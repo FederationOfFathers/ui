@@ -1,8 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './app';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import Promise from 'promise-polyfill';
+if (!window.Promise) {
+        window.Promise = Promise;
+}
+
+ReactDOM.render(
+        <App/>,
+        document.getElementById('root')
+);
 registerServiceWorker();
