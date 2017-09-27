@@ -1,6 +1,5 @@
 import React from 'react';
 import LoggedIn from './logged-in.js';
-import LoggedOut from './logged-out.js';
 import Api from './api.js'
 import './app.css';
 
@@ -10,26 +9,15 @@ class App extends Api {
                 this.apiComponentWillMount()
         }
         render = () => {
-                console.log(this.state)
-                if ( false === this.state.didPing ) {
+                if ( false === this.state.loggedIn || false === this.state.didPing ) {
                         return (
-                                <div className="App">Checking log in information, hold please.</div>
+                              <div className="app noauth">
+                                    <h1>Please log in.</h1>
+                                    <p>Send a message of just "login" to @damnbot in slack. Click the link he replies with.</p>
+                              </div>
                         );
                 }
-                if ( false === this.state.loggedIn ) {
-                        return (
-                                <div className="App">
-                                <LoggedOut/>
-                                <button onClick={this.setLoggedIn}>test</button>
-                                <button onClick={this.test}>test2</button>
-                                </div>
-                        );
-                }
-                return (
-                        <div className="App">
-                        <LoggedIn state={this.state}/>
-                        </div>
-                );
+                return ( <LoggedIn state={this.state}/> );
         }
 }
 
