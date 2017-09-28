@@ -4,7 +4,13 @@ class Channels extends Component {
         render() {
                 return (
                         <div className="channels">
-                        channels
+                                <div className="my-1 py-1 sticky-top">
+                                        <ol class="breadcrumb">
+                                               <li class="breadcrumb-item">Channels</li>
+                                        </ol>
+                                </div>
+                                <div>
+                                </div>
                         </div>
                 );
         }
