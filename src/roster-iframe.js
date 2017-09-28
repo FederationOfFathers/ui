@@ -6,9 +6,9 @@ class Roster extends Component {
                         return(<div/>)
                 }
                 return (
-                        <div className="team">
+                        <div className="roster">
                                 <iframe
-                                        title="team tool"
+                                        title="roster list"
                                         src="//fofgaming.com/friends/"
                                         className="embed-responsive embed-responsive-item border-0 fixed-top"
                                         style={{
