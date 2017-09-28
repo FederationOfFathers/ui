@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Nav from './nav'
 import Team from './team-iframe'
 import Roster from './roster-iframe'
+import Channels from './channels'
+import Members from './members'
 
 class LoggedIn extends Component {
         renderSection = () => {
@@ -14,9 +16,9 @@ class LoggedIn extends Component {
                         case "roster":
                                 return (<Roster state={this.props.state}/>)
                         case "channels":
-                                return
+                                return (<Channels state={this.props.state}/>)
                         case "members":
-                                return
+                                return (<Members state={this.props.state}/>)
                 }
         }
         render = () => {
