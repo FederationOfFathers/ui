@@ -12,8 +12,21 @@ class State extends Component {
                         vars: hash.get(),
                         hasher: hash,
                         hashString: window.location.hash,
+                        windowHeight: window.innerHeight,
+                        windowWidth: window.innerWidth,
+                        navHeight: 0,
+                        setNavHeight: this.setNavHeight,
                 })
                 hash.registerListener(this.hashChange);
+                window.onresize = function() {
+                        this.setState({
+                                windowHeight: window.innerHeight,
+                                windowWidth: window.innerWidth,
+                        })
+                }.bind(this)
+        }
+        setNavHeight = ( height ) => {
+                this.setState({ navHeight: height })
         }
         hashChange = () => {
                 this.setState({
