@@ -9,7 +9,7 @@ class Team extends Component {
                         <div className="team">
                                 <iframe
                                         title="team tool"
-                                        src="//team.fofgaming.com/"
+                                        src="//dashboard.fofgaming.com/api/v0/redirect/team-tool"
                                         className="embed-responsive embed-responsive-item border-0 fixed-top"
                                         style={{
                                             width: this.props.state.windowWidth,
