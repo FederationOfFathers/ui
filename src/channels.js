@@ -35,7 +35,7 @@ class Channels extends Component {
                         var classes = "list-group-item"
                         var button = []
 
-                        if ( list[i].is == "channel" ) {
+                        if ( list[i].is === "channel" ) {
                                 if ( list[i].member === true ) {
                                         button.push((<button key="part" className="btn btn-secondary float-right">part</button>))
                                         classes = classes + " list-group-item-primary"
