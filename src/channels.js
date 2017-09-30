@@ -33,14 +33,31 @@ class Channels extends Component {
                 var elements = [];
                 for ( var i in list ) {
                         var classes = "list-group-item"
-                        var button = (<button className="btn btn-primary float-right">join</button>)
-                        if ( list[i].member === true ) {
-                                classes = classes + " list-group-item-primary"
-                                button = (<button className="btn btn-secondary float-right">part</button>)
-                        } else if ( list[i].raw.visible !== "true" ) {
-                                classes = classes + " list-group-item-secondary"
-                                button = <button className="btn btn-warning float-right">visibility</button>
+                        var button = []
+
+                        if ( list[i].is == "channel" ) {
+                                if ( list[i].member === true ) {
+                                        button.push((<button key="part" className="btn btn-secondary float-right">part</button>))
+                                        classes = classes + " list-group-item-primary"
+                                } else {
+                                        button.push((<button key="join" className="btn btn-primary float-right">join</button>))
+                                        classes = classes + " list-group-item-secondary"
+                                }
+                        } else {
+                                if ( list[i].member === true ) {
+                                        button.push((<button key="part" className="btn btn-secondary float-right">part</button>))
+                                        classes = classes + " list-group-item-primary"
+                                } else {
+                                        if ( list[i].raw.visible === "true" ) {
+                                                button.push((<button key="join" className="btn btn-primary float-right">join</button>))
+                                        }
+                                        classes = classes + " list-group-item-secondary"
+                                }
+                                if ( this.props.state.admin === true ) {
+                                        button.push((<button key="visi" className="btn btn-warning float-right">visibility</button>))
+                                }
                         }
+
                         var prefix = ""
                         if ( list[i].is === "channel" ) {
                                 prefix = "#"
