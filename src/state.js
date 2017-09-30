@@ -34,6 +34,22 @@ class State extends Component {
                         hashString: window.location.hash,
                 })
         }
+        save = () => {
+                localStorage.setItem("fofstate", JSON.stringify(this.state));
+        }
+        load = () => {
+                var value = JSON.parse(localStorage.getItem("fofstate"));
+                if ( "object" !== typeof value ) {
+                        return
+                }
+                if ( value === null ) {
+                        return
+                }
+                value.hasher = hash
+                value.vars = hash.get()
+                value.hashString = window.location.hash
+                this.setState(value)
+        }
 }
 
 export default State

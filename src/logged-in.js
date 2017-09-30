@@ -25,7 +25,13 @@ class LoggedIn extends Component {
                 return (
                         <div className="app">
                                 <Nav state={this.props.state}/>
-                                {this.renderSection()}
+                                <div
+                                        style={{
+                                            height: this.props.state.windowHeight - this.props.state.navHeight,
+                                            overflow: "auto",
+                                }}>
+                                        {this.renderSection()}
+                                </div>
                         </div>
                 );
         }
