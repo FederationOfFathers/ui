@@ -1,5 +1,31 @@
 import React, { Component } from 'react';
 
+class Part extends Component {
+        callback = () => { this.props.callback(this.props.id, this.props.type) }
+        render = () => {
+                return(
+                        <button style={{cursor: "pointer"}} className="btn btn-secondary float-right" onClick={this.callback}>part</button>
+                )
+        }
+}
+
+class Join extends Component {
+        callback = () => { this.props.callback(this.props.id, this.props.type) }
+        render = () => {
+                return(
+                        <button style={{cursor: "pointer"}} className="btn btn-primary float-right" onClick={this.callback}>join</button>
+                )
+        }
+}
+
+class Visibility extends Component {
+        render = () => {
+                return(
+                        <button style={{cursor: "pointer"}} className="btn btn-warning float-right">visibility</button>
+                )
+        }
+}
+
 class Channels extends Component {
         merge = () => {
                 var list = [];
@@ -37,24 +63,28 @@ class Channels extends Component {
 
                         if ( list[i].is === "channel" ) {
                                 if ( list[i].member === true ) {
-                                        button.push((<button key="part" className="btn btn-secondary float-right">part</button>))
+                                        button.push(<Part key="part" type="channel" id={list[i].raw.id}
+                                                callback={this.props.state.callbacks.slack.part}/>)
                                         classes = classes + " list-group-item-primary"
                                 } else {
-                                        button.push((<button key="join" className="btn btn-primary float-right">join</button>))
+                                        button.push(<Join key="join" type="channel" id={list[i].raw.id}
+                                                callback={this.props.state.callbacks.slack.part}/>)
                                         classes = classes + " list-group-item-secondary"
                                 }
                         } else {
                                 if ( list[i].member === true ) {
-                                        button.push((<button key="part" className="btn btn-secondary float-right">part</button>))
+                                        button.push(<Part key="part" type="group" id={list[i].raw.id}
+                                                callback={this.props.state.callbacks.slack.part}/>)
                                         classes = classes + " list-group-item-primary"
                                 } else {
                                         if ( list[i].raw.visible === "true" ) {
-                                                button.push((<button key="join" className="btn btn-primary float-right">join</button>))
+                                                button.push(<Join key="join" type="group" id={list[i].raw.id}
+                                                        callback={this.props.state.callbacks.slack.part}/>)
                                         }
                                         classes = classes + " list-group-item-secondary"
                                 }
                                 if ( this.props.state.admin === true ) {
-                                        button.push((<button key="visi" className="btn btn-warning float-right">visibility</button>))
+                                        button.push((<Visibility key="visi"/>))
                                 }
                         }
 

@@ -16,6 +16,12 @@ class State extends Component {
                         windowWidth: window.innerWidth,
                         navHeight: 0,
                         setNavHeight: this.setNavHeight,
+                        callbacks: {
+                                slack: {
+                                        join: this.joinSlack,
+                                        part: this.partSlack,
+                                },
+                        },
                 })
                 hash.registerListener(this.hashChange);
                 window.onresize = function() {
@@ -24,6 +30,12 @@ class State extends Component {
                                 windowWidth: window.innerWidth,
                         })
                 }.bind(this)
+        }
+        joinSlack = (id, kind) => {
+                console.log("join " + id + " " + kind)
+        }
+        partSlack = (id, kind) => {
+                console.log("part " + id + " " + kind)
         }
         setNavHeight = ( height ) => {
                 this.setState({ navHeight: height })
@@ -48,6 +60,12 @@ class State extends Component {
                 value.hasher = hash
                 value.vars = hash.get()
                 value.hashString = window.location.hash
+                value.callbacks = {
+                        slack: {
+                                join: this.joinSlack,
+                                part: this.partSlack,
+                        },
+                };
                 this.setState(value)
         }
 }
