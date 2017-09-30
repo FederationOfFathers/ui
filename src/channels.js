@@ -68,7 +68,7 @@ class Channels extends Component {
                                         classes = classes + " list-group-item-primary"
                                 } else {
                                         button.push(<Join key="join" type="channel" id={list[i].raw.id}
-                                                callback={this.props.state.callbacks.slack.part}/>)
+                                                callback={this.props.state.callbacks.slack.join}/>)
                                         classes = classes + " list-group-item-secondary"
                                 }
                         } else {
@@ -79,7 +79,7 @@ class Channels extends Component {
                                 } else {
                                         if ( list[i].raw.visible === "true" ) {
                                                 button.push(<Join key="join" type="group" id={list[i].raw.id}
-                                                        callback={this.props.state.callbacks.slack.part}/>)
+                                                        callback={this.props.state.callbacks.slack.join}/>)
                                         }
                                         classes = classes + " list-group-item-secondary"
                                 }

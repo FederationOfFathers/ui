@@ -5,6 +5,12 @@ class Api extends State {
         apiComponentWillMount = () => {
                 this.load()
                 this.ping()
+                this.setState({callbacks: {
+                        slack: {
+                                join: this.joinSlack,
+                                part: this.partSlack,
+                        },
+                }})
         }
         url = ( part ) => {
                 return "//dashboard.fofgaming.com/api/v0/" + part
@@ -32,6 +38,38 @@ class Api extends State {
                         this.setState({groupList: json})
                         this.save()
                 }.bind(this))
+        }
+        joinSlack = (id, kind) => {
+                console.log("join " + id + " " + kind)
+                var op = null
+                var on = null
+                if ( kind === "channel" ) {
+                        on = this.channels
+                        op = this.fetch("channels/"+id+"/join")
+                } else {
+                        on = this.groups
+                        op = this.fetch("groups/"+id+"/join")
+                }
+                op.then(setTimeout(function() {
+                        this.ping()
+                        on()
+                }.bind(this), 2500))
+        }
+        partSlack = (id, kind) => {
+                var op = null
+                var on = null
+                if ( kind === "channel" ) {
+                        on = this.channels
+                        op = this.fetch("channels/"+id+"/leave")
+                } else {
+                        on = this.groups
+                        op = this.fetch("groups/"+id+"/leave")
+                }
+                op.then(setTimeout(function() {
+                        this.ping()
+                        on()
+                }.bind(this), 2500))
+                console.log("part " + id + " " + kind)
         }
         ping = () => {
                 this.fetch( "ping" )

@@ -31,12 +31,6 @@ class State extends Component {
                         })
                 }.bind(this)
         }
-        joinSlack = (id, kind) => {
-                console.log("join " + id + " " + kind)
-        }
-        partSlack = (id, kind) => {
-                console.log("part " + id + " " + kind)
-        }
         setNavHeight = ( height ) => {
                 this.setState({ navHeight: height })
         }
