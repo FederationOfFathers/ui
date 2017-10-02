@@ -11,6 +11,11 @@ class Api extends State {
                                 part: this.partSlack,
                         },
                 }})
+                setInterval(function(){
+                        this.ping()
+                        this.channels()
+                        this.url()
+                }.bind(this), 60000)
         }
         url = ( part ) => {
                 return "//dashboard.fofgaming.com/api/v0/" + part
