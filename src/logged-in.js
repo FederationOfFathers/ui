@@ -25,9 +25,14 @@ class LoggedIn extends Component {
                 return (
                         <div className="app">
                                 <Nav state={this.props.state}/>
-                                <div
+                                <div className="px-3 py-3"
                                         style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
                                             height: this.props.state.windowHeight - this.props.state.navHeight,
+                                            width: this.props.state.windowWidth,
+                                            marginBottom: this.props.state.navHeight,
                                             overflow: "auto",
                                 }}>
                                         {this.renderSection()}
