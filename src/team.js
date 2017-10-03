@@ -144,9 +144,7 @@ class Team extends Component {
                         return null
                 }
                 return (
-                        <div className="col">
-                                <Channel key={myChan} keys={cRaidKeys} name={myChan} data={myRaids} state={this.props.state}/>
-                        </div>
+                        <Channel key={myChan} keys={cRaidKeys} name={myChan} data={myRaids} state={this.props.state}/>
                 )
         }
         render = () => {
@@ -159,7 +157,11 @@ class Team extends Component {
                                         <div className="col">
                                                 <div className="btn-group-vertical w-100">{this.channelButtons()}</div>
                                         </div>
+                                </div>
+                                <div className="row">
+                                        <div className="col">
                                         {this.channel()}
+                                        </div>
                                 </div>
                         </div>
                 );
