@@ -46,15 +46,19 @@ class RaidButton extends Component {
                 if ( typeof this.props.data.alts !== "undefined" && this.props.data.alts !== null ) {
                         alts = this.props.data.alts
                 }
-                var buttonClass = "btn w-100"
+                var buttonClass = "my-1 btn w-100"
                 if ( this.props.state.vars.raid === this.props.data.uuid ) {
                         buttonClass = buttonClass + " btn-primary"
                 }
-                console.log({raidData: this.props.data})
+                var date = new Date(Date.parse(this.props.data.raid_time))
                 return (
                         <button className={buttonClass} style={{overflow: "hidden"}} onClick={this.click}>
-                        <span className="float-left mx-1 badge badge-dark">{this.props.data.members.length + alts.length}</span>
-                        {this.shortName()}
+                                {this.shortName()}
+                                <br/>
+                        <span className="mx-1 my-1 badge badge-dark">{date.toLocaleString('en-US')}</span>
+                        <span className="mx-1 my-1 badge badge-secondary">{this.props.data.members.length + alts.length} member
+                        {(this.props.data.members.length + alts.length) === 1 ? "" : "s" }
+                        </span>
                         </button>
                 )
         }
@@ -68,6 +72,13 @@ class Channel extends Component {
                 if ( this.props.state.vars.chan !== this.props.name ) {
                         return null
                 }
+                this.props.keys.sort(function(a,b) {
+                        if (this.props.data[a].raid_time < this.props.data[b].raid_time)
+                                return -1;
+                        if (this.props.data[a].raid_time > this.props.data[b].raid_time)
+                                return 1;
+                        return 0;
+                }.bind(this))
                 var rval = []
                 for ( var i in this.props.keys ) {
                         var key = this.props.keys[i]
@@ -88,7 +99,7 @@ class Channel extends Component {
         render = () => {
                 return (
                         <div>
-                                <div className="btn-group-vertical w-100 my-2">
+                                <div className="w-100 my-1">
                                         {this.raidButtons()}
                                 </div>
                         {this.raid()}
