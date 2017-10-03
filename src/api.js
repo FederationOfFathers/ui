@@ -26,22 +26,61 @@ class Api extends State {
                 }
                 return fetch(what, { credentials: 'include' })
         }
+        raidfetch = ( what ) => {
+                return fetch(
+                        "//team.fofgaming.com/rest/" + what,
+                        {
+                                headers: {
+                                        'Authorization': this.state.raidbotToken,
+                                },
+                        }
+                )
+        }
+        raidList = () => {
+                this.raidfetch("get")
+                        .then(function(response) {
+                        return response.json()
+                }).then(function(json) {
+                        this.setState({raids: json})
+                }.bind(this))
+        }
+        raidJoin = () => {
+        }
+        raidLeave = () => {
+        }
+        raidJoinAlt = () => {
+        }
+        raidLeaveAlt = () => {
+        }
+        raidHost = () => {
+        }
+        raidPing = () => {
+        }
+        raidClose = () => {
+        }
         channels = () => {
-                this.fetch("channels")
+                return this.fetch("channels")
                 .then(function(response) {
                         return response.json()
                 }).then(function(json) {
                         this.setState({chanList: json})
-                        this.save()
+                }.bind(this))
+        }
+        raidbotAuth = () => {
+                return this.fetch("auth/team-tool")
+                .then(function(response) {
+                        return response.json()
+                }).then(function(json) {
+                        this.setState({raidbotToken: "fof-ut " + json})
+                        this.raidList()
                 }.bind(this))
         }
         groups = () => {
-                this.fetch("groups")
+                return this.fetch("groups")
                 .then(function(response) {
                         return response.json()
                 }).then(function(json) {
                         this.setState({groupList: json})
-                        this.save()
                 }.bind(this))
         }
         joinSlack = (id, kind) => {
@@ -94,14 +133,16 @@ class Api extends State {
                         json.loggedIn = true
                         this.setState(json)
                         this.channels()
-                        this.groups()
-                        this.save()
+                        .then(this.groups())
+                        .then(this.raidbotAuth())
+                        .then(this.save())
                 }.bind(this))
                 .catch(function(ex) {
                         this.setState({
                                 didPing: false,
                                 loggedIn: false,
                         })
+                        this.save()
                 }.bind(this))
         }
 }

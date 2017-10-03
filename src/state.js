@@ -7,6 +7,8 @@ const hash = Hash();
 class State extends Component {
         stateComponentWillMount = () => {
                 this.setState({
+                        raidbotToken: false,
+                        raids: {},
                         didPing: false,
                         loggedIn: false,
                         vars: hash.get(),
@@ -41,6 +43,7 @@ class State extends Component {
                 })
         }
         save = () => {
+                console.log(this.state)
                 localStorage.setItem("fofstate", JSON.stringify(this.state));
         }
         load = () => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './nav'
-import Team from './team-iframe'
+import Team from './team'
 import Roster from './roster-iframe'
 import Channels from './channels'
 import Members from './members'
@@ -31,7 +31,7 @@ class LoggedIn extends Component {
                                             top: 0,
                                             left: 0,
                                             height: this.props.state.windowHeight - this.props.state.navHeight,
-                                            width: this.props.state.windowWidth,
+                                            width: "100%",
                                             marginBottom: this.props.state.navHeight,
                                             overflow: "auto",
                                 }}>
