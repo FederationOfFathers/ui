@@ -33,8 +33,11 @@ class Raid extends Component {
 
 class RaidButton extends Component {
         click = () => {
-                console.log("here " + this.props.data.uuid)
-                this.props.state.hasher.set({raid: this.props.data.uuid})
+                if ( this.props.state.vars.raid !== this.props.data.uuid ) {
+                        this.props.state.hasher.set({raid: this.props.data.uuid})
+                } else {
+                        this.props.state.hasher.set({raid: null})
+                }
         }
         shortName = () => {
                 var name = this.props.data.name
@@ -49,6 +52,10 @@ class RaidButton extends Component {
                 var buttonClass = "my-1 btn w-100"
                 if ( this.props.state.vars.raid === this.props.data.uuid ) {
                         buttonClass = buttonClass + " btn-primary"
+                } else {
+                        if ( typeof this.props.state.vars.raid !== "undefined" && this.props.state.vars.raid !== null ) {
+                                return null
+                        }
                 }
                 var date = new Date(Date.parse(this.props.data.raid_time))
                 return (
@@ -110,12 +117,20 @@ class Channel extends Component {
 
 class ChannelButton extends Component {
         click = () => {
-                this.props.state.hasher.set({chan: this.props.name})
+                if ( this.props.name !== this.props.state.vars.chan ) {
+                        this.props.state.hasher.set({chan: this.props.name, raid: null})
+                } else {
+                        this.props.state.hasher.set({chan: null, raid: null})
+                }
         }
         render = () => {
-                var btnClass = "btn w-100"
+                var btnClass = "btn w-100 my-1"
                 if ( this.props.state.vars.chan === this.props.name ) {
                         btnClass = btnClass + " btn-primary"
+                } else {
+                        if ( this.props.state.vars.chan !== null && typeof this.props.state.vars.chan !== "undefined" ) {
+                                return null
+                        }
                 }
                 return (
                         <button className={btnClass} onClick={this.click} style={{whiteSpace: "nowrap"}}>
