@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 
-class Part extends Component {
+class JoinPart extends Component {
         callback = () => { this.props.callback(this.props.id, this.props.type) }
         render = () => {
+                var classes = "mx-1 badge float-right"
+                if ( this.props.kind === "join" ) {
+                        classes = classes + " badge-primary"
+                } else {
+                        classes = classes + " badge-secondary"
+                }
                 return(
-                        <button style={{cursor: "pointer"}} className="btn btn-secondary float-right" onClick={this.callback}>part</button>
-                )
-        }
-}
-
-class Join extends Component {
-        callback = () => { this.props.callback(this.props.id, this.props.type) }
-        render = () => {
-                return(
-                        <button style={{cursor: "pointer"}} className="btn btn-primary float-right" onClick={this.callback}>join</button>
+                        <span className={classes} style={{cursor: "pointer"}} onClick={this.callback}>{this.props.kind}</span>
                 )
         }
 }
 
 class Visibility extends Component {
         render = () => {
+                var text = "hidden"
+                if ( this.props.visible === "true" ) {
+                console.log(this.props)
+                        text = "public\u00A0"
+                }
                 return(
-                        <button style={{cursor: "pointer"}} className="btn btn-warning float-right">visibility</button>
+                        <span className="float-right badge badge-secondary mx-1" style={{cursor: "pointer"}}>{text}</span>
                 )
         }
 }
@@ -61,31 +63,21 @@ class Channels extends Component {
                         var classes = "list-group-item"
                         var button = []
 
-                        if ( list[i].is === "channel" ) {
-                                if ( list[i].member === true ) {
-                                        button.push(<Part key="part" type="channel" id={list[i].raw.id}
-                                                callback={this.props.state.callbacks.slack.part}/>)
-                                        classes = classes + " list-group-item-primary"
-                                } else {
-                                        button.push(<Join key="join" type="channel" id={list[i].raw.id}
-                                                callback={this.props.state.callbacks.slack.join}/>)
-                                        classes = classes + " list-group-item-secondary"
-                                }
+                        button.push((<Visibility key="visi" visible={list[i].raw.visible}/>))
+                        // TODO:
+                        // members: request visibility change
+                        // admins: change visibility
+
+                        if ( list[i].member === true ) {
+                                button.push(<JoinPart kind="part" key="part" type={list[i].is} id={list[i].raw.id}
+                                        callback={this.props.state.callbacks.slack.part}/>)
+                                classes = classes + " list-group-item-primary"
                         } else {
-                                if ( list[i].member === true ) {
-                                        button.push(<Part key="part" type="group" id={list[i].raw.id}
-                                                callback={this.props.state.callbacks.slack.part}/>)
-                                        classes = classes + " list-group-item-primary"
-                                } else {
-                                        if ( list[i].raw.visible === "true" ) {
-                                                button.push(<Join key="join" type="group" id={list[i].raw.id}
-                                                        callback={this.props.state.callbacks.slack.join}/>)
-                                        }
-                                        classes = classes + " list-group-item-secondary"
+                                if ( list[i].raw.visible === "true" ) {
+                                        button.push(<JoinPart kind="join" key="join" type={list[i].is} id={list[i].raw.id}
+                                                callback={this.props.state.callbacks.slack.join}/>)
                                 }
-                                if ( this.props.state.admin === true ) {
-                                        button.push((<Visibility key="visi"/>))
-                                }
+                                classes = classes + " list-group-item-secondary"
                         }
 
                         var prefix = ""
