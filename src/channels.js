@@ -19,7 +19,6 @@ class Visibility extends Component {
         render = () => {
                 var text = "hidden"
                 if ( this.props.visible === "true" ) {
-                console.log(this.props)
                         text = "public\u00A0"
                 }
                 return(
