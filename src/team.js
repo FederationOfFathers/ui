@@ -54,9 +54,9 @@ class RaidButton extends Component {
                 if ( this.props.state.vars.raid === this.props.data.uuid ) {
                         buttonClass = buttonClass + " btn-primary"
                         close = (
-                                <button type="button" className="float-right close" aria-label="Close">
+                                <span className="float-right close" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
-                                </button>
+                                </span>
                         )
                 } else {
                         if ( typeof this.props.state.vars.raid !== "undefined" && this.props.state.vars.raid !== null ) {
@@ -135,9 +135,9 @@ class ChannelButton extends Component {
                 if ( this.props.state.vars.chan === this.props.name ) {
                         btnClass = btnClass + " btn-primary"
                         close = (
-                                <button type="button" className="float-right close" aria-label="Close">
+                                <span className="float-right close" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
-                                </button>
+                                </span>
                         )
                 } else {
                         if ( this.props.state.vars.chan !== null && typeof this.props.state.vars.chan !== "undefined" ) {
