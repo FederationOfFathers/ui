@@ -4,7 +4,7 @@ class Raid extends Component {
         members = () => {
                 var rval = []
                 for ( var i in this.props.data.members ) {
-                        rval.push(<li key={"m-"+i} className="list-group-item-primary list-group-item">{this.props.data.members[i]}</li>)
+                        rval.push(<li key={"m-"+i} className="list-group-item">{this.props.data.members[i]}</li>)
                 }
                 return rval
         }
@@ -13,7 +13,7 @@ class Raid extends Component {
                 if ( this.props.data.alts !== null ) {
                         for ( var i in this.props.data.alts ) {
                                 rval.push(
-                                        <li key={"a-"+i} className="list-group-item list-group-item-secondary">
+                                        <li key={"a-"+i} className="list-group-item disabled">
                                                 {this.props.data.alts[i]}
                                         </li>
                                 )
@@ -50,8 +50,14 @@ class RaidButton extends Component {
                         alts = this.props.data.alts
                 }
                 var buttonClass = "my-1 btn w-100"
+                var close = null
                 if ( this.props.state.vars.raid === this.props.data.uuid ) {
                         buttonClass = buttonClass + " btn-primary"
+                        close = (
+                                <button type="button" className="float-right close" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                        )
                 } else {
                         if ( typeof this.props.state.vars.raid !== "undefined" && this.props.state.vars.raid !== null ) {
                                 return null
@@ -59,7 +65,7 @@ class RaidButton extends Component {
                 }
                 var date = new Date(Date.parse(this.props.data.raid_time))
                 return (
-                        <button className={buttonClass} style={{overflow: "hidden"}} onClick={this.click}>
+                        <button className={buttonClass} style={{overflow: "hidden"}} onClick={this.click}>{close}
                                 {this.shortName()}
                                 <br/>
                         <span className="mx-1 my-1 badge badge-dark">{date.toLocaleString('en-US')}</span>
@@ -125,15 +131,21 @@ class ChannelButton extends Component {
         }
         render = () => {
                 var btnClass = "btn w-100 my-1"
+                var close = null
                 if ( this.props.state.vars.chan === this.props.name ) {
                         btnClass = btnClass + " btn-primary"
+                        close = (
+                                <button type="button" className="float-right close" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                </button>
+                        )
                 } else {
                         if ( this.props.state.vars.chan !== null && typeof this.props.state.vars.chan !== "undefined" ) {
                                 return null
                         }
                 }
                 return (
-                        <button className={btnClass} onClick={this.click} style={{whiteSpace: "nowrap"}}>
+                        <button className={btnClass} onClick={this.click} style={{whiteSpace: "nowrap"}}>{close}
                                 #{this.props.name} <span className="float-left mx-1 badge badge-dark">{this.props.keys.length}</span>
                         </button>
                 )
@@ -164,7 +176,6 @@ class Team extends Component {
                 if ( typeof myRaids === "undefined" ) {
                         return null
                 }
-                console.log(">>", myRaids)
                 var cRaidKeys = Object.keys(myRaids)
                 if ( cRaidKeys.length < 1 ) {
                         return null
