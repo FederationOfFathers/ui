@@ -28,8 +28,21 @@ class Visibility extends Component {
                 if ( this.props.visible === "true" ) {
                         text = "public"
                 }
+                if ( this.props.data.is === "channel" ) {
+                        text="channel"
+                } else {
+                        if ( this.props.state.vars.chan === this.props.data.raw.name ) {
+                                text = (
+                                        <span>{text}
+                                                <span style={{fontSize: '0.9em'}} type="button" className="close" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                </span>
+                                        </span>
+                                )
+                        }
+                }
                 return(
-                        <span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "5em", cursor: "pointer"}}>{text}</span>
+                        <span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "6em", cursor: "pointer"}}>{text}</span>
                 )
         }
 }
@@ -90,14 +103,22 @@ class Channels extends Component {
                         if ( list[i].is === "channel" ) {
                                 prefix = "#"
                         }
-                        if ( this.props.state.vars.chan === list[i].raw.name ) {
+                        if ( list[i].is !== "channel" && this.props.state.vars.chan === list[i].raw.name ) {
+                                var nv = "public"
+                                if ( list[i].raw.visible === "true" ) {
+                                        nv = "private"
+                                }
                                 if ( this.props.state.admin ) {
                                         button.push((
-                                                <div>admin</div>
+                                                <div key="admin" style={{textAlign: "left"}}>
+                                                        <button className="btn btn-danger w-75">Make {list[i].is} {nv}</button>
+                                                </div>
                                         ))
                                 } else {
                                         button.push((
-                                                <div>test</div>
+                                                <div key="user" style={{textAlign: "left"}}>
+                                                        <button className="btn btn-primary w-75">Request {list[i].is} be made {nv}</button>
+                                                </div>
                                         ))
                                 }
                         }
