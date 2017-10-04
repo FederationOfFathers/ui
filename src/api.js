@@ -5,7 +5,7 @@ class Api extends State {
         apiComponentWillMount = () => {
                 this.load()
                 this.ping()
-                this.setState({callbacks: {
+                this.setState({api: {
                         slack: {
                                 join: this.joinSlack,
                                 part: this.partSlack,

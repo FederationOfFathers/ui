@@ -76,12 +76,12 @@ class Channels extends Component {
 
                         if ( list[i].member === true ) {
                                 button.push(<JoinPart kind="part" key="part" type={list[i].is} id={list[i].raw.id}
-                                        callback={this.props.state.callbacks.slack.part}/>)
+                                        callback={this.props.state.api.slack.part}/>)
                                 classes = classes + " list-group-item-primary"
                         } else {
                                 if ( list[i].raw.visible === "true" ) {
                                         button.push(<JoinPart kind="join" key="join" type={list[i].is} id={list[i].raw.id}
-                                                callback={this.props.state.callbacks.slack.join}/>)
+                                                callback={this.props.state.api.slack.join}/>)
                                 }
                                 classes = classes + " list-group-item-secondary"
                         }

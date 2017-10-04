@@ -1,6 +1,56 @@
 import React, { Component } from 'react';
 import Channel from './team-channel'
 import ChannelButton from './team-channel-button'
+import moment from 'moment';
+import InputMoment from 'input-moment';
+import './input-moment.css'
+
+class Host extends Component {
+        change = ( m ) => {
+                console.log(m)
+                console.log(this.props.state)
+                this.props.state.callbacks.team.setHostMoment( m );
+        }
+        save = () => {
+                console.log(this.props.state.raidHost.m.format('llll'))
+        }
+        stateComponentWillMount = () => {
+                this.change( moment() )
+        }
+        render = () => {
+                var channels = []
+                for ( var cID in this.props.state.channels ) {
+                        channels.push(<option>{this.props.state.channels[cID].name}</option>)
+                }
+                return (
+                        <div className="form-group">
+                                <div className="my-2 mx-4">
+                                        <label htmlFor="echan">Event Channel</label>
+                                        <select className="form-control" id="echan">
+                                                {channels}
+                                        </select>
+                                </div>
+
+                                <div className="my-2 mx-4">
+                                        <label htmlFor="ename">Event Name</label>
+                                        <input type="test" id="ename" className="form-control" placeholder="Event Name"/>
+                                </div>
+
+                                <div className="my-2">
+                                        <label htmlFor="ets" className="mx-4">Event Date &amp; Time</label>
+                                        <div style={{textAlign: "center"}}>
+                                                <InputMoment
+                                                        moment={this.props.state.raidHost.m}
+                                                        onChange={this.change}
+                                                        onSave={this.save}
+                                                        minStep={5}
+                                                        />
+                                        </div>
+                                </div>
+                        </div>
+                )
+        }
+}
 
 class Team extends Component {
         channelButtons = () => {
@@ -35,7 +85,7 @@ class Team extends Component {
                 )
         }
         host = () => {
-                return( <div>host an event...</div> )
+                return (<Host state={this.props.state}/>)
         }
         render = () => {
                 if ( this.props.state.navHeight < 1 ) {
