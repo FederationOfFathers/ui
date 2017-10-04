@@ -12,12 +12,16 @@ class Host extends Component {
                 if ( initialOffMinutes !== 0 ) {
                         initialMoment.set( 'minute', initialMoment.get('minute') + ( 5 - initialOffMinutes ) )
                 }
+                var maxDays = 14
+                if ( this.props.state.admin === true ) {
+                        maxDays = 365
+                }
                 this.setState({
                         title: "",
                         channel: "",
                         m: initialMoment,
                         now: moment(initialMoment),
-                        max: moment().add(14, 'days'),
+                        max: moment().add(maxDays, 'days'),
                 })
         }
         changeChannel = ( e ) => {
@@ -49,9 +53,9 @@ class Host extends Component {
                         rval.Title = (<div className="alert alert-danger">Title must be more substantial</div>)
                 }
                 if ( this.state.now.isAfter( this.state.m ) ) {
-                        rval.Moment = (<div className="mx-4 alert alert-danger"><strong>After</strong> {moment().format('llll')}</div>)
+                        rval.Moment = (<div className="mx-4 alert alert-danger">Be <strong>after</strong> {moment().format('llll')}</div>)
                 } else if ( this.state.m.isAfter( this.state.max ) ) {
-                        rval.Moment = (<div className="mx-4 alert alert-danger"><strong>Before</strong> {this.state.max.format('llll')}</div>)
+                        rval.Moment = (<div className="mx-4 alert alert-danger">Be <strong>before</strong> {this.state.max.format('llll')}</div>)
                 } else {
                         rval.MomentGood = (<div className="mx-4 alert alert-success">Event Time: {this.state.m.format('llll')}</div>)
                 }
