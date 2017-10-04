@@ -3,26 +3,33 @@ import React, { Component } from 'react';
 class JoinPart extends Component {
         callback = () => { this.props.callback(this.props.id, this.props.type) }
         render = () => {
-                var classes = "mx-1 badge float-right"
+                var classes = "mx-1 py-1 badge float-right"
                 if ( this.props.kind === "join" ) {
                         classes = classes + " badge-primary"
                 } else {
                         classes = classes + " badge-secondary"
                 }
                 return(
-                        <span className={classes} style={{cursor: "pointer"}} onClick={this.callback}>{this.props.kind}</span>
+                        <span className={classes} style={{cursor: "pointer", width: "5em"}} onClick={this.callback}>{this.props.kind}</span>
                 )
         }
 }
 
 class Visibility extends Component {
+        click = () => {
+                if ( this.props.state.vars.chan !== this.props.data.raw.name ) {
+                        this.props.state.hasher.set({chan: this.props.data.raw.name})
+                } else {
+                        this.props.state.hasher.set({chan: null})
+                }
+        }
         render = () => {
                 var text = "hidden"
                 if ( this.props.visible === "true" ) {
-                        text = "public\u00A0"
+                        text = "public"
                 }
                 return(
-                        <span className="float-right badge badge-secondary mx-1" style={{cursor: "pointer"}}>{text}</span>
+                        <span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "5em", cursor: "pointer"}}>{text}</span>
                 )
         }
 }
@@ -62,7 +69,7 @@ class Channels extends Component {
                         var classes = "list-group-item"
                         var button = []
 
-                        button.push((<Visibility key="visi" visible={list[i].raw.visible}/>))
+                        button.push((<Visibility key="visi" state={this.props.state} data={list[i]} visible={list[i].raw.visible}/>))
                         // TODO:
                         // members: request visibility change
                         // admins: change visibility
@@ -82,6 +89,17 @@ class Channels extends Component {
                         var prefix = ""
                         if ( list[i].is === "channel" ) {
                                 prefix = "#"
+                        }
+                        if ( this.props.state.vars.chan === list[i].raw.name ) {
+                                if ( this.props.state.admin ) {
+                                        button.push((
+                                                <div>admin</div>
+                                        ))
+                                } else {
+                                        button.push((
+                                                <div>test</div>
+                                        ))
+                                }
                         }
                         elements.push((
                                 <li key={list[i].raw.name} className={classes}>{prefix}{list[i].raw.name} {button}</li>
