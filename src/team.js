@@ -185,6 +185,9 @@ class Team extends Component {
                 )
         }
         render = () => {
+                if ( this.props.state.vars.raid === "host" ) {
+                        return( <div>host an event...</div> )
+                }
                 if ( this.props.state.navHeight < 1 ) {
                         return(<div/>)
                 }

@@ -30,13 +30,29 @@ class Nav extends Component {
                 }
         }
         teamNav = () => {
+                var f = function() {
+                        if ( this.props.state.vars.raid !== "host" ) {
+                                this.props.state.hasher.set({raid: "host"})
+                        } else {
+                                this.props.state.hasher.set({raid: null})
+                        }
+                }.bind(this)
                 if ( this.props.state.vars.main !== "team" ) {
-                        return (<div/>)
+                        return null
+                }
+                if ( this.props.state.vars.raid === "host" ) {
+                        return (
+                                <ul className="nav nav-pills nav-fill">
+                                        <li className="nav-item px-1 my-1">
+                                                <button onClick={f} className="btn btn-danger w-100">Cancel</button>
+                                        </li>
+                                </ul>
+                        )
                 }
                 return (
                         <ul className="nav nav-pills nav-fill">
                                 <li className="nav-item px-1 my-1">
-                                        <button className="btn btn-success w-100">Host an Event</button>
+                                        <button onClick={f} className="btn btn-success w-100">Host an Event</button>
                                 </li>
                         </ul>
                 )
