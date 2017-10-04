@@ -23,10 +23,29 @@ class Nav extends Component {
                         document.getElementById("nav").offsetHeight
                 )
         }
+        componentDidUpdate = () => {
+                var h = document.getElementById("nav").offsetHeight
+                if ( this.props.state.navHeight !== h ) {
+                        this.props.state.setNavHeight(h)
+                }
+        }
+        teamNav = () => {
+                if ( this.props.state.vars.main !== "team" ) {
+                        return (<div/>)
+                }
+                return (
+                        <ul className="nav nav-pills nav-fill">
+                                <li className="nav-item px-1 my-1">
+                                        <button className="btn btn-success w-100">Host an Event</button>
+                                </li>
+                        </ul>
+                )
+        }
         render() {
                 var current = this.props.state.vars.main || false
                 return (
                         <div id="nav" className="container container-fluid fixed-bottom px-1 py-2">
+                                {this.teamNav()}
                                 <ul className="nav nav-pills nav-fill">
                                         <NavLink text="Team" active={"team" === current} nav={this.nav("team")}/>
                                         <NavLink text="Roster" active={"roster" === current} nav={this.nav("roster")}/>
