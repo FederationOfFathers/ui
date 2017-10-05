@@ -64,9 +64,10 @@ class Nav extends Component {
                                 {this.teamNav()}
                                 <ul className="nav nav-pills nav-fill">
                                         <NavLink text="Team" active={"team" === current} nav={this.nav("team")}/>
-                                        <NavLink text="Roster" active={"roster" === current} nav={this.nav("roster")}/>
+                                        { /* <NavLink text="Roster" active={"roster" === current} nav={this.nav("roster")}/> */ }
                                         <NavLink text="Channels" active={"channels" === current} nav={this.nav("channels")}/>
                                         { /* <NavLink text="Members" active={"members" === current} nav={this.nav("members")}/> */ }
+                                        <NavLink text="Members" active={"members" === current} nav={this.nav("members")}/>
                                 </ul>
                         </div>
                 );
