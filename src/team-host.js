@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import InputMoment from 'input-moment';
 import './input-moment.css'
-
 class Host extends Component {
 	componentWillMount = () => {
 		var initialMoment = moment()
@@ -20,6 +19,7 @@ class Host extends Component {
 			m: initialMoment,
 			now: moment(initialMoment),
 			max: moment().add(maxDays, 'days'),
+			tz: moment.tz.zone(moment.tz.guess()).abbr(moment()),
 		})
 	}
 	changeChannel = ( e ) => {
@@ -27,6 +27,9 @@ class Host extends Component {
 	}
 	changeTitle = ( e ) => {
 		this.setState({title: e.target.value})
+	}
+	momentString = () => {
+		return this.state.m.format('MM/DD hh:mma') + ' ' + this.state.tz
 	}
 	changeMoment = ( m ) => {
 		this.setState({m: m})
@@ -55,7 +58,7 @@ class Host extends Component {
 		} else if ( this.state.m.isAfter( this.state.max ) ) {
 			rval.Moment = (<div className="mx-4 alert alert-danger">Be <strong>before</strong> {this.state.max.format('llll')}</div>)
 		} else {
-			rval.MomentGood = (<div className="mx-4 alert alert-success">Event Time: {this.state.m.format('llll')}</div>)
+			rval.MomentGood = (<div className="mx-4 alert alert-success">Event Time: [{this.momentString()}]</div>)
 		}
 		return rval
 	}
