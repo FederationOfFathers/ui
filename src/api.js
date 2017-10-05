@@ -58,6 +58,14 @@ class Api extends State {
 	}
 	raidClose = () => {
 	}
+	users = () => {
+		return this.fetch("xhr/users/v1/users.json")
+			.then(function(response) {
+				return response.json()
+			}).then(function(json) {
+				this.setState({users: json})
+			}.bind(this))
+	}
 	channels = () => {
 		return this.fetch("channels")
 			.then(function(response) {
@@ -135,6 +143,7 @@ class Api extends State {
 				this.channels()
 					.then(this.groups())
 					.then(this.raidbotAuth())
+					.then(this.users())
 					.then(this.save())
 			}.bind(this))
 			.catch(function(ex) {
