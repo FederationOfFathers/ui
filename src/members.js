@@ -80,7 +80,7 @@ class Members extends Component {
 			return 0;
 		})
 		for ( var i in rval ) {
-			rval[i] = ( <span key={chan.name} className="w-50 my-1 badge badge-light">{rval[i]}</span> )
+			rval[i] = ( <span key={i} className="w-50 my-1 badge badge-light">{rval[i]}</span> )
 		}
 		return rval
 	}
