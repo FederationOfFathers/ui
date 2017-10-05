@@ -6,6 +6,7 @@
     "hash-handler": "^2.0.1",
     "input-moment": "^0.3.6",
     "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "promise-polyfill": "6.0.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
