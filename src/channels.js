@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 
 class JoinPart extends Component {
-	callback = () => { this.props.callback(this.props.id, this.props.type) }
+	callback = () => {
+		if ( typeof this.props.callback === "undefined" ) {
+			return
+		}
+		this.props.callback(this.props.id, this.props.type)
+	}
 	text = () => {
 		if ( this.props.kind === "join" ) {
 			return this.props.kind
+		}
+		if ( this.props.kind === "noop" ) {
+			return "\x00\xA0"
 		}
 		return "leave"
 	}
@@ -12,7 +20,9 @@ class JoinPart extends Component {
 		var classes = "mx-1 py-1 badge float-right"
 		if ( this.props.kind === "join" ) {
 			classes = classes + " badge-primary"
-		} else {
+		} else if ( this.props.kind === "noop" ) {
+			classes = classes + " badge-light"
+		}else {
 			classes = classes + " badge-secondary"
 		}
 		return(
@@ -89,11 +99,6 @@ class Channels extends Component {
 			var classes = "list-group-item"
 			var button = []
 
-			button.push((<Visibility key="visi" state={this.props.state} data={list[i]} visible={list[i].raw.visible}/>))
-			// TODO:
-			// members: request visibility change
-			// admins: change visibility
-
 			if ( list[i].member === true ) {
 				button.push(<JoinPart kind="part" key="part" type={list[i].is} id={list[i].raw.id}
 					callback={this.props.state.api.slack.part}/>)
@@ -102,6 +107,8 @@ class Channels extends Component {
 				if ( list[i].raw.visible === "true" ) {
 					button.push(<JoinPart kind="join" key="join" type={list[i].is} id={list[i].raw.id}
 						callback={this.props.state.api.slack.join}/>)
+				} else if ( this.props.state.admin === true ) {
+					button.push(<JoinPart kind="noop" key="join" type={list[i].is} id={list[i].raw.id}/>)
 				}
 				classes = classes + " list-group-item-secondary"
 			}
@@ -110,6 +117,8 @@ class Channels extends Component {
 			if ( list[i].is === "channel" ) {
 				prefix = "#"
 			}
+
+			button.push((<Visibility key="visi" state={this.props.state} data={list[i]} visible={list[i].raw.visible}/>))
 			if ( list[i].is !== "channel" && this.props.state.vars.chan === list[i].raw.name ) {
 				var nv = "public"
 				if ( list[i].raw.visible === "true" ) {
@@ -129,6 +138,7 @@ class Channels extends Component {
 					))
 				}
 			}
+
 			elements.push((
 				<li key={list[i].raw.name} className={classes}>{prefix}{list[i].raw.name} {button}</li>
 			))
