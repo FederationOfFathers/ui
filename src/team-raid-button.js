@@ -18,7 +18,7 @@ class RaidButton extends Component {
 		if ( typeof this.props.data.alts !== "undefined" && this.props.data.alts !== null ) {
 			alts = this.props.data.alts
 		}
-		var buttonClass = "my-1 btn w-100"
+		var buttonClass = "my-1 btn btn-primary w-100"
 		var close = null
 		if ( this.props.state.vars.raid === this.props.data.uuid ) {
 			buttonClass = buttonClass + " btn-primary"

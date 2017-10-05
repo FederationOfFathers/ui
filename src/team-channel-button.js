@@ -9,7 +9,7 @@ class ChannelButton extends Component {
 		}
 	}
 	render = () => {
-		var btnClass = "btn w-100 my-1"
+		var btnClass = "btn w-100 my-1 btn-primary"
 		var close = null
 		if ( this.props.state.vars.chan === this.props.name ) {
 			btnClass = btnClass + " btn-primary"
