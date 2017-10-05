@@ -92,6 +92,14 @@ class Nav extends Component {
 					</li>
 				</ul>
 			)
+		} else if ( typeof this.props.state.vars.raid !== 'undefined' && this.props.state.vars.raid !== null ) {
+			return (
+				<ul className="nav nav-pills nav-fill">
+					<li className="nav-item px-1 my-1">
+						<button onClick={f} className="btn btn-primary w-100">Join This Event</button>
+					</li>
+				</ul>
+			)
 		}
 		return (
 			<ul className="nav nav-pills nav-fill">
