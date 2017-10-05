@@ -12,7 +12,7 @@ class Raid extends Component {
 				id={this.props.data.members[i]}
 				onClick={this.memberClick}
 				style={{cursor: 'pointer'}}
-				className="list-group-item">{this.props.data.members[i]}</li>)
+				className="list-group-item list-group-item-primary">{this.props.data.members[i]}</li>)
 		}
 		return rval
 	}
