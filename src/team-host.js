@@ -59,24 +59,32 @@ class Host extends Component {
 		}
 		return rval
 	}
-	render = () => {
-		var err = this.errors()
+	renderChanSelect = () => {
 		var channels = [
 			(<option key="none" value="">Select A Channel</option>)
 		]
 		for ( var cID in this.props.state.channels ) {
 			channels.push(<option key={cID}>{this.props.state.channels[cID].name}</option>)
 		}
-		return (
+		return(
 			<div className="form-group">
 				<form>
 					<div className="my-2 mx-4">
-						{err.Chan || err.Title }
 						<select onChange={this.changeChannel} className="form-control" id="echan">
 							{channels}
 						</select>
 					</div>
-
+				</form>
+			</div>
+		)
+	}
+	renderTitleInput = () => {
+		if ( this.state.channel === "" ) {
+			return null
+		}
+		return(
+			<div className="form-group">
+				<form>
 					<div className="my-2 mx-4">
 						<input
 							value={this.state.title}
@@ -86,17 +94,40 @@ class Host extends Component {
 							placeholder="Example Event Name"/>
 					</div>
 				</form>
-				<div className="my-2">
-					{ err.MomentGood || err.Moment }
-					<div style={{textAlign: "center"}}>
-						<InputMoment
-							moment={this.state.m}
-							onChange={this.changeMoment}
-							onSave={this.save}
-							minStep={5}
-						/>
+			</div>
+		)
+	}
+
+	renderMomentSelect = () => {
+		if ( this.state.title.length < 5 ) {
+			return null
+		}
+		var err = this.errors()
+		return(
+			<div className="form-group">
+				<form>
+					<div className="my-2">
+						{ err.MomentGood || err.Moment }
+						<div style={{textAlign: "center"}}>
+							<InputMoment
+								moment={this.state.m}
+								onChange={this.changeMoment}
+								onSave={this.save}
+								minStep={5}
+							/>
+						</div>
 					</div>
-				</div>
+				</form>
+			</div>
+		)
+	}
+
+	render = () => {
+		return (
+			<div>
+				{this.renderChanSelect()}
+				{this.renderTitleInput()}
+				{this.renderMomentSelect()}
 			</div>
 		)
 	}
