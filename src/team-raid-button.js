@@ -24,7 +24,7 @@ class RaidButton extends Component {
 			buttonClass = buttonClass + " btn-primary"
 			close = (
 				<span className="float-right close" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</span>
 			)
 		} else {

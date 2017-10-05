@@ -28,12 +28,12 @@ class LoggedIn extends Component {
 				<div className="px-3 py-3"
 					style={{
 						position: "absolute",
-							top: 0,
-							left: 0,
-							height: this.props.state.windowHeight - this.props.state.navHeight,
-							width: "100%",
-							marginBottom: this.props.state.navHeight,
-							overflow: "auto",
+						top: 0,
+						left: 0,
+						height: this.props.state.windowHeight - this.props.state.navHeight,
+						width: "100%",
+						marginBottom: this.props.state.navHeight,
+						overflow: "auto",
 					}}>
 					{this.renderSection()}
 				</div>

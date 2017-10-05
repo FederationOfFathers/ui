@@ -15,7 +15,7 @@ class Roster extends Component {
 						width: this.props.state.windowWidth,
 						height: this.props.state.windowHeight - this.props.state.navHeight,
 					}}
-					/>
+				/>
 			</div>
 		);
 	}

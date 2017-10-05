@@ -96,7 +96,7 @@ class Host extends Component {
 							onChange={this.changeMoment}
 							onSave={this.save}
 							minStep={5}
-							/>
+						/>
 					</div>
 				</div>
 			</div>
@@ -148,16 +148,16 @@ class Team extends Component {
 		}
 		return (
 			<div className="team container container-fluid">
-			<div className="row">
-			<div className="col">
-			<div className="btn-group-vertical w-100">{this.channelButtons()}</div>
-			</div>
-			</div>
-			<div className="row">
-			<div className="col">
-			{this.channel()}
-			</div>
-			</div>
+				<div className="row">
+					<div className="col">
+						<div className="btn-group-vertical w-100">{this.channelButtons()}</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col">
+						{this.channel()}
+					</div>
+				</div>
 			</div>
 		);
 	}
