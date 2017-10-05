@@ -6,11 +6,11 @@ import registerServiceWorker from './registerServiceWorker';
 
 import Promise from 'promise-polyfill';
 if (!window.Promise) {
-        window.Promise = Promise;
+	window.Promise = Promise;
 }
 
 ReactDOM.render(
-        <App/>,
-        document.getElementById('root')
+	<App/>,
+	document.getElementById('root')
 );
 registerServiceWorker();
