@@ -50,8 +50,8 @@ class Visibility extends Component {
 			if ( this.props.state.vars.chan === this.props.data.raw.name ) {
 				text = (
 					<span>
-						<span style={{fontSize: '0.9em'}} type="button" className="close float-right" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
+						<span style={{fontSize: '0.8em', marginTop: ".25em"}} className="float-right text-dark">
+							▼
 						</span>
 						{text}
 					</span>
@@ -126,14 +126,14 @@ class Channels extends Component {
 				}
 				if ( this.props.state.admin ) {
 					button.push((
-						<div key="admin" style={{textAlign: "left"}}>
-							<button className="btn btn-danger w-75">Make {list[i].is} {nv}</button>
+						<div key="admin" className="my-3" style={{textAlign: "left"}}>
+							<button className="btn btn-danger w-100">Make {list[i].is} {nv}</button>
 						</div>
 					))
 				} else {
 					button.push((
-						<div key="user" style={{textAlign: "left"}}>
-							<button className="btn btn-primary w-75">Request {list[i].is} be made {nv}</button>
+						<div key="user" className="my-3" style={{textAlign: "left"}}>
+							<button className="btn btn-primary w-100">Request {list[i].is} be made {nv}</button>
 						</div>
 					))
 				}
