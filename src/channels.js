@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 
 class JoinPart extends Component {
 	callback = () => { this.props.callback(this.props.id, this.props.type) }
+	text = () => {
+		if ( this.props.kind === "join" ) {
+			return this.props.kind
+		}
+		return "leave"
+	}
 	render = () => {
 		var classes = "mx-1 py-1 badge float-right"
 		if ( this.props.kind === "join" ) {
@@ -10,7 +16,7 @@ class JoinPart extends Component {
 			classes = classes + " badge-secondary"
 		}
 		return(
-			<span className={classes} style={{cursor: "pointer", width: "5em"}} onClick={this.callback}>{this.props.kind}</span>
+			<span className={classes} style={{cursor: "pointer", width: "5em"}} onClick={this.callback}>{this.text()}</span>
 		)
 	}
 }
@@ -33,16 +39,17 @@ class Visibility extends Component {
 		} else {
 			if ( this.props.state.vars.chan === this.props.data.raw.name ) {
 				text = (
-					<span>{text}
-						<span style={{fontSize: '0.9em'}} type="button" className="close" aria-label="Close">
+					<span>
+						<span style={{fontSize: '0.9em'}} type="button" className="close float-right" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</span>
+						{text}
 					</span>
 				)
 			}
 		}
 		return(
-			<span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "6em", cursor: "pointer"}}>{text}</span>
+			<span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "7em", cursor: "pointer"}}>{text}</span>
 		)
 	}
 }
