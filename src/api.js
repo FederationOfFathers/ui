@@ -172,6 +172,7 @@ class Api extends State {
 					this.setState({loggedIn: false})
 					return
 				}
+				//json.admin = false // testing
 				json.didPing = true
 				json.loggedIn = true
 				this.setState(json)

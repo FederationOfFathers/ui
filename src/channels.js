@@ -18,15 +18,17 @@ class JoinPart extends Component {
 	}
 	render = () => {
 		var classes = "mx-1 py-1 badge float-right"
+		var style = {cursor: "pointer", width: "5em"}
 		if ( this.props.kind === "join" ) {
 			classes = classes + " badge-primary"
 		} else if ( this.props.kind === "noop" ) {
 			classes = classes + " badge-light"
+			style.opacity = 0;
 		}else {
 			classes = classes + " badge-secondary"
 		}
 		return(
-			<span className={classes} style={{cursor: "pointer", width: "5em"}} onClick={this.callback}>{this.text()}</span>
+			<span className={classes} style={style} onClick={this.callback}>{this.text()}</span>
 		)
 	}
 }
@@ -45,7 +47,7 @@ class Visibility extends Component {
 			text = "public"
 		}
 		if ( this.props.data.is === "channel" ) {
-			text="channel"
+			return null
 		} else {
 			if ( this.props.state.vars.chan === this.props.data.raw.name ) {
 				text = (
@@ -76,11 +78,15 @@ class Channels extends Component {
 			})
 		}
 		for ( var g in this.props.state.groupList ) {
+			var isMember = (this.props.state.groupList[g].members.indexOf(this.props.state.user.name) >= 0)
+			if ( isMember === false && this.props.state.admin === false ) {
+				continue
+			}
 			list.push({
 				sortname: this.props.state.groupList[g].name.replace(/[^a-zA-Z0-9]/, ""),
 				raw: this.props.state.groupList[g],
 				is: "group",
-				member: (this.props.state.groupList[g].members.indexOf(this.props.state.user.name) >= 0),
+				member: isMember,
 			})
 		}
 		list.sort(function(a,b) {
