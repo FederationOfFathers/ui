@@ -9,6 +9,7 @@ class Api extends State {
 			slack: {
 				join: this.joinSlack,
 				part: this.partSlack,
+				visibility: this.visibilitySlack,
 			},
 			team: {
 				host: this.raidHost,
@@ -26,6 +27,21 @@ class Api extends State {
 	}
 	url = ( part ) => {
 		return "//dashboard.fofgaming.com/api/v0/" + part
+	}
+	putJSON = ( what, payload ) => {
+		if ( what.substring(0, 2) !== "//" ) {
+			what = this.url( what );
+		}
+		return fetch(
+			what,
+			{
+				credentials: "include",
+				method: "PUT",
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(payload)
+			})
 	}
 	fetch = ( what ) => {
 		if ( what.substring(0, 2) !== "//" ) {
@@ -156,7 +172,12 @@ class Api extends State {
 			this.ping()
 			on()
 		}.bind(this), 2500))
-		console.log("part " + id + " " + kind)
+	}
+	visibilitySlack = (id, set) => {
+		return this.putJSON(
+			"groups/"+id+"/visibility",
+			{ visible: set }
+		).then(this.ping)
 	}
 	ping = () => {
 		this.fetch( "ping" )
@@ -172,7 +193,7 @@ class Api extends State {
 					this.setState({loggedIn: false})
 					return
 				}
-				//json.admin = false // testing
+				// json.admin = false // testing
 				json.didPing = true
 				json.loggedIn = true
 				this.setState(json)

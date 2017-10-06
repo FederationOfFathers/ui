@@ -24,7 +24,7 @@ class JoinPart extends Component {
 		} else if ( this.props.kind === "noop" ) {
 			classes = classes + " badge-light"
 			style.opacity = 0;
-		}else {
+		} else {
 			classes = classes + " badge-secondary"
 		}
 		return(
@@ -66,6 +66,52 @@ class Visibility extends Component {
 	}
 }
 
+class ToggleVisibility extends Component {
+	componentWillMount = () => {
+		this.setState({
+			requested: false,
+		})
+	}
+	doToggle = () => {
+		if ( this.props.nv === "public" ) {
+			return this.props.state.api.slack.visibility(this.props.list[this.props.i].raw.id, "true")
+		} else {
+			return this.props.state.api.slack.visibility(this.props.list[this.props.i].raw.id, "false")
+		}
+	}
+	toggleVisibility = () => {
+		this.doToggle()
+			.then(function() {
+				if ( this.props.state.admin ) {
+					return;
+				}
+				this.setState({requested: true})
+			}.bind(this))
+	}
+	render = () => {
+		if ( this.state.requested ) {
+			return (<div className="alert alert-success" role="alert">Request Sent</div>)
+		}
+		if ( this.props.state.admin ) {
+			return (
+				<div key="admin" className="my-3" style={{textAlign: "left"}}>
+					<button onClick={this.toggleVisibility} className="btn btn-danger w-100">
+						Make {this.props.list[this.props.i].is} {this.props.nv}
+					</button>
+				</div>
+			)
+		} else {
+			return(
+				<div key="user" className="my-3" style={{textAlign: "left"}}>
+					<button onClick={this.toggleVisibility} className="btn btn-primary w-100">
+						Request {this.props.list[this.props.i].is} be made {this.props.nv}
+					</button>
+				</div>
+			)
+		}
+	}
+}
+
 class Channels extends Component {
 	merge = () => {
 		var list = [];
@@ -79,7 +125,7 @@ class Channels extends Component {
 		}
 		for ( var g in this.props.state.groupList ) {
 			var isMember = (this.props.state.groupList[g].members.indexOf(this.props.state.user.name) >= 0)
-			if ( isMember === false && this.props.state.admin === false ) {
+			if ( isMember === false && this.props.state.admin === false && this.props.state.groupList[g].visible !== "true" ) {
 				continue
 			}
 			list.push({
@@ -130,19 +176,7 @@ class Channels extends Component {
 				if ( list[i].raw.visible === "true" ) {
 					nv = "private"
 				}
-				if ( this.props.state.admin ) {
-					button.push((
-						<div key="admin" className="my-3" style={{textAlign: "left"}}>
-							<button className="btn btn-danger w-100">Make {list[i].is} {nv}</button>
-						</div>
-					))
-				} else {
-					button.push((
-						<div key="user" className="my-3" style={{textAlign: "left"}}>
-							<button className="btn btn-primary w-100">Request {list[i].is} be made {nv}</button>
-						</div>
-					))
-				}
+				button.push(<ToggleVisibility i={i} list={list} nv={nv} state={this.props.state}/>)
 			}
 
 			elements.push((
