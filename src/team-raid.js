@@ -4,22 +4,30 @@ class RaidMember extends Component {
 	click = () => {
 		this.props.state.hasher.replace({main: "members", member: this.props.id})
 	}
+	new = () => {
+		return {
+		}
+	}
 	render = () => {
+		var leave = null
+		var classes = "btn btn-secondary"
+		if ( this.props.id === this.props.state.user.name ) {
+			classes = classes + " w-75"
+			leave = (<button className="btn-warning btn w-25">Leave</button>)
+		} else {
+			classes = classes + " w-100"
+		}
 		return (
-			<li
-				key={"m-"+this.props.ii}
-				id={this.props.id}
-				onClick={this.click}
-				style={{cursor: 'pointer'}}
-				className="list-group-item list-group-item-primary">{this.props.text}</li>
+			<div className="my-1 w-100 btn-group" role="group">
+				<button key={"m-"+this.props.ii} onClick={this.click} type="button" className={classes}>{this.props.text}</button>
+				{leave}
+			</div>
 		)
 	}
 }
 
 class Raid extends Component {
 	memberClick = ( e ) => {
-		console.log(e.target)
-		return
 		this.props.state.hasher.replace({main: "members", member: e.target.id})
 	}
 	members = () => {
@@ -53,10 +61,12 @@ alts = () => {
 }
 render = () => {
 	return (
-		<ul className="list-group">
+		<div>
 			{this.members()}
-			{this.alts()}
-		</ul>
+			<ul className="list-group">
+				{this.alts()}
+			</ul>
+		</div>
 	)
 }
 }

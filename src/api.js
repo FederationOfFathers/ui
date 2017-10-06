@@ -12,6 +12,8 @@ class Api extends State {
 			},
 			team: {
 				host: this.raidHost,
+				leave: this.raidLeave,
+				join: this.raidJoin,
 			}
 		}})
 		setInterval(function(){
@@ -59,13 +61,17 @@ class Api extends State {
 				this.setState({raids: json})
 			}.bind(this))
 	}
-	raidJoin = () => {
+	raidJoin = ( body ) => {
+		return this.raidpost( 'raid/join', body )
+			.then(function() {
+				this.raidList()
+			}.bind(this))
 	}
-	raidLeave = () => {
-	}
-	raidJoinAlt = () => {
-	}
-	raidLeaveAlt = () => {
+	raidLeave = ( body ) => {
+		return this.raidpost( 'raid/leave', body )
+			.then(function() {
+				this.raidList()
+			}.bind(this))
 	}
 	raidHost = ( body ) => {
 		return this.raidpost( 'raid/host', body )
@@ -73,9 +79,17 @@ class Api extends State {
 				this.raidList()
 			}.bind(this))
 	}
-	raidPing = () => {
+	raidPing = ( body ) => {
+		return this.raidpost( 'raid/ping', body )
+			.then(function() {
+				this.raidList()
+			}.bind(this))
 	}
-	raidClose = () => {
+	raidClose = ( body ) => {
+		return this.raidpost( 'raid/finish', body )
+			.then(function() {
+				this.raidList()
+			}.bind(this))
 	}
 	users = () => {
 		return this.fetch("xhr/users/v1/users.json")

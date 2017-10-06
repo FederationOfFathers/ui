@@ -23,7 +23,7 @@ class RaidButton extends Component {
 		if ( this.props.state.vars.raid === this.props.data.uuid ) {
 			buttonClass = buttonClass + " btn-primary"
 			close = (
-				<span className="float-right text-dark">▼</span>
+				<span className="float-right text-dark">◀</span>
 			)
 		} else {
 			if ( typeof this.props.state.vars.raid !== "undefined" && this.props.state.vars.raid !== null ) {

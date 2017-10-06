@@ -51,7 +51,7 @@ class Visibility extends Component {
 				text = (
 					<span>
 						<span style={{fontSize: '0.8em', marginTop: ".25em"}} className="float-right text-dark">
-							▼
+							◀
 						</span>
 						{text}
 					</span>
