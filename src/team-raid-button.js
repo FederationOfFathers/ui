@@ -19,11 +19,13 @@ class RaidButton extends Component {
 			alts = this.props.data.alts
 		}
 		var buttonClass = "my-1 btn btn-primary w-100"
-		var close = null
+		var close = (
+				<span className="float-right text-dark">▼</span>
+			)
 		if ( this.props.state.vars.raid === this.props.data.uuid ) {
 			buttonClass = buttonClass + " btn-primary"
 			close = (
-				<span className="float-right text-dark">◀</span>
+				<span className="float-right text-dark">▲</span>
 			)
 		} else {
 			if ( typeof this.props.state.vars.raid !== "undefined" && this.props.state.vars.raid !== null ) {

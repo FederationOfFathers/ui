@@ -20,11 +20,13 @@ class ChannelButton extends Component {
 	}
 	render = () => {
 		var btnClass = "btn w-100 my-1 btn-primary"
-		var close = null
+		var close = (
+			<span className="float-right text-dark">▼</span>
+		)
 		if ( this.props.state.vars.chan === this.props.name ) {
 			btnClass = btnClass + " btn-primary"
 			close = (
-				<span className="float-right text-dark">◀</span>
+				<span className="float-right text-dark">▲</span>
 			)
 		} else {
 			if ( this.props.state.vars.chan !== null && typeof this.props.state.vars.chan !== "undefined" ) {

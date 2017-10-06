@@ -42,9 +42,25 @@ class Visibility extends Component {
 		}
 	}
 	render = () => {
-		var text = "hidden"
+		var raw = "hidden"
+		var text = (
+			<span>
+				<span style={{fontSize: '0.8em', marginTop: ".25em"}} className="float-right text-dark">
+					▼
+				</span>
+				hidden
+			</span>
+		)
 		if ( this.props.visible === "true" ) {
-			text = "public"
+			raw = "public"
+			text = (
+				<span>
+					<span style={{fontSize: '0.8em', marginTop: ".25em"}} className="float-right text-dark">
+						▼
+					</span>
+					public
+				</span>
+			)
 		}
 		if ( this.props.data.is === "channel" ) {
 			return null
@@ -53,15 +69,17 @@ class Visibility extends Component {
 				text = (
 					<span>
 						<span style={{fontSize: '0.8em', marginTop: ".25em"}} className="float-right text-dark">
-							◀
+							▲
 						</span>
-						{text}
+						{raw}
 					</span>
 				)
 			}
 		}
 		return(
-			<span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "7em", cursor: "pointer"}}>{text}</span>
+			<span onClick={this.click} className="py-1 float-right badge badge-secondary" style={{width: "7em", cursor: "pointer"}}>
+				{text}
+			</span>
 		)
 	}
 }
