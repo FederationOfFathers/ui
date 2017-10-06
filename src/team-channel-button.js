@@ -8,6 +8,16 @@ class ChannelButton extends Component {
 			this.props.state.hasher.set({chan: null, raid: null})
 		}
 	}
+	chanValidForDisplay = ( name ) => {
+		var c = this.props.state.raids.raids[name]
+		if ( typeof c === "undefined" ) {
+			return false
+		}
+		if ( Object.keys(c).length < 1 ) {
+			return false
+		}
+		return true
+	}
 	render = () => {
 		var btnClass = "btn w-100 my-1 btn-primary"
 		var close = null
@@ -18,7 +28,9 @@ class ChannelButton extends Component {
 			)
 		} else {
 			if ( this.props.state.vars.chan !== null && typeof this.props.state.vars.chan !== "undefined" ) {
-				return null
+				if ( this.chanValidForDisplay(this.props.state.vars.chan) ) {
+					return null
+				}
 			}
 		}
 		return (

@@ -32,6 +32,10 @@ class TeamNav extends Component {
 			return this.viewingSubNav()
 		}
 		var raid = this.props.state.raids.raids[this.props.state.vars.chan][this.props.state.vars.raid]
+		if ( typeof raid === "undefined" ) {
+			// raid no longer exists...
+			return this.canHostFromHere()
+		}
 		var inRaid = raid.members.indexOf(this.props.state.user.name)
 		var rval = []
 		switch( inRaid ) {
