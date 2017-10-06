@@ -35,7 +35,19 @@ class Host extends Component {
 		this.setState({m: m})
 	}
 	save = () => {
-		console.log(this.state)
+		var err = this.errors()
+		if ( err.Moment !== false ) {
+			return
+		}
+		var body = new URLSearchParams()
+		body.set('channel', this.state.channel)
+		body.set('raidName', this.state.title)
+		body.set('time', this.state.m.format('x'))
+		body.set('raid', '[' + this.momentString() + '] ' + this.state.title)
+		this.props.state.api.team.host(body)
+			.then(function() {
+				this.props.state.hasher.set({raid: null})
+			}.bind(this))
 	}
 	stateComponentWillMount = () => {
 		this.change( moment() )

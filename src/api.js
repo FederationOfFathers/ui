@@ -10,6 +10,9 @@ class Api extends State {
 				join: this.joinSlack,
 				part: this.partSlack,
 			},
+			team: {
+				host: this.raidHost,
+			}
 		}})
 		setInterval(function(){
 			this.ping()
@@ -36,8 +39,20 @@ class Api extends State {
 			}
 		)
 	}
+	raidpost = ( what, body ) => {
+		return fetch(
+			"//team.fofgaming.com/rest/" + what,
+			{
+				body: body,
+				method: 'POST',
+				headers: {
+					'Authorization': this.state.raidbotToken,
+				},
+			}
+		)
+	}
 	raidList = () => {
-		this.raidfetch("get")
+		return this.raidfetch("get")
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {
@@ -52,7 +67,11 @@ class Api extends State {
 	}
 	raidLeaveAlt = () => {
 	}
-	raidHost = () => {
+	raidHost = ( body ) => {
+		return this.raidpost( 'raid/host', body )
+			.then(function() {
+				this.raidList()
+			}.bind(this))
 	}
 	raidPing = () => {
 	}
