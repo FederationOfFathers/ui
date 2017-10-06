@@ -34,7 +34,7 @@ class RaidButton extends Component {
 		}
 		var date = new Date(Date.parse(this.props.data.raid_time))
 		return (
-			<button className={buttonClass} style={{overflow: "hidden"}} onClick={this.click}>{close}
+			<button className={buttonClass} style={{overflow: "hidden", textOverflow: 'ellipsis'}} onClick={this.click}>{close}
 				{this.shortName()}
 				<br/>
 				<span className="mx-1 my-1 badge badge-dark">{date.toLocaleString('en-US')}</span>
