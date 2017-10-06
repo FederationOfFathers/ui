@@ -13,24 +13,73 @@ class RaidMember extends Component {
 				this.props.state.hasher.set({raid: null, chan: null})
 			}.bind(this))
 	}
+	ping = (e) => {
+		var raid = this.props.state.raids.raids[this.props.state.vars.chan][this.props.state.vars.raid]
+		var body = new URLSearchParams()
+		body.set('channel', this.props.state.vars.chan)
+		body.set('raid', raid.name)
+		this.props.state.api.team.ping(body)
+	}
+	close = () => {
+		var raid = this.props.state.raids.raids[this.props.state.vars.chan][this.props.state.vars.raid]
+		var body = new URLSearchParams()
+		body.set('channel', this.props.state.vars.chan)
+		body.set('raid', raid.name)
+		console.log(body)
+		this.props.state.api.team.close(body)
+			.then(function() {
+				this.props.state.hasher.set({raid: null, chan: null})
+			}.bind(this))
+	}
 	new = () => {
 		return {
 		}
 	}
 	render = () => {
-		var leave = null
+		var actions = []
 		var classes = "btn btn-secondary"
 		if ( this.props.id === this.props.state.user.name ) {
-			classes = classes + " w-75"
-			leave = (<button onClick={this.leave} className="btn-warning btn w-25">Leave</button>)
+			classes = classes + " w-100"
+			actions.push((
+				<button
+					key="dd"
+					id="btnGroupDrop1"
+					type="button"
+					className="btn btn-secondary dropdown-toggle"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false">☰
+				</button>
+
+			))
+			if ( this.props.data.members[0] === this.props.id ) {
+				actions.push((
+					<div className="dropdown-menu p-0 border-0 w-100" key="om">
+						<div className="btn-group-vertical w-100 m-0 m-0 border-1">
+							<button onClick={this.leave} className="btn btn-outline-primary">Leave Event</button>
+							<button onClick={this.ping}  className="btn btn-outline-primary">Ping Members</button>
+							<button onClick={this.close} className="btn btn-outline-primary">Close Event</button>
+						</div>
+					</div>
+				))
+			} else {
+				actions.push((
+					<div className="dropdown-menu p-0 border-0 w-100" key="om">
+						<div className="btn-group-vertical w-100 m-0 m-0 border-1">
+							<button onClick={this.leave} className="btn btn-outline-primary">Leave Event</button>
+						</div>
+					</div>
+				))
+			}
 		} else {
 			classes = classes + " w-75"
-			leave = (<button className="btn btn-secondary w-25" type="button" onClick={this.click}>&nbsp;</button>)
+			actions = (
+				<button className="btn btn-secondary w-25" type="button" onClick={this.click}>&nbsp;</button>)
 		}
 		return (
 			<div className="my-1 w-100 btn-group" role="group">
 				<button key={"m-"+this.props.ii} onClick={this.click} type="button" className={classes}>{this.props.text}</button>
-				{leave}
+				{actions}
 			</div>
 		)
 	}
@@ -54,32 +103,32 @@ class Raid extends Component {
 					state={this.props.state}
 					text={text}/>
 			)
-	}
-	return rval
-}
-alts = () => {
-	var rval = []
-	if ( this.props.data.alts !== null ) {
-		for ( var i in this.props.data.alts ) {
-			rval.push(
-				<li key={"a-"+i} className="list-group-item disabled">
-					{this.props.data.alts[i]}
-				</li>
-			)
 		}
+		return rval
 	}
-	return rval
-}
-render = () => {
-	return (
-		<div>
-			{this.members()}
-			<ul className="list-group">
-				{this.alts()}
-			</ul>
-		</div>
-	)
-}
+	alts = () => {
+		var rval = []
+		if ( this.props.data.alts !== null ) {
+			for ( var i in this.props.data.alts ) {
+				rval.push(
+					<li key={"a-"+i} className="list-group-item disabled">
+						{this.props.data.alts[i]}
+					</li>
+				)
+			}
+		}
+		return rval
+	}
+	render = () => {
+		return (
+			<div>
+				{this.members()}
+				<ul className="list-group">
+					{this.alts()}
+				</ul>
+			</div>
+		)
+	}
 }
 
 export default Raid
