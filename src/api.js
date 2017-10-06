@@ -14,6 +14,8 @@ class Api extends State {
 				host: this.raidHost,
 				leave: this.raidLeave,
 				join: this.raidJoin,
+				ping: this.raidPing,
+				close: this.raidClose,
 			}
 		}})
 		setInterval(function(){

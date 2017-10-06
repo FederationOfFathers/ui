@@ -20,11 +20,30 @@ class TeamNav extends Component {
 			this.props.state.hasher.set({raid: null})
 		}
 	}
-	leaveClick = () => {
+	joinClick = () => {
+		var raid = this.props.state.raids.raids[this.props.state.vars.chan][this.props.state.vars.raid]
+		var body = new URLSearchParams()
+		body.set('channel', this.props.state.vars.chan)
+		body.set('raid', raid.name)
+		this.props.state.api.team.join(body)
 	}
 	pingClick = () => {
+		var raid = this.props.state.raids.raids[this.props.state.vars.chan][this.props.state.vars.raid]
+		var body = new URLSearchParams()
+		body.set('channel', this.props.state.vars.chan)
+		body.set('raid', raid.name)
+		this.props.state.api.team.ping(body)
 	}
-	finishClick = () => {
+	closeClick = () => {
+		var raid = this.props.state.raids.raids[this.props.state.vars.chan][this.props.state.vars.raid]
+		var body = new URLSearchParams()
+		body.set('channel', this.props.state.vars.chan)
+		body.set('raid', raid.name)
+		console.log(body)
+		this.props.state.api.team.close(body)
+			.then(function() {
+				this.props.state.hasher.set({raid: null, chan: null})
+			}.bind(this))
 	}
 	ownerClick = () => {
 	}
@@ -35,29 +54,29 @@ class TeamNav extends Component {
 		if ( inRaid === 0 ) {
 			rval.push((
 				<li key="join" className="nav-item px-1 my-1">
-					<button onClick={this.subNavClick} type="button" className="btn btn-primary w-100">
+					<button onClick={this.joinClick} type="button" className="btn btn-primary w-100">
 						Hold Another Spot
 					</button>
 				</li>
 			))
 			rval.push((
 				<li key="ping" className="nav-item px-1 my-1">
-					<button onClick={this.subNavClick} type="button" className="btn btn-primary w-100">
+					<button onClick={this.pingClick} type="button" className="btn btn-primary w-100">
 						Ping
 					</button>
 				</li>
 			))
 			rval.push((
 				<li key="finish" className="nav-item px-1 my-1">
-					<button onClick={this.subNavClick} type="button" className="btn btn-primary w-100">
-						Finish
+					<button onClick={this.closeClick} type="button" className="btn btn-primary w-100">
+						Close
 					</button>
 				</li>
 			))
 		} else if ( inRaid > 0 ) {
 			rval.push((
 				<li key="join" className="nav-item px-1 my-1">
-					<button onClick={this.subNavClick} type="button" className="btn btn-primary w-100">
+					<button onClick={this.joinClick} type="button" className="btn btn-primary w-100">
 						Hold Another Spot
 					</button>
 				</li>
@@ -95,14 +114,14 @@ class TeamNav extends Component {
 			case -1:
 				rval.push((
 					<li key="user" className="nav-item px-1 my-1">
-						<button onClick={this.click} type="button" className="btn btn-primary w-100">Join This Event</button>
+						<button onClick={this.joinClick} type="button" className="btn btn-primary w-100">Join This Event</button>
 					</li>
 				))
 				break;
 			default:
 				rval.push((
 					<li className="nav-item px-1 my-1">
-						<button className="btn btn-primary w-100">Hold Another Spot</button>
+						<button onClick={this.joinClick} className="btn btn-primary w-100">Hold Another Spot</button>
 					</li>
 				));
 				break;

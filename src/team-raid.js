@@ -10,7 +10,7 @@ class RaidMember extends Component {
 		body.set('raid', this.props.data.name)
 		this.props.state.api.team.leave(body)
 			.then(function() {
-				this.props.state.hasher.set({raid: false, chan: false})
+				this.props.state.hasher.set({raid: null, chan: null})
 			}.bind(this))
 	}
 	new = () => {
