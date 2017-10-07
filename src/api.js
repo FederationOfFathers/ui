@@ -147,24 +147,18 @@ class Api extends State {
 	joinSlack = (id, kind) => {
 		console.log("join " + id + " " + kind)
 		var op = null
-		var on = null
 		if ( kind === "channel" ) {
-			on = this.channels
 			op = this.fetch("channels/"+id+"/join")
 		} else {
-			on = this.groups
 			op = this.fetch("groups/"+id+"/join")
 		}
 		op.then(this.ping)
 	}
 	partSlack = (id, kind) => {
 		var op = null
-		var on = null
 		if ( kind === "channel" ) {
-			on = this.channels
 			op = this.fetch("channels/"+id+"/leave")
 		} else {
-			on = this.groups
 			op = this.fetch("groups/"+id+"/leave")
 		}
 		op.then(this.ping)
