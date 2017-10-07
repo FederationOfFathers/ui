@@ -9,7 +9,7 @@ class App extends Api {
 		this.apiComponentWillMount()
 	}
 	render = () => {
-		if ( false === this.state.loggedIn || false === this.state.didPing ) {
+		if ( false === this.state.loggedIn ) {
 			return (
 				<div className="app noauth">
 					<h1>Please log in.</h1>

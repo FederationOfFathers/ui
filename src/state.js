@@ -14,6 +14,11 @@ class State extends Component {
 	}
 	stateComponentWillMount = () => {
 		this.setState({
+			lastRaidFetch: null,
+			lastPingFetch: null,
+			lastChannelsFetch: null,
+			lastGroupsFetch: null,
+			lastUsersFetch: null,
 			raidbotToken: false,
 			raids: {},
 			raidHost: {
@@ -59,6 +64,7 @@ class State extends Component {
 		localStorage.setItem("fofstate", JSON.stringify(this.state));
 	}
 	load = () => {
+		// return // testing
 		var value = JSON.parse(localStorage.getItem("fofstate"));
 		if ( "object" !== typeof value ) {
 			return
