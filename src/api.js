@@ -155,10 +155,7 @@ class Api extends State {
 			on = this.groups
 			op = this.fetch("groups/"+id+"/join")
 		}
-		op.then(setTimeout(function() {
-			this.ping()
-			on()
-		}.bind(this), 2500))
+		op.then(this.ping)
 	}
 	partSlack = (id, kind) => {
 		var op = null
@@ -170,10 +167,7 @@ class Api extends State {
 			on = this.groups
 			op = this.fetch("groups/"+id+"/leave")
 		}
-		op.then(setTimeout(function() {
-			this.ping()
-			on()
-		}.bind(this), 2500))
+		op.then(this.ping)
 	}
 	visibilitySlack = (id, set) => {
 		return this.putJSON(
