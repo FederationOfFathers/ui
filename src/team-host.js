@@ -168,7 +168,7 @@ class Host extends Component {
 				<div className="form-group">
 					<form>
 						<div className="my-2 mx-4 text-center">
-							<button type="button" onClick={this.incrNeed} className="btn btn-primary w-100">Specify how many you need</button>
+							<input type="text" onClick={this.incrNeed} value="" className="form-control w-100" placeholder="How many players do you need?"/>
 						</div>
 					</form>
 				</div>
