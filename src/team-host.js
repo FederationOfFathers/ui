@@ -168,7 +168,7 @@ class Host extends Component {
 				<div className="form-group">
 					<form>
 						<div className="my-2 mx-4 text-center">
-							Specify how many you need {this.incrNeedBtn()}
+							<button type="button" onClick={this.incrNeed} className="btn btn-primary w-100">Specify how many you need</button>
 						</div>
 					</form>
 				</div>
@@ -177,7 +177,7 @@ class Host extends Component {
 		return(
 			<div className="form-group">
 				<form>
-					<div className="my-2 mx-4 text-center">
+					<div className="my-2 mx-4 text-center border">
 						looking for {this.decrNeedBtn()} {this.state.need} {this.incrNeedBtn()} more
 					</div>
 				</form>
