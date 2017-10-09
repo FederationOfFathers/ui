@@ -37,7 +37,13 @@ class RaidMember extends Component {
 	}
 	render = () => {
 		var actions = []
-		var classes = "btn btn-secondary"
+		var colorClass = "btn-secondary"
+		if ( this.props.i === "0" ) {
+			colorClass = "btn-dark"
+		} else if ( this.props.i >= this.props.data.need ) {
+			colorClass = "btn-link"
+		}
+		var classes = "btn " + colorClass
 		if ( this.props.id === this.props.state.user.name ) {
 			classes = classes + " w-100"
 			actions.push((
@@ -45,7 +51,7 @@ class RaidMember extends Component {
 					key="dd"
 					id="btnGroupDrop1"
 					type="button"
-					className="btn btn-secondary dropdown-toggle"
+					className={"btn " + colorClass + " dropdown-toggle"}
 					data-toggle="dropdown"
 					aria-haspopup="true"
 					aria-expanded="false">☰
@@ -74,7 +80,7 @@ class RaidMember extends Component {
 		} else {
 			classes = classes + " w-75"
 			actions = (
-				<button className="btn btn-secondary w-25" type="button" onClick={this.click}>&nbsp;</button>)
+				<button className={colorClass + " btn w-25"} type="button" onClick={this.click}>&nbsp;</button>)
 		}
 		return (
 			<div className="my-1 w-100 btn-group" role="group">
@@ -89,33 +95,31 @@ class Raid extends Component {
 	memberClick = ( e ) => {
 		this.props.state.hasher.replace({main: "members", member: e.target.id})
 	}
-	members = () => {
+	combined = () => {
 		var rval = []
 		for ( var i in this.props.data.members ) {
-			var text = (<div className="py-2">{this.props.data.members[i]}</div>)
-			if ( i === "0" ) {
-				text = (<div className="py-2"><strong>{this.props.data.members[i]}</strong></div>)
+			rval.push(this.props.data.members[i])
+		}
+		if ( this.props.data.alts !== null ) {
+			for ( var ai in this.props.data.alts ) {
+				rval.push(this.props.data.alts[ai])
 			}
-			rval.push(
-				<RaidMember key={"m-"+i}
-					data={this.props.data}
-					id={this.props.data.members[i]}
-					state={this.props.state}
-					text={text}/>
-			)
 		}
 		return rval
 	}
-	alts = () => {
+	members = () => {
 		var rval = []
-		if ( this.props.data.alts !== null ) {
-			for ( var i in this.props.data.alts ) {
-				rval.push(
-					<li key={"a-"+i} className="list-group-item disabled">
-						{this.props.data.alts[i]}
-					</li>
-				)
-			}
+		var list = this.combined()
+		for ( var i in list ) {
+			var member = list[i]
+			rval.push(
+				<RaidMember key={"m-"+i}
+					data={this.props.data}
+					i={i}
+					id={member}
+					state={this.props.state}
+					text={member}/>
+			)
 		}
 		return rval
 	}
@@ -123,9 +127,6 @@ class Raid extends Component {
 		return (
 			<div>
 				{this.members()}
-				<ul className="list-group">
-					{this.alts()}
-				</ul>
 			</div>
 		)
 	}
