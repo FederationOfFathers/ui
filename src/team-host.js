@@ -20,6 +20,7 @@ class Host extends Component {
 			now: moment(initialMoment),
 			max: moment().add(maxDays, 'days'),
 			tz: moment.tz.zone(moment.tz.guess()).abbr(moment()),
+			need: 0,
 		})
 	}
 	changeChannel = ( e ) => {
@@ -44,6 +45,11 @@ class Host extends Component {
 		body.set('raidName', this.state.title)
 		body.set('time', this.state.m.format('x'))
 		body.set('raid', '[' + this.momentString() + '] ' + this.state.title)
+		if ( this.state.need > 0 ) {
+			// we ask how many MORE members... but we want to record how many
+			// total that we need... so add an additional slot for the host
+			body.set('need', (this.state.need + 1))
+		}
 		this.props.state.api.team.host(body)
 			.then(function() {
 				this.props.state.hasher.set({raid: null})
@@ -137,11 +143,54 @@ class Host extends Component {
 		)
 	}
 
+	decrNeed = () => {
+		this.setState({need: this.state.need - 1})
+	}
+
+	decrNeedBtn = () => {
+		return (<button type="button" className="btn btn-link border-1" onClick={this.decrNeed}>-</button>)
+	}
+
+	incrNeed = () => {
+		this.setState({need: this.state.need + 1})
+	}
+
+	incrNeedBtn = () => {
+		return (<button type="button" className="btn btn-link border-1" onClick={this.incrNeed}>+</button>)
+	}
+
+	renderNeedInput = () => {
+		if ( this.state.title.length < 5 ) {
+			return
+		}
+		if ( this.state.need < 1 ) {
+			return (
+				<div className="form-group">
+					<form>
+						<div className="my-2 mx-4 text-center">
+							Specify how many you need {this.incrNeedBtn()}
+						</div>
+					</form>
+				</div>
+			)
+		}
+		return(
+			<div className="form-group">
+				<form>
+					<div className="my-2 mx-4 text-center">
+						looking for {this.decrNeedBtn()} {this.state.need} {this.incrNeedBtn()} more
+					</div>
+				</form>
+			</div>
+		)
+	}
+
 	render = () => {
 		return (
 			<div>
 				{this.renderChanSelect()}
 				{this.renderTitleInput()}
+				{this.renderNeedInput()}
 				{this.renderMomentSelect()}
 			</div>
 		)

@@ -33,14 +33,25 @@ class RaidButton extends Component {
 			}
 		}
 		var date = new Date(Date.parse(this.props.data.raid_time))
+		var memberBadge = []
+		memberBadge.push((
+			<span className="mx-1 my-1 badge badge-secondary">{this.props.data.members.length + alts.length} member
+				{(this.props.data.members.length + alts.length) === 1 ? "" : "s" }
+			</span>
+		))
+		if ( this.props.data.need > 0 ) {
+			memberBadge.push((
+				<span className="mx-1 my-1 badge badge-warning">
+					need {this.props.data.need - (this.props.data.members.length + alts.length)}
+				</span>
+			))
+		}
 		return (
 			<button className={buttonClass} style={{overflow: "hidden", textOverflow: 'ellipsis'}} onClick={this.click}>{close}
 				{this.shortName()}
 				<br/>
 				<span className="mx-1 my-1 badge badge-dark">{date.toLocaleString('en-US')}</span>
-				<span className="mx-1 my-1 badge badge-secondary">{this.props.data.members.length + alts.length} member
-					{(this.props.data.members.length + alts.length) === 1 ? "" : "s" }
-				</span>
+				{memberBadge}
 			</button>
 		)
 	}
