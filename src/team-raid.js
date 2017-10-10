@@ -40,7 +40,7 @@ class RaidMember extends Component {
 		var colorClass = "btn-secondary"
 		if ( this.props.i === "0" ) {
 			colorClass = "btn-dark"
-		} else if ( this.props.data.need != "0" && this.props.i >= this.props.data.need ) {
+		} else if ( this.props.data.need !== "0" && this.props.i >= this.props.data.need ) {
 			colorClass = "btn-link"
 		}
 		var classes = "btn " + colorClass
