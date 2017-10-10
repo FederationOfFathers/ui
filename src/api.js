@@ -191,10 +191,14 @@ class Api extends State {
 						json.loggedIn = true
 						this.setState(json)
 						this.setState({lastPingFetch: new Date().getTime()})
-						this.raidList()
-							.then(this.users)
-							.then(this.groups)
-							.then(this.channels)
+						Promise.all(
+							[
+								this.raidList(),
+								this.users(),
+								this.groups(),
+								this.channels(),
+							]
+						)
 							.then(this.save)
 					}.bind(this))
 					.catch(function(ex) {
