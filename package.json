@@ -13,6 +13,7 @@
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.13",
     "redux": "^3.7.2",
+    "url-search-params-polyfill": "^2.0.1",
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
