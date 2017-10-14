@@ -35,6 +35,9 @@ class State extends Component {
 			navHeight: 0,
 			setNavHeight: this.setNavHeight,
 			callbacks: this.callbacks(),
+			meta: {
+				users: {},
+			}
 		})
 		this.callbacks();
 		hash.registerListener(this.hashChange);
@@ -61,26 +64,38 @@ class State extends Component {
 		})
 	}
 	save = () => {
-		localStorage.setItem("fofstate", JSON.stringify(this.state));
+		// clean certain parts of the state
+		var s = JSON.parse( JSON.stringify( this.state ) )
+		s.meta = {
+			user: {},
+		}
+		s.vars = {}
+		localStorage.setItem("fofstate", JSON.stringify( s ) )
 	}
 	load = () => {
 		// return // testing
-		var value = JSON.parse(localStorage.getItem("fofstate"));
-		if ( "object" !== typeof value ) {
+		try {
+			var value = JSON.parse(localStorage.getItem("fofstate"));
+			if ( "object" !== typeof value ) {
+				return
+			}
+			if ( value === null ) {
+				return
+			}
+			value.hasher = hash
+			value.vars = hash.get()
+			value.hashString = window.location.hash
+			value.callbacks = this.callbacks();
+			value.raidHost = {
+				m: moment(),
+				title: "",
+			}
+			this.setState(value)
+		} catch(e) {
+			console.log("attempted to load saved state got error: ")
+			console.log(e)
 			return
 		}
-		if ( value === null ) {
-			return
-		}
-		value.hasher = hash
-		value.vars = hash.get()
-		value.hashString = window.location.hash
-		value.callbacks = this.callbacks();
-		value.raidHost = {
-			m: moment(),
-			title: "",
-		}
-		this.setState(value)
 	}
 }
 
