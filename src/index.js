@@ -5,8 +5,6 @@ import App from './app';
 import registerServiceWorker from './registerServiceWorker';
 
 import Promise from 'promise-polyfill';
-import 'url-search-params-polyfill';
-
 if (!window.Promise) {
 	window.Promise = Promise;
 }
