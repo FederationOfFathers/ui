@@ -17,12 +17,19 @@ class Api extends State {
 				join: this.raidJoin,
 				ping: this.raidPing,
 				close: this.raidClose,
-			}
+			},
+			user: {
+				streams: {
+					get: this.getUserStreams,
+				},
+				meta: {
+					get: this.getUserMeta,
+					set: this.setUserMeta,
+				},
+			},
 		}})
 		setInterval(function(){
 			this.ping()
-			this.channels()
-			this.url()
 		}.bind(this), 60000)
 	}
 	url = ( part ) => {
@@ -168,6 +175,28 @@ class Api extends State {
 			"groups/"+id+"/visibility",
 			{ visible: set }
 		).then(this.ping)
+	}
+	getUserStreams = (userid) => {
+		return this.fetch("streams/" + userid)
+			.then(function(response) {
+				return response.json()
+			}).then(function(json) {
+				var m = this.state.meta
+				m.streams[userid] = json
+				this.setState({meta: m})
+			}.bind(this))
+	}
+	getUserMeta = (userid) => {
+		return this.fetch("meta/member/" + userid)
+			.then(function(response) {
+				return response.json()
+			}).then(function(json) {
+				var m = this.state.meta
+				m.users[userid] = json
+				this.setState({meta: m})
+			}.bind(this))
+	}
+	setUserMeta = (userid, key, value) => {
 	}
 	ping = () => {
 		this.raidbotAuth()

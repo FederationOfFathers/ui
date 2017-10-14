@@ -37,6 +37,7 @@ class State extends Component {
 			callbacks: this.callbacks(),
 			meta: {
 				users: {},
+				streams: {},
 			}
 		})
 		this.callbacks();
@@ -67,7 +68,8 @@ class State extends Component {
 		// clean certain parts of the state
 		var s = JSON.parse( JSON.stringify( this.state ) )
 		s.meta = {
-			user: {},
+			users: {},
+			streams: {},
 		}
 		s.vars = {}
 		localStorage.setItem("fofstate", JSON.stringify( s ) )
@@ -89,6 +91,10 @@ class State extends Component {
 			value.raidHost = {
 				m: moment(),
 				title: "",
+			}
+			value.meta = {
+				users: {},
+				streams: {},
 			}
 			this.setState(value)
 		} catch(e) {

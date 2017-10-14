@@ -10,9 +10,9 @@ class MembersNav extends Component {
 			users.push(this.props.state.users[id].User)
 		}
 		users.sort(function(a,b) {
-			if (a.Name < b.Name)
+			if (a.DisplayName.toLowerCase() < b.DisplayName.toLowerCase())
 				return -1;
-			if (a.Name > b.Name)
+			if (a.DisplayName.toLowerCase() > b.DisplayName.toLowerCase())
 				return 1;
 			return 0;
 		})
