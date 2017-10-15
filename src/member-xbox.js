@@ -5,6 +5,10 @@ class Xbox extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
+		if ( this.props.owner === true ) {
+			this.props.edit("xbox")
+			return
+		}
 		window.location = "https://account.xbox.com/en-US/Profile?GamerTag="+this.props.id
 	}
 	render = () => {

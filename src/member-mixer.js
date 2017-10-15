@@ -5,6 +5,10 @@ class Mixer extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
+		if ( this.props.owner === true ) {
+			this.props.edit("mixer")
+			return
+		}
 		window.location = "//mixer.com/" + this.props.id
 	}
 	render = () => {

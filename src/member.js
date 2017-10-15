@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Xbox from './member-xbox'
-import Mixer from './member-mixer'
-import Twitch from './member-twitch'
+import LinkBar from './member-linkbar'
 import Channels from './member-channels'
 
 class Member extends Component {
@@ -37,22 +35,6 @@ class Member extends Component {
 				this.setState({fetch: false})
 			}.bind(this))
 	}
-	links = () => {
-		var s = this.props.state.meta.streams[this.props.member.ID]
-		var mixer = ""
-		var twitch = ""
-		if ( typeof s !== "undefined" ) {
-			twitch = s.Twitch
-			mixer = s.Beam
-		}
-		return(
-			<div className="btn-group btn-group-justified w-100">
-				<Xbox id={this.props.member.GamerTag} state={this.props.state}/>
-				<Twitch id={twitch} state={this.props.state}/>
-				<Mixer id={mixer} state={this.props.state}/>
-			</div>
-		)
-	}
 	render = () => {
 		return (
 			<div className="members">
@@ -71,7 +53,7 @@ class Member extends Component {
 							</h6>
 						</div>
 						<div className="py-1">
-							{this.links()}
+							<LinkBar state={this.props.state} member={this.props.member}/>
 							<Channels member={this.props.member} state={this.props.state}/>
 						</div>
 					</div>

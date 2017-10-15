@@ -5,6 +5,10 @@ class Twitch extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
+		if ( this.props.owner === true ) {
+			this.props.edit("twitch")
+			return
+		}
 		window.location = "https://go.twitch.tv/" + this.props.id
 	}
 	render = () => {
