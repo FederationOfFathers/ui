@@ -18,6 +18,7 @@ class Channels extends Component {
 			if ( chan.members.indexOf(id) >= 0 ) {
 				rval.push({
 					name: "#" + chan.name,
+					is: "channel",
 					raw: chan,
 				})
 			}
@@ -37,6 +38,7 @@ class Channels extends Component {
 				if ( group.members.indexOf(id) >= 0 ) {
 					rval.push({
 						name: group.name,
+						is: "group",
 						raw: group,
 					})
 				}
@@ -59,15 +61,11 @@ class Channels extends Component {
 		})
 		for ( var i in rval ) {
 			var button = []
-			var is = "channel"
-			if ( i.substr(0, 1) !== "#" ) {
-				is = "group"
-			}
 			if ( rval[i].raw.members.indexOf(this.props.state.user.name) >= 0 ) {
-				button.push(<JoinPart kind="part" key="part" type={is} id={rval[i].raw.id}
+				button.push(<JoinPart kind="part" key="part" type={rval[i].is} id={rval[i].raw.id}
 						callback={this.props.state.api.slack.part}/>)
 			} else {
-				button.push(<JoinPart kind="join" key="join" type={is} id={rval[i].raw.id}
+				button.push(<JoinPart kind="join" key="join" type={rval[i].is} id={rval[i].raw.id}
 						callback={this.props.state.api.slack.join}/>)
 			}
 			rval[i] = ( <li key={rval[i].name} className="list-group-item">{button}{rval[i].name}</li> )
