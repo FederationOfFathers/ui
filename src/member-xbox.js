@@ -12,7 +12,7 @@ class Xbox extends Component {
 			return null
 		}
 		return (
-			<button onClick={this.clickLink} className="btn btn-success" style={{ display: "block", width:"33%"}}>xbox</button>
+			<button onClick={this.clickLink} className="btn btn-success" style={{ display: "block", width:"34%"}}>xbox</button>
 		)
 	}
 }

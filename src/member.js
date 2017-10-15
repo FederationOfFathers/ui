@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Xbox from './member-xbox'
 import Mixer from './member-mixer'
 import Twitch from './member-twitch'
+import Channels from './member-channels'
 
 class Member extends Component {
 	componentDidMount = () => {
@@ -35,50 +36,6 @@ class Member extends Component {
 			.catch(function() {
 				this.setState({fetch: false})
 			}.bind(this))
-	}
-	memberChannels = () => {
-		var id = this.props.member.Name
-		var rval = []
-		for ( var cid in this.props.state.chanList ) {
-			var chan = this.props.state.chanList[cid]
-			if ( chan.members.indexOf(id) >= 0 ) {
-				rval.push("#" + chan.name )
-			}
-		}
-		for ( var gid in this.props.state.groupList ) {
-			var group = this.props.state.groupList[gid]
-			if ( group.visible === "false" ) {
-				var found = false
-				for ( var mid in this.props.state.groups ) {
-					if ( this.props.state.groups[mid].id === group.id ) {
-						found = true
-					}
-				}
-				if ( !found ) {
-					continue
-				}
-				if ( group.members.indexOf(id) >= 0 ) {
-					rval.push(group.name)
-				}
-			}
-		}
-		rval.sort(function(a,b) {
-			if (a.substr(0, 1) === "#") {
-				a = a.substr(1)
-			}
-			if (b.substr(0, 1) === "#") {
-				b = b.substr(1)
-			}
-			if (a < b)
-				return -1;
-			if (a > b)
-				return 1;
-			return 0;
-		})
-		for ( var i in rval ) {
-			rval[i] = ( <span key={i} className="w-50 my-1 badge badge-light">{rval[i]}</span> )
-		}
-		return rval
 	}
 	links = () => {
 		var s = this.props.state.meta.streams[this.props.member.ID]
@@ -115,10 +72,7 @@ class Member extends Component {
 						</div>
 						<div className="py-1">
 							{this.links()}
-							<h5 className="my-1">Channels</h5>
-							<div>
-								<h5>{this.memberChannels()}</h5>
-							</div>
+							<Channels member={this.props.member} state={this.props.state}/>
 						</div>
 					</div>
 				</div>
