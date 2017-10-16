@@ -204,9 +204,6 @@ class Api extends State {
 	}
 	setUserStream = (userID, kind, value) => {
 		return this.postJSON("streams", {kind: kind, id: value, userID: userID})
-			.then(function(response) {
-				return response.json()
-			})
 	}
 	getUserMeta = (userid) => {
 		return this.fetch("meta/member/" + userid)

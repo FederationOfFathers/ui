@@ -15,11 +15,23 @@ class LinkBar extends Component {
 	}
 	componentWillMount = () => {
 		this.setState({
+			id: this.props.member.ID,
 			editing: false,
 			xbl: this.user().GamerTag,
 			twitch: this.streams().Twitch,
 			mixer: this.streams().Beam,
 		})
+	}
+	componentWillReceiveProps = ( p ) => {
+		if ( this.state.id !== p.member.ID ) {
+			this.setState({
+				id: p.member.ID,
+				editing: false,
+				xbl: "",
+				twitch: "",
+				mixer: "",
+			})
+		}
 	}
 	componentDidUpdate = () => {
 		if ( this.state.mixer === "" || this.state.twitch === "" ) {
@@ -52,8 +64,10 @@ class LinkBar extends Component {
 	}
 
 	saveMixer = () => {
-		console.log("save mixer as " + this.state.mixer)
-		this.setState({editing: false})
+		this.props.state.api.user.streams.set(this.props.member.ID, "beam", this.state.mixer)
+		.then(function() {
+			this.setState({editing: false})
+		}.bind(this))
 	}
 	changeMixer = (e) => {
 		this.setState({mixer: e.target.value})
@@ -103,7 +117,7 @@ class LinkBar extends Component {
 		}
 		return(
 			<div className="btn-group btn-group-justified w-100">
-				<Xbox owner={owner} edit={this.edit} id={this.props.member.GamerTag} state={this.props.state}/>
+				<Xbox owner={false} edit={this.edit} id={this.props.member.GamerTag} state={this.props.state}/>
 				<Twitch owner={owner} edit={this.edit} id={twitch} state={this.props.state}/>
 				<Mixer owner={owner} edit={this.edit} id={mixer} state={this.props.state}/>
 			</div>
