@@ -1,7 +1,7 @@
 import React from 'react';
 import LoggedIn from './logged-in.js';
 import Api from './api.js'
-import './app.css';
+import './App.css';
 
 class App extends Api {
 	componentWillMount = () => {
