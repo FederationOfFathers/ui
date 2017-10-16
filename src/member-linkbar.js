@@ -31,8 +31,10 @@ class LinkBar extends Component {
 	}
 
 	saveTwitch = () => {
-		console.log("save twitch as " + this.state.mixer)
-		this.setState({editing: false})
+		this.props.state.api.user.streams.set(this.props.member.ID, "twitch", this.state.twitch)
+		.then(function() {
+			this.setState({editing: false})
+		}.bind(this))
 	}
 	changeTwitch = (e) => {
 		this.setState({twitch: e.target.value})

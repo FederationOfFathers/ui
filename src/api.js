@@ -21,6 +21,7 @@ class Api extends State {
 			user: {
 				streams: {
 					get: this.getUserStreams,
+					set: this.setUserStream,
 				},
 				meta: {
 					get: this.getUserMeta,
@@ -34,6 +35,21 @@ class Api extends State {
 	}
 	url = ( part ) => {
 		return "//dashboard.fofgaming.com/api/v0/" + part
+	}
+	postJSON = ( what, payload ) => {
+		if ( what.substring(0, 2) !== "//" ) {
+			what = this.url( what );
+		}
+		return fetch(
+			what,
+			{
+				credentials: "include",
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(payload)
+			})
 	}
 	putJSON = ( what, payload ) => {
 		if ( what.substring(0, 2) !== "//" ) {
@@ -185,6 +201,12 @@ class Api extends State {
 				m.streams[userid] = json
 				this.setState({meta: m})
 			}.bind(this))
+	}
+	setUserStream = (userID, kind, value) => {
+		return this.postJSON("streams", {kind: kind, id: value, userID: userID})
+			.then(function(response) {
+				return response.json()
+			})
 	}
 	getUserMeta = (userid) => {
 		return this.fetch("meta/member/" + userid)
