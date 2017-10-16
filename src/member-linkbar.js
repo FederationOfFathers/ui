@@ -44,9 +44,9 @@ class LinkBar extends Component {
 
 	saveTwitch = () => {
 		this.props.state.api.user.streams.set(this.props.member.ID, "twitch", this.state.twitch)
-		.then(function() {
-			this.setState({editing: false})
-		}.bind(this))
+			.then(function() {
+				this.setState({editing: false})
+			}.bind(this))
 	}
 	changeTwitch = (e) => {
 		this.setState({twitch: e.target.value})
@@ -65,9 +65,9 @@ class LinkBar extends Component {
 
 	saveMixer = () => {
 		this.props.state.api.user.streams.set(this.props.member.ID, "beam", this.state.mixer)
-		.then(function() {
-			this.setState({editing: false})
-		}.bind(this))
+			.then(function() {
+				this.setState({editing: false})
+			}.bind(this))
 	}
 	changeMixer = (e) => {
 		this.setState({mixer: e.target.value})
@@ -85,8 +85,12 @@ class LinkBar extends Component {
 	}
 
 	saveXbox = () => {
-		console.log("save xbl as " + this.state.xbl)
-		this.setState({editing: false})
+		// As of this writing it can take 10 minutes or more for caches to clear and new
+		// data to appear in the users.json response.
+		this.props.state.api.user.set.xbl(this.props.member.ID, this.state.xbl)
+			.then(function() {
+				this.setState({editing: false})
+			}.bind(this))
 	}
 	changeXbox = (e) => {
 		this.setState({xbl: e.target.value})
@@ -117,7 +121,7 @@ class LinkBar extends Component {
 		}
 		return(
 			<div className="btn-group btn-group-justified w-100">
-				<Xbox owner={false} edit={this.edit} id={this.props.member.GamerTag} state={this.props.state}/>
+				<Xbox owner={owner} edit={this.edit} id={this.props.member.GamerTag} state={this.props.state}/>
 				<Twitch owner={owner} edit={this.edit} id={twitch} state={this.props.state}/>
 				<Mixer owner={owner} edit={this.edit} id={mixer} state={this.props.state}/>
 			</div>

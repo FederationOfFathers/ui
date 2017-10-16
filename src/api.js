@@ -23,6 +23,9 @@ class Api extends State {
 					get: this.getUserStreams,
 					set: this.setUserStream,
 				},
+				set: {
+					xbl: this.setUserXbl,
+				},
 				meta: {
 					get: this.getUserMeta,
 					set: this.setUserMeta,
@@ -204,6 +207,9 @@ class Api extends State {
 	}
 	setUserStream = (userID, kind, value) => {
 		return this.postJSON("streams", {kind: kind, id: value, userID: userID})
+	}
+	setUserXbl = (userID, value) => {
+		return this.postJSON("member/" + userID, {xbl: value})
 	}
 	getUserMeta = (userid) => {
 		return this.fetch("meta/member/" + userid)
