@@ -8,3 +8,4 @@ yolo:
 	git status
 	git commit -m "yolo" .
 	git push
+	npm run deploy
