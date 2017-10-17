@@ -12,11 +12,14 @@ class Xbox extends Component {
 		window.location = "https://account.xbox.com/en-US/Profile?GamerTag="+this.props.id
 	}
 	render = () => {
+		var classes = "btn"
 		if ( this.props.id === "" ) {
-			return null
+			classes = classes + " btn-disabled"
+		} else {
+			classes = classes + " btn-success"
 		}
 		return (
-			<button onClick={this.clickLink} className="btn btn-success" style={{ display: "block", width:"34%"}}>xbox</button>
+			<button onClick={this.clickLink} className={classes} style={{ display: "block", width:"34%"}}>xbox</button>
 		)
 	}
 }
