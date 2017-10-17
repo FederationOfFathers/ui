@@ -20,6 +20,7 @@ class LinkBar extends Component {
 			xbl: this.user().GamerTag,
 			twitch: this.streams().Twitch,
 			mixer: this.streams().Beam,
+			setFor: false,
 		})
 	}
 	componentWillReceiveProps = ( p ) => {
@@ -30,14 +31,18 @@ class LinkBar extends Component {
 				xbl: "",
 				twitch: "",
 				mixer: "",
+				setFor: false,
 			})
 		}
 	}
 	componentDidUpdate = () => {
-		if ( this.state.mixer === "" || this.state.twitch === "" ) {
-			var s = this.streams()
-			if ( s.Beam !== "" || s.Twitch !== "" ) {
-				this.setState({mixer: s.Beam, twitch: s.Twitch})
+		if ( this.state.setFor === false ) {
+			this.setState({setFor: this.props.member.ID})
+			if ( this.state.mixer === "" || this.state.twitch === "" ) {
+				var s = this.streams()
+				if ( s.Beam !== "" || s.Twitch !== "" ) {
+					this.setState({mixer: s.Beam, twitch: s.Twitch})
+				}
 			}
 		}
 	}
