@@ -38,7 +38,7 @@ class MembersNav extends Component {
 						className="form-control"
 						id="users"
 						style={{height: "3em"}}
-						defaultValue={this.props.state.vars.member}>
+						value={this.props.state.vars.member}>
 						{this.users()}
 					</select>
 				</div>
