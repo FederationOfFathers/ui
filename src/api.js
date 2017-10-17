@@ -11,6 +11,9 @@ class Api extends State {
 				part: this.partSlack,
 				visibility: this.visibilitySlack,
 			},
+			stats: {
+				hourly: this.statsHourly,
+			},
 			team: {
 				host: this.raidHost,
 				leave: this.raidLeave,
@@ -179,6 +182,12 @@ class Api extends State {
 			op = this.fetch("groups/"+id+"/join")
 		}
 		op.then(this.ping)
+	}
+	statsHourly = (userID, statID, last) => {
+		return this.fetch("xhr/stats/v1/hourly.json?stats=" + statID + "&last=" + last + "&users=" + userID)
+			.then(function(response) {
+				return response.json()
+			})
 	}
 	partSlack = (id, kind) => {
 		var op = null
