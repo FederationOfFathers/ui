@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LinkBar from './member-linkbar'
 import Channels from './member-channels'
+import SlackStats from './member-slack-activity'
 
 class Member extends Component {
 	componentDidMount = () => {
@@ -54,6 +55,7 @@ class Member extends Component {
 						</div>
 						<div className="py-1">
 							<LinkBar state={this.props.state} member={this.props.member}/>
+							<SlackStats member={this.props.member} state={this.props.state}/>
 							<Channels member={this.props.member} state={this.props.state}/>
 						</div>
 					</div>
