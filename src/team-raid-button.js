@@ -34,11 +34,6 @@ class RaidButton extends Component {
 		}
 		var date = new Date(Date.parse(this.props.data.raid_time))
 		var memberBadge = []
-		memberBadge.push((
-			<span key="members" className="mx-1 my-1 badge badge-secondary">{this.props.data.members.length + alts.length} member
-				{(this.props.data.members.length + alts.length) === 1 ? "" : "s" }
-			</span>
-		))
 		if ( this.props.data.need > 0 ) {
 			var overCount = 0 - ( this.props.data.need - (this.props.data.members.length + alts.length) )
 			var needCount = Math.max(0, (this.props.data.need - (this.props.data.members.length + alts.length)))
@@ -55,6 +50,12 @@ class RaidButton extends Component {
 			memberBadge.push((
 				<span key="need" className={needClass}>
 					{needText}
+				</span>
+			))
+		} else {
+			memberBadge.push((
+				<span key="members" className="mx-1 my-1 badge badge-secondary">{this.props.data.members.length + alts.length} member
+					{(this.props.data.members.length + alts.length) === 1 ? "" : "s" }
 				</span>
 			))
 		}
