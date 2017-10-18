@@ -38,9 +38,10 @@ class TeamNav extends Component {
 		}
 		var inRaid = raid.members.indexOf(this.props.state.user.name)
 		var rval = []
+		var text = ""
 		switch( inRaid ) {
 			case -1:
-				var text = "Join This Event"
+				text = "Join This Event"
 				if ( raid.need > 0 && raid.members.length >= raid.need ) {
 					text = "It's full, but I'll wait in line"
 				}
@@ -51,7 +52,7 @@ class TeamNav extends Component {
 				))
 				break;
 			default:
-				var text = "Hold Another Spot"
+				text = "Hold Another Spot"
 				if ( raid.need > 0 && raid.members.length >= raid.need ) {
 					text = "It's full, but I'll hold a spot in line"
 				}

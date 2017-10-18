@@ -136,13 +136,14 @@ class Raid extends Component {
 		var rval = []
 		var list = this.combined()
 		for ( var i in list ) {
-			if ( i === "0" ) {
+			var iInt = parseInt(i, 10)
+			if ( iInt === 0 ) {
 				rval.push((<div key="own" className="btn-group text-secondary px-3" role="group">⇊ owner</div>))
 			}
-			if ( i === "1" ) {
+			if ( iInt === 1 ) {
 				rval.push((<div key="mem" className="btn-group text-secondary px-3" role="group">⇊ members</div>))
 			}
-			if ( this.props.data.need > 0 && i == this.props.data.need ) {
+			if ( this.props.data.need > 0 && iInt === this.props.data.need ) {
 				rval.push((<div key="alt" className="btn-group text-secondary px-3" role="group">⇊ alternate queue</div>))
 			}
 			var member = list[i]

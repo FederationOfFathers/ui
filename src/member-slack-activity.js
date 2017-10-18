@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ResponsiveContainer, Legend, YAxis, XAxis, BarChart, Bar } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar } from 'recharts';
 import Moment from 'moment-timezone'
 
 class SlackStats extends Component {
@@ -27,7 +27,6 @@ class SlackStats extends Component {
 						}
 						var local = Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD')
 						var label = m.format('YYYY-MM-DD HH:00:00')
-						var point = m.format('YYYY-MM-DD')
 						if ( typeof h[local] === "undefined" ) {
 							h[local] = {name: local, v: 0}
 						}
