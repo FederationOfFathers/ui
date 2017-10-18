@@ -9,6 +9,8 @@ class Host extends Component {
 		if ( initialOffMinutes !== 0 ) {
 			initialMoment.set( 'minute', initialMoment.get('minute') + ( 5 - initialOffMinutes ) )
 		}
+		var initialOffSeconds = initialMoment.get('second')
+		initialMoment.set( 'second', initialMoment.get('minute') - initialOffSeconds )
 		var maxDays = 14
 		if ( this.props.state.admin === true ) {
 			maxDays = 365
