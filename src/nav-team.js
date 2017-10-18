@@ -40,16 +40,24 @@ class TeamNav extends Component {
 		var rval = []
 		switch( inRaid ) {
 			case -1:
+				var text = "Join This Event"
+				if ( raid.need > 0 && raid.members.length >= raid.need ) {
+					text = "It's full, but I'll wait in line"
+				}
 				rval.push((
 					<li key="user" className="nav-item px-1 my-1">
-						<button onClick={this.joinClick} type="button" className="btn btn-primary w-100">Join This Event</button>
+						<button onClick={this.joinClick} type="button" className="btn btn-primary w-100">{text}</button>
 					</li>
 				))
 				break;
 			default:
+				var text = "Hold Another Spot"
+				if ( raid.need > 0 && raid.members.length >= raid.need ) {
+					text = "It's full, but I'll hold a spot in line"
+				}
 				rval.push((
 					<li key="join" className="nav-item px-1 my-1">
-						<button onClick={this.joinClick} className="btn btn-primary w-100">Hold Another Spot</button>
+						<button onClick={this.joinClick} className="btn btn-primary w-100">{text}</button>
 					</li>
 				));
 				break;
