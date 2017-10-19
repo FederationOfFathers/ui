@@ -38,6 +38,7 @@ class SlackStats extends Component {
 					for (var key in h) {
 						data.push(h[key])
 					}
+					data.reverse()
 					this.setState({stats: data})
 				}.bind(this))
 		}
