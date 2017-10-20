@@ -5,36 +5,41 @@ class Api extends State {
 	apiComponentWillMount = () => {
 		this.load()
 		this.ping()
-		this.setState({api: {
-			slack: {
-				join: this.joinSlack,
-				part: this.partSlack,
-				visibility: this.visibilitySlack,
-			},
-			stats: {
-				hourly: this.statsHourly,
-			},
-			team: {
-				host: this.raidHost,
-				leave: this.raidLeave,
-				join: this.raidJoin,
-				ping: this.raidPing,
-				close: this.raidClose,
-			},
-			user: {
-				streams: {
-					get: this.getUserStreams,
-					set: this.setUserStream,
+		this.setState({
+			api: {
+				raw: {
+					fetch: this.fetch,
 				},
-				set: {
-					xbl: this.setUserXbl,
+				slack: {
+					join: this.joinSlack,
+					part: this.partSlack,
+					visibility: this.visibilitySlack,
 				},
-				meta: {
-					get: this.getUserMeta,
-					set: this.setUserMeta,
+				stats: {
+					hourly: this.statsHourly,
 				},
-			},
-		}})
+				team: {
+					host: this.raidHost,
+					leave: this.raidLeave,
+					join: this.raidJoin,
+					ping: this.raidPing,
+					close: this.raidClose,
+				},
+				user: {
+					streams: {
+						get: this.getUserStreams,
+						set: this.setUserStream,
+					},
+					set: {
+						xbl: this.setUserXbl,
+					},
+					meta: {
+						get: this.getUserMeta,
+						set: this.setUserMeta,
+					},
+				},
+			}
+		})
 		setInterval(function(){
 			this.ping()
 		}.bind(this), 60000)
