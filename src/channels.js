@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import JoinPart from './channels-joinp-part'
+import ChannelStats from './channels-stats'
 
 class Visibility extends Component {
 	click = () => {
@@ -99,6 +100,18 @@ class ToggleVisibility extends Component {
 }
 
 class Channels extends Component {
+	componentWillMount = () => {
+		this.setState({
+			viewing: "details",
+		})
+	}
+	toggleViewing = () => {
+		if ( this.state.viewing === "details" ) {
+			this.setState({viewing:"stats"})
+		} else {
+			this.setState({viewing:"details"})
+		}
+	}
 	merge = () => {
 		var list = [];
 		for ( var c in this.props.state.chanList ) {
@@ -172,10 +185,19 @@ class Channels extends Component {
 		return elements
 	}
 	render() {
+		var content = null
+		if ( this.state.viewing === "stats" ) {
+			content = (<ChannelStats state={this.props.state}/>)
+		} else {
+			content = this.groups()
+		}
 		return (
-			<ul className="list-group">
-				{this.groups()}
-			</ul>
+			<div>
+				<button className="btn btn-primary w-100 my-1" onClick={this.toggleViewing}>
+					Switch to channel { this.state.viewing === "stats" ? "details" : "stats" }
+				</button>
+				<ul className="list-group">{content}</ul>
+			</div>
 		);
 	}
 }
