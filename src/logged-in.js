@@ -4,13 +4,16 @@ import Team from './team'
 import Roster from './roster-iframe'
 import Channels from './channels'
 import Members from './members'
+import First from './first'
 
 class LoggedIn extends Component {
 	renderSection = () => {
 		switch( this.props.state.vars.main ) {
 			default:
-				this.props.state.hasher.replace({main: "team"})
+				this.props.state.hasher.replace({main: "first"})
 				return
+			case "first":
+				return (<First state={this.props.state}/>)
 			case "team":
 				return (<Team state={this.props.state}/>)
 			case "roster":

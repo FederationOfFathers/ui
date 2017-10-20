@@ -47,7 +47,7 @@ class TeamNav extends Component {
 				}
 				rval.push((
 					<li key="user" className="nav-item px-1 my-1">
-						<button onClick={this.joinClick} type="button" className="btn btn-primary w-100">{text}</button>
+						<button onClick={this.joinClick} type="button" style={{fontSize: "0.7em"}} className="btn btn-primary w-100">{text}</button>
 					</li>
 				))
 				break;
@@ -58,7 +58,7 @@ class TeamNav extends Component {
 				}
 				rval.push((
 					<li key="join" className="nav-item px-1 my-1">
-						<button onClick={this.joinClick} className="btn btn-primary w-100">{text}</button>
+						<button style={{fontSize: "0.7em"}} onClick={this.joinClick} className="btn btn-primary w-100">{text}</button>
 					</li>
 				));
 				break;
@@ -73,7 +73,7 @@ class TeamNav extends Component {
 		return (
 			<ul className="nav nav-pills nav-fill">
 				<li className="nav-item px-1 my-1">
-					<button onClick={this.click} className="btn btn-danger w-100">Cancel</button>
+					<button onClick={this.click} style={{fontSize: "0.7em"}} className="btn btn-danger w-100">Cancel</button>
 				</li>
 			</ul>
 		)
@@ -82,7 +82,7 @@ class TeamNav extends Component {
 		return (
 			<ul className="nav nav-pills nav-fill">
 				<li className="nav-item px-1 my-1">
-					<button onClick={this.click} className="btn btn-success w-100">Host an Event</button>
+					<button onClick={this.click} style={{fontSize: "0.7em"}} className="btn btn-success w-100">Host an Event</button>
 				</li>
 			</ul>
 		)

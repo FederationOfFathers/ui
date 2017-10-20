@@ -9,7 +9,7 @@ class NavLink extends Component {
 			classes = classes + " active"
 		}
 		return(
-			<li className="nav-item">
+			<li className="nav-item" style={{fontSize: "0.7em"}}>
 				<a style={{cursor: "pointer"}} className={classes} onClick={this.props.nav}>{this.props.text}</a>
 			</li>
 		);
@@ -38,6 +38,7 @@ class Nav extends Component {
 				<TeamNav state={this.props.state}/>
 				<MembersNav state={this.props.state}/>
 				<ul className="nav nav-pills nav-fill">
+					<NavLink text="Home" active={"first" === current} nav={this.nav("first")}/>
 					<NavLink text="Team" active={"team" === current} nav={this.nav("team")}/>
 					{ /* <NavLink text="Roster" active={"roster" === current} nav={this.nav("roster")}/> */ }
 					<NavLink text="Channels" active={"channels" === current} nav={this.nav("channels")}/>
