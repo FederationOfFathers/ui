@@ -26,7 +26,7 @@ class SlackStats extends Component {
 							m.subtract(1, "hour")
 						}
 						var local = Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD')
-						var label = m.format('YYYY-MM-DD HH:00:00')
+						var label = m.format('YYYY-MM-DDTHH:00:00') + "Z"
 						if ( typeof h[local] === "undefined" ) {
 							h[local] = {name: local, v: 0}
 						}
