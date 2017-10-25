@@ -9,7 +9,7 @@ class NavLink extends Component {
 			classes = classes + " active"
 		}
 		return(
-			<li className="nav-item" style={{fontSize: "0.7em"}}>
+			<li className="nav-item" style={{fontSize: "0.7em", maxWidth: "25%"}}>
 				<a style={{cursor: "pointer"}} className={classes} onClick={this.props.nav}>{this.props.text}</a>
 			</li>
 		);
