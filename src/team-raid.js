@@ -127,7 +127,7 @@ class Raid extends Component {
 			return null
 		}
 		var rval = []
-		for (var i=0; i<=this.props.data.need-have; i++) {
+		for (var i=0; i<this.props.data.need-have; i++) {
 			rval.push((<RaidPlaceHolder key={i}/>))
 		}
 		return rval
