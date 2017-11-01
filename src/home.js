@@ -27,7 +27,6 @@ class Home extends Component {
 				for ( i=0; i<json.length; i++ ) {
 					json[i].pct = Math.round((json[i].players / max) * 100)
 				}
-				console.log(json)
 				this.setState({
 					games: json,
 				})
