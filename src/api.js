@@ -4,7 +4,6 @@ import State from './state.js'
 class Api extends State {
 	apiComponentWillMount = () => {
 		this.load()
-		this.ping()
 		this.setState({
 			api: {
 				raw: {
@@ -40,9 +39,10 @@ class Api extends State {
 				},
 			}
 		})
+		this.ping()
 		setInterval(function(){
 			this.ping()
-		}.bind(this), 60000)
+		}.bind(this), 180000)
 	}
 	url = ( part ) => {
 		return "//dashboard.fofgaming.com/api/v0/" + part
