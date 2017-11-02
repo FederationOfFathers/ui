@@ -1,19 +1,48 @@
 import React, { Component } from 'react';
 
+var homeStats = {
+	games: null,
+	stats: null,
+}
+
 class Home extends Component {
 	componentWillMount = () => {
+		var games = false
+		var stats = false
+		if ( homeStats.games !== null ) {
+			games = homeStats.games
+		}
+		if ( homeStats.stats !== null ) {
+			stats = homeStats.stats
+		}
 		this.setState({
 			days: 7,
-			top: 6,
-			stats: false,
-			games: false,
+			topChannels: 6,
+			topGames: 10,
 			fetching: false,
+			games: games,
+			stats: stats
 		})
+	}
+
+	fetch = () => {
+		if ( this.state.fetching === false ) {
+			this.pullSlackActivity()
+			.then(this.pullGameActivity)
+		}
+	}
+
+	componentDidMount = () => {
+		this.fetch()
+	}
+
+	componentDidUpdate = () => {
+		this.fetch()
 	}
 
 	pullGameActivity = () => {
 		this.setState({fetching: "games"})
-		return this.props.state.api.raw.fetch('games/played/top/'+this.state.days+'/10.json')
+		return this.props.state.api.raw.fetch('games/played/top/'+this.state.days+'/'+this.state.topGames+'.json')
 			.then(function(response) {
 				return response.json()
 			})
@@ -27,6 +56,7 @@ class Home extends Component {
 				for ( i=0; i<json.length; i++ ) {
 					json[i].pct = Math.round((json[i].players / max) * 100)
 				}
+				homeStats.games = json
 				this.setState({
 					games: json,
 				})
@@ -64,20 +94,15 @@ class Home extends Component {
 					return 0
 				})
 				var final = []
-				for ( var i=0; i<this.state.top; i++ ) {
+				for ( var i=0; i<this.state.topChannels; i++ ) {
 					final.push(data.pop())
 					final[i].pct = Math.round((final[i].v / max) * 100)
 				}
+				homeStats.stats = final
 				this.setState({stats: final})
 			}.bind(this))
 	}
 
-	componentDidUpdate = () => {
-		if ( this.state.fetching === false ) {
-			this.pullSlackActivity()
-			.then(this.pullGameActivity)
-		}
-	}
 	games = () => {
 		if ( this.state.games === false ) {
 			return null
