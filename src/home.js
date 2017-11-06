@@ -111,7 +111,7 @@ class Home extends Component {
 		for ( var i in this.state.games ) {
 			var img = null
 			if ( this.state.games[i].image !== "" ) {
-				img = (<img style={{height: "2em"}} className="float-right" src={"//i0.wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=128&w=128"}/>)
+				img = (<img style={{height: "2em"}} className="float-right" src={"//i0.wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=128&w=128"} alt=""/>)
 			}
 			rval.push((
 				<div key={this.state.games[i].name} className="d-flex flex-row">
