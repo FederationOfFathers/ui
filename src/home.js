@@ -18,7 +18,7 @@ class Home extends Component {
 		this.setState({
 			days: 7,
 			topChannels: 6,
-			topGames: 10,
+			topGames: 8,
 			fetching: false,
 			games: games,
 			stats: stats
@@ -109,8 +109,12 @@ class Home extends Component {
 		}
 		var rval = []
 		for ( var i in this.state.games ) {
+			var img = null
+			if ( this.state.games[i].image !== "" ) {
+				img = (<img style={{height: "2em"}} className="float-right" src={"//i0.wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=128&w=128"}/>)
+			}
 			rval.push((
-				<div key={i} className="d-flex flex-row">
+				<div key={this.state.games[i].name} className="d-flex flex-row">
 					<div
 						className="text-nowrap w-75 mw-75 text-truncate"
 						style={{
@@ -124,7 +128,11 @@ class Home extends Component {
 					}}>
 						{this.state.games[i].name}
 					</div>
-					<div className="w-25 text-center">{this.state.games[i].players.toLocaleString()}</div>
+					<div className="w-25 text-left clearfix">
+						<div className="float-left py-1">{this.state.games[i].players.toLocaleString()}</div>
+						&nbsp;
+						{img}
+					</div>
 				</div>
 			))
 		}
@@ -132,7 +140,7 @@ class Home extends Component {
 			<div>
 				<div className="d-flex flex-row">
 					<div className="w-75"><strong>Most PLayed Games</strong></div>
-					<div className="w-25 text-center"><strong>Players</strong></div>
+					<div className="w-25 text-left"><strong>Players</strong></div>
 				</div>
 				{rval}
 			</div>
@@ -160,7 +168,7 @@ class Home extends Component {
 						}}>
 							{this.state.stats[i].name}
 						</div>
-					<div className="w-25 text-center">{this.state.stats[i].v.toLocaleString()}</div>
+					<div className="w-25 text-left py-1">{this.state.stats[i].v.toLocaleString()}</div>
 				</div>
 			))
 		}
@@ -168,7 +176,7 @@ class Home extends Component {
 			<div>
 				<div className="d-flex flex-row">
 					<div className="w-75"><strong>Most Active Channels</strong></div>
-					<div className="w-25 text-center"><strong>Msgs</strong></div>
+					<div className="w-25 text-left"><strong>Msgs</strong></div>
 				</div>
 				{rval}
 			</div>
