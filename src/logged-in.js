@@ -5,6 +5,7 @@ import Roster from './roster-iframe'
 import Channels from './channels'
 import Members from './members'
 import Home from './home'
+import Game from './game'
 
 class LoggedIn extends Component {
 	renderSection = () => {
@@ -22,6 +23,8 @@ class LoggedIn extends Component {
 				return (<Channels state={this.props.state}/>)
 			case "members":
 				return (<Members state={this.props.state}/>)
+			case "game":
+				return (<Game state={this.props.state}/>)
 		}
 	}
 	render = () => {

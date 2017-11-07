@@ -113,11 +113,18 @@ class Home extends Component {
 		for ( var i in this.state.games ) {
 			var img = null
 			if ( this.state.games[i].image !== "" ) {
-				img = (<img style={{height: "32px", width: "32px"}} className="float-right" src={"//i"+(i%3)+".wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=32&w=32&zoom=" + zoom} alt=""/>)
+				img = (<img style={{height: "32px", width: "32px"}} className="float-right" src={"//i"+(i%3)+".wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=32&w=32&zoom=" + zoom} alt="" game-id={this.state.games[i].id}/>)
 			}
 			rval.push((
-				<div key={this.state.games[i].name} className="d-flex flex-row">
+				<div key={this.state.games[i].name} className="d-flex flex-row" game-id={this.state.games[i].id}
+					onClick={(e) =>{
+						this.props.state.hasher.replace({
+							main: "game",
+							id: e.target.getAttribute("game-id"),
+						})
+					}}>
 					<div
+						game-id={this.state.games[i].id}
 						className="text-nowrap w-75 mw-75 text-truncate"
 						style={{
 							paddingTop: "0.25em",
@@ -130,8 +137,8 @@ class Home extends Component {
 					}}>
 						{this.state.games[i].name}
 					</div>
-					<div className="w-25 text-left clearfix">
-						<div className="float-left py-1">{this.state.games[i].players.toLocaleString()}</div>
+					<div className="w-25 text-left clearfix" game-id={this.state.games[i].id}>
+						<div className="float-left py-1" game-id={this.state.games[i].id}>{this.state.games[i].players.toLocaleString()}</div>
 						&nbsp;
 						{img}
 					</div>

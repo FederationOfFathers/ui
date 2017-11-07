@@ -61,7 +61,16 @@ class Games extends Component {
 			brick.push((
 				<img key={i} style={{width: w + "px", height: w + "px"}} className="card-img-top"
 					src={"//i"+(i%3)+".wp.com/dashboard.fofgaming.com/api/v0/cdn/" + game.image + "?w="+w+"&zoom=" + dprVal }
-					alt={game.name}/>
+					alt={game.name}
+					game-name={game.name}
+					game-id={game.id}
+					onClick={(e) => {
+						this.props.state.hasher.replace({
+							main: "game",
+							id: e.target.getAttribute("game-id"),
+						})
+					}}
+				/>
 			))
 			if ( (i+1)%3 === 0 ) {
 				rval.push((<LazyLoad key={i} offset={w*1.5} height={w}><div>{brick}</div></LazyLoad>))
