@@ -236,6 +236,9 @@ class Api extends State {
 			}.bind(this))
 	}
 	setUserMeta = (userid, key, value) => {
+		var put = {}
+		put[key]=value
+		return this.putJSON("meta/member/" + userid, put)
 	}
 	ping = () => {
 		this.raidbotAuth()
