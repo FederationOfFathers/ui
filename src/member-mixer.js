@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 class Mixer extends Component {
 	clickLink = () => {
-		if ( this.props.id === "" ) {
-			return
-		}
 		if ( this.props.owner === true ) {
 			this.props.edit("mixer")
+			return
+		}
+		if ( this.props.id === "" ) {
 			return
 		}
 		window.location = "//mixer.com/" + this.props.id

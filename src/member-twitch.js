@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 
 class Twitch extends Component {
 	clickLink = () => {
-		if ( this.props.id === "" ) {
-			return
-		}
 		if ( this.props.owner === true ) {
 			this.props.edit("twitch")
+			return
+		}
+		if ( this.props.id === "" ) {
 			return
 		}
 		window.location = "https://go.twitch.tv/" + this.props.id

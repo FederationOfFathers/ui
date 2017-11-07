@@ -32,10 +32,19 @@ class Member extends Component {
 		this.props.state.api.user.streams.get(this.state.currentID)
 			.then(function() {
 				this.props.state.api.user.meta.get(this.state.currentID)
+					.then(function() {
+						this.props.state.api.user.meta.get(this.state.currentID)
+							.then(()=>{
+								this.setState({meta: this.props.state.meta.users[this.state.currentID]})
+							})
+					}.bind(this))
 			}.bind(this))
 			.catch(function() {
 				this.setState({fetch: false})
 			}.bind(this))
+	}
+	reloadMeta = () => {
+		this.setState({meta: this.props.state.meta.users[this.state.currentID]})
 	}
 	render = () => {
 		return (
@@ -55,7 +64,7 @@ class Member extends Component {
 							</h6>
 						</div>
 						<div className="py-1">
-							<LinkBar state={this.props.state} member={this.props.member}/>
+							<LinkBar state={this.props.state} meta={this.state.meta} member={this.props.member} reloadMeta={this.reloadMeta}/>
 							<SlackStats member={this.props.member} state={this.props.state}/>
 							<Channels member={this.props.member} state={this.props.state}/>
 							<Games member={this.props.member} state={this.props.state}/>

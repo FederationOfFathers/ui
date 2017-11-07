@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import Xbox from './member-xbox'
 import Mixer from './member-mixer'
 import Twitch from './member-twitch'
+import Twitter from './member-twitter'
+import Instagram from './member-instagram'
 
 class LinkBar extends Component {
+	metaValue = ( key ) => {
+		if ( typeof this.props.meta === "undefined" ) {
+			return ""
+		}
+		if ( typeof this.props.meta[key] === "undefined" ) {
+			return ""
+		}
+		return this.props.meta[key]
+	}
 	user = () => {
 		return this.props.state.users[this.props.state.user.id].User
 	}
@@ -20,17 +31,29 @@ class LinkBar extends Component {
 			xbl: this.user().GamerTag,
 			twitch: this.streams().Twitch,
 			mixer: this.streams().Beam,
+			twitter: '',
+			instagram: '',
 			setFor: false,
 		})
 	}
 	componentWillReceiveProps = ( p ) => {
 		if ( this.state.id !== p.member.ID ) {
+			var twit = ""
+			if ( typeof p.meta.twitter !== "undefined" ) {
+				twit = p.meta.twitter
+			}
+			var gram = ""
+			if ( typeof p.meta.instagram !== "undefined" ) {
+				gram = p.meta.instagram
+			}
 			this.setState({
 				id: p.member.ID,
 				editing: false,
 				xbl: "",
 				twitch: "",
 				mixer: "",
+				twitter: twit,
+				instagram: gram,
 				setFor: false,
 			})
 		}
@@ -46,7 +69,9 @@ class LinkBar extends Component {
 			}
 		}
 	}
-
+	componentDidMount = () => {
+		this.props.state.api.user.meta.get()
+	}
 	saveTwitch = () => {
 		this.props.state.api.user.streams.set(this.props.member.ID, "twitch", this.state.twitch)
 			.then(function() {
@@ -112,8 +137,62 @@ class LinkBar extends Component {
 		)
 	}
 
+	editTwitter = () => {
+		return(
+			<div className="input-group my-2">
+				<span className="input-group-addon">twitter</span>
+				<input onChange={(e)=>{
+					this.setState({
+						twitter: e.target.value,
+					})
+				}} type="text" className="form-control" value={this.state.twitter}/>
+				<span className="input-group-btn">
+					<button onClick={()=>{
+						this.props.state.api.user.meta.set(this.props.member.ID, "twitter", this.state.twitter)
+							.then(() =>{
+								this.props.state.api.user.meta.get(this.props.member.ID)
+									.then(()=>{
+										this.props.reloadMeta()
+										this.setState({editing:false})
+									})
+							})
+					}} type="button" className="btn btn-primary">save</button>
+				</span>
+			</div>
+		)
+	}
+
+	editInstagram = () => {
+		return(
+			<div className="input-group my-2">
+				<span className="input-group-addon">instagram</span>
+				<input onChange={(e)=>{
+					this.setState({
+						instagram: e.target.value,
+					})
+				}} type="text" className="form-control" value={this.state.instagram}/>
+				<span className="input-group-btn">
+					<button onClick={()=>{
+						this.props.state.api.user.meta.set(this.props.member.ID, "instagram", this.state.instagram)
+							.then(() =>{
+								this.props.state.api.user.meta.get(this.props.member.ID)
+									.then(()=>{
+										this.props.reloadMeta()
+										this.setState({editing:false})
+									})
+							})
+					}} type="button" className="btn btn-primary">save</button>
+				</span>
+			</div>
+		)
+	}
+
 	edit = ( what ) => {
-		this.setState({editing: what})
+		this.setState({
+			editing: what,
+			twitter: this.metaValue("twitter"),
+			instagram: this.metaValue("instagram"),
+		})
 	}
 	display = () => {
 		var owner = this.props.member.Name === this.props.state.user.name
@@ -125,10 +204,16 @@ class LinkBar extends Component {
 			mixer = s.Beam
 		}
 		return(
-			<div className="btn-group btn-group-justified w-100">
-				<Xbox owner={owner} edit={this.edit} id={this.props.member.GamerTag} state={this.props.state}/>
-				<Twitch owner={owner} edit={this.edit} id={twitch} state={this.props.state}/>
-				<Mixer owner={owner} edit={this.edit} id={mixer} state={this.props.state}/>
+			<div>
+				<div className="btn-group btn-group-justified w-100">
+					<Xbox owner={owner} edit={this.edit} id={this.props.member.GamerTag} state={this.props.state}/>
+					<Twitch owner={owner} edit={this.edit} id={twitch} state={this.props.state}/>
+					<Mixer owner={owner} edit={this.edit} id={mixer} state={this.props.state}/>
+				</div>
+				<div className="btn-group btn-group-justified w-100">
+					<Twitter owner={owner} edit={this.edit} id={this.metaValue("twitter")} state={this.props.state}/>
+					<Instagram owner={owner} edit={this.edit} id={this.metaValue("instagram")} state={this.props.state}/>
+				</div>
 			</div>
 		)
 	}
@@ -140,6 +225,10 @@ class LinkBar extends Component {
 				return this.editMixer()
 			case "xbox":
 				return this.editXbox()
+			case "twitter":
+				return this.editTwitter()
+			case "instagram":
+				return this.editInstagram()
 			default:
 				return this.display()
 		}
