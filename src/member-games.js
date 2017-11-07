@@ -54,7 +54,7 @@ class Games extends Component {
 		var rval = []
 		var dprVal = dpr()
 		var totalW = document.querySelector('#members').offsetWidth
-		var w = Math.round(totalW/3)
+		var w = Math.floor(totalW/3)
 		var brick = []
 		for ( var i in this.state.data ) {
 			var game = this.state.data[i]
