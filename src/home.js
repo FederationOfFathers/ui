@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import dpr from './lib/dpr'
 
 var homeStats = {
 	games: null,
@@ -107,11 +108,12 @@ class Home extends Component {
 		if ( this.state.games === false ) {
 			return null
 		}
+		var zoom = dpr()
 		var rval = []
 		for ( var i in this.state.games ) {
 			var img = null
 			if ( this.state.games[i].image !== "" ) {
-				img = (<img style={{height: "2em"}} className="float-right" src={"//i0.wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=128&w=128"} alt=""/>)
+				img = (<img style={{height: "32px", width: "32px"}} className="float-right" src={"//i"+(i%3)+".wp.com/dashboard.fofgaming.com" + this.state.games[i].image+ "?h=32&w=32&zoom=" + zoom} alt=""/>)
 			}
 			rval.push((
 				<div key={this.state.games[i].name} className="d-flex flex-row">
