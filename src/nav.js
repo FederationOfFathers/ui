@@ -34,7 +34,7 @@ class Nav extends Component {
 	render() {
 		var current = this.props.state.vars.main || false
 		return (
-			<div id="nav" className="container container-fluid fixed-bottom px-1 py-2">
+			<div id="nav" style={{backgroundColor:"#fff"}} className="container container-fluid fixed-bottom px-1 py-2">
 				<TeamNav state={this.props.state}/>
 				<MembersNav state={this.props.state}/>
 				<ul className="nav nav-pills nav-fill">
