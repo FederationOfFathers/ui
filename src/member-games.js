@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import dpr from './lib/dpr'
+import LazyLoad from 'react-lazy-load'
 
 var gamesCache = {}
 
@@ -20,8 +22,6 @@ class Games extends Component {
 		if ( this.state.user === this.props.member.ID ) {
 			return
 		}
-		console.log("here")
-		console.log(this)
 		this.fetch()
 		var data = false
 		if ( typeof gamesCache[this.props.member.ID] !== "undefined" ) {
@@ -52,13 +52,24 @@ class Games extends Component {
 			return null
 		}
 		var rval = []
+		var dprVal = dpr()
+		var totalW = document.querySelector('#members').offsetWidth
+		var w = Math.round(totalW/3)
+		var brick = []
 		for ( var i in this.state.data ) {
 			var game = this.state.data[i]
-			rval.push((
-				<div key={i} className="card clearfix my-2">
-					<img style={{minHeight: "200px"}} className="card-img-top" src={"//i0.wp.com/dashboard.fofgaming.com/api/v0/cdn/" + game.image } alt={game.name}/>
-				</div>
+			brick.push((
+				<img key={i} style={{width: w + "px", height: w + "px"}} className="card-img-top"
+					src={"//i"+(i%3)+".wp.com/dashboard.fofgaming.com/api/v0/cdn/" + game.image + "?w="+w+"&zoom=" + dprVal }
+					alt={game.name}/>
 			))
+			if ( (i+1)%3 === 0 ) {
+				rval.push((<LazyLoad key={i} offset={w*1.5} height={w}><div>{brick}</div></LazyLoad>))
+				brick = []
+			}
+		}
+		if ( brick.length > 0 ) {
+			rval.push((<LazyLoad key="last-brick" offset={w*1.5} height={w}><div>{brick}</div></LazyLoad>))
 		}
 		return rval
 	}
@@ -72,7 +83,7 @@ class Games extends Component {
 	render = () => {
 		var openClose = this.state.open ? "▲" : "▼"
 		return (
-			<div>
+			<div id="members">
 				<a onClick={this.click} className="text-light my-1 w-100 btn btn-primary">
 					<span style={{fontSize: '0.8em', marginTop: ".25em"}} className="float-right text-dark">{openClose}</span>
 					Recently Played Games
