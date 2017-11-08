@@ -34,12 +34,11 @@ class App extends Api {
 		return (
 			<div>
 					<div className="input-group">
-						<span className="input-group-addon" id="basic-addon1">code</span>
 						<input onChange={()=>{}}id="logincode" className="font-weight-bold form-control text-center text-uppercase" value={this.state.loginCode}/>
 						<Clipboard className="btn input-group-addon" data-clipboard-text={this.state.loginCode} onSuccess={()=>{
 							this.setState({copied: true})
 						}}>
-							<img style={{height: "1em"}} src="/clippy.svg" alt="Copy to clipboard"/>
+							&#x2398; copy code
 						</Clipboard>
 					</div>
 					{copied}
