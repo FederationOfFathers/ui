@@ -1,6 +1,7 @@
 import React from 'react';
 import LoggedIn from './logged-in.js';
 import Api from './api.js'
+import Clipboard from 'react-clipboard.js';
 import './App.css';
 
 class App extends Api {
@@ -10,6 +11,7 @@ class App extends Api {
 	}
 	componentDidMount = () => {
 		this.setState({
+			copied: false,
 			loginCode: false,
 			logincheck: false,
 			fetchingLoginCode: false,
@@ -22,23 +24,27 @@ class App extends Api {
 			</div>)
 	}
 	code = () => {
-		var rval = []
-		if ( typeof this.state.loginCode === "undefined" ) {
-			return rval
+		if ( typeof this.state.loginCode === "undefined" || ! this.state.loginCode ) {
+			return null
 		}
-		if ( !this.state.loginCode ) {
-			return rval
+		var copied = null
+		if ( this.state.copied ) {
+			copied = (<div className="my-1 alert alert-success" role="alert">code copied to clipboard</div>)
 		}
-		for ( var i=0; i<this.state.loginCode.length; i++ ) {
-			var classN = "mx-2 badge badge-primary"
-			if ( this.state.loginCode[i].match(/^[0-9]$/) ) {
-				classN = "mx-2 badge badge-secondary"
-			}
-			rval.push((
-				<span style={{fontFamily: '"Lucida Console", Monaco, monospace'}} className={classN} key={i}>{this.state.loginCode[i]}</span>
-			))
-		}
-		return rval
+		return (
+			<div>
+					<div className="input-group">
+						<span className="input-group-addon" id="basic-addon1">code</span>
+						<input onChange={()=>{}}id="logincode" className="font-weight-bold form-control text-center text-uppercase" value={this.state.loginCode}/>
+						<Clipboard className="btn input-group-addon" data-clipboard-text={this.state.loginCode} onSuccess={()=>{
+							this.setState({copied: true})
+						}}>
+							<img style={{height: "1em"}} src="/clippy.svg" alt="Copy to clipboard"/>
+						</Clipboard>
+					</div>
+					{copied}
+				</div>
+		)
 	}
 	newCode = () => {
 		return this.fetch("login/get")
@@ -46,7 +52,7 @@ class App extends Api {
 				return response.json()
 			})
 			.then((json) => {
-				this.setState({loginCode: json})
+				this.setState({loginCode: json, copied: false})
 			})
 	}
 	pleaseLogIn = () => {
@@ -66,9 +72,14 @@ class App extends Api {
 			<div className="app noauth text-center my-5">
 				<h1>Please log in.</h1>
 				<p>Send the following code to <span className="text-primary">@damnbot</span> in slack</p>
-				<h2 style={{textTransform: "uppercase"}}>{this.code()}</h2>
-				<p className="my-3 py-2 px-2 text-secondary text-justify bg-light">
-					Letters in the code are blue, and numbers are gray, to make it easier to tell the difference. You can send upper or lower case letters to damnbot, both will work
+				{this.code()}
+				<p className="my-3 py-2 px-2 text-justify">
+					Once you have sent the code in a direct message to <span className="text-primary">@damnbot </span>
+					in slack you can come back here and you should get
+					automatically logged in.
+				</p>
+				<p className="my-3 py-2 px-2 text-justify">
+					It doesn't matter if you send upper or lower case letters.
 				</p>
 			</div>
 		)
@@ -105,6 +116,7 @@ class App extends Api {
 		if ( false === this.state.loggedIn ) {
 			return this.pleaseLogIn()
 		}
+		new window.Clipboard('.btn')
 		return ( <LoggedIn state={this.state}/> );
 	}
 }
