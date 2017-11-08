@@ -166,7 +166,11 @@ class Api extends State {
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {
-				this.setState({raidbotToken: "fof-ut " + json})
+				if ( typeof json === "string" ) {
+					this.setState({raidbotToken: "fof-ut " + json})
+				} else {
+					this.setState({raidbotToken: false})
+				}
 			}.bind(this))
 	}
 	groups = () => {
@@ -179,7 +183,6 @@ class Api extends State {
 			}.bind(this))
 	}
 	joinSlack = (id, kind) => {
-		console.log("join " + id + " " + kind)
 		var op = null
 		if ( kind === "channel" ) {
 			op = this.fetch("channels/"+id+"/join")
@@ -243,12 +246,16 @@ class Api extends State {
 	ping = () => {
 		this.raidbotAuth()
 			.then(function() {
-				this.setState({loggedIn: true})
+				if ( this.state.raidbotToken === false ) {
+					this.setState({checkedAuth: true, loggedIn: false})
+					return
+				}
 				this.fetch( "ping" )
 					.then(function(response) {
 						return response.json()
 					})
 					.then(function(json) {
+						this.setState({checkedAuth: true})
 						if ( typeof json.user === "undefined" ) {
 							this.setState({loggedIn: false})
 							return
@@ -257,6 +264,7 @@ class Api extends State {
 							this.setState({loggedIn: false})
 							return
 						}
+						this.setState({loggedIn: true})
 						// json.admin = false // testing
 						json.didPing = true
 						json.loggedIn = true

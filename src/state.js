@@ -84,6 +84,7 @@ class State extends Component {
 			if ( value === null ) {
 				return
 			}
+			value.checkedAuth = false
 			value.hasher = hash
 			value.vars = hash.get()
 			value.hashString = window.location.hash
