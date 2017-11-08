@@ -12,6 +12,7 @@ class App extends Api {
 		this.setState({
 			loginCode: false,
 			logincheck: false,
+			fetchingLoginCode: false,
 		})
 	}
 	stillChecking = () => {
@@ -22,6 +23,12 @@ class App extends Api {
 	}
 	code = () => {
 		var rval = []
+		if ( typeof this.state.loginCode === "undefined" ) {
+			return rval
+		}
+		if ( !this.state.loginCode ) {
+			return rval
+		}
 		for ( var i=0; i<this.state.loginCode.length; i++ ) {
 			rval.push((
 				<span style={{fontFamily: '"Lucida Console", Monaco, monospace'}} className="mx-2 badge badge-primary" key={i}>{this.state.loginCode[i]}</span>
@@ -40,12 +47,16 @@ class App extends Api {
 	}
 	pleaseLogIn = () => {
 		if ( this.state.loginCode === false ) {
-			this.newCode()
-				.then(() =>{
-					this.setState({
-						loginChecker: window.setInterval(this.loginChecker, 1000),
-					})
+			if ( this.state.fetchingLoginCode === false ) {
+				this.setState({fetchingLoginCode: true})
+				this.newCode()
+					.then(() =>{
+						this.setState({
+							fetchingLoginCode: false,
+							loginChecker: window.setInterval(this.loginChecker, 1000),
+						})
 				})
+			}
 		}
 		return(
 			<div className="app noauth text-center my-5">
