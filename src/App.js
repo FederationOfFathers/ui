@@ -30,8 +30,12 @@ class App extends Api {
 			return rval
 		}
 		for ( var i=0; i<this.state.loginCode.length; i++ ) {
+			var classN = "mx-2 badge badge-primary"
+			if ( this.state.loginCode[i].match(/^[0-9]$/) ) {
+				classN = "mx-2 badge badge-secondary"
+			}
 			rval.push((
-				<span style={{fontFamily: '"Lucida Console", Monaco, monospace'}} className="mx-2 badge badge-primary" key={i}>{this.state.loginCode[i]}</span>
+				<span style={{fontFamily: '"Lucida Console", Monaco, monospace'}} className={classN} key={i}>{this.state.loginCode[i]}</span>
 			))
 		}
 		return rval
@@ -61,8 +65,11 @@ class App extends Api {
 		return(
 			<div className="app noauth text-center my-5">
 				<h1>Please log in.</h1>
-				<p>Send the following code @damnbot in slack</p>
-				<h2>{this.code()}</h2>
+				<p>Send the following code to <span className="text-primary">@damnbot</span> in slack</p>
+				<h2 style={{textTransform: "uppercase"}}>{this.code()}</h2>
+				<p className="my-3 py-2 px-2 text-secondary text-justify bg-light">
+					Letters in the code are blue, and numbers are gray, to make it easier to tell the difference. You can send upper or lower case letters to damnbot, both will work
+				</p>
 			</div>
 		)
 	}
