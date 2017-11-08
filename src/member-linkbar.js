@@ -84,7 +84,7 @@ class LinkBar extends Component {
 	editTwitch = () => {
 		return (
 			<div className="input-group my-2">
-				<span className="input-group-addon">twitch</span>
+				<span className="input-group-addon">twitch.com/</span>
 				<input onChange={this.changeTwitch} type="text" className="form-control" value={this.state.twitch}/>
 				<span className="input-group-btn">
 					<button onClick={this.saveTwitch} type="button" className="btn btn-primary">save</button>
@@ -105,7 +105,7 @@ class LinkBar extends Component {
 	editMixer = () => {
 		return (
 			<div className="input-group my-2">
-				<span className="input-group-addon">mixer</span>
+				<span className="input-group-addon">mixer.com/</span>
 				<input onChange={this.changeMixer} type="text" className="form-control" value={this.state.mixer}/>
 				<span className="input-group-btn">
 					<button onClick={this.saveMixer} type="button" className="btn btn-primary">save</button>
@@ -140,7 +140,7 @@ class LinkBar extends Component {
 	editTwitter = () => {
 		return(
 			<div className="input-group my-2">
-				<span className="input-group-addon">twitter</span>
+				<span className="input-group-addon">twitter.com/</span>
 				<input onChange={(e)=>{
 					this.setState({
 						twitter: e.target.value,
@@ -165,7 +165,7 @@ class LinkBar extends Component {
 	editInstagram = () => {
 		return(
 			<div className="input-group my-2">
-				<span className="input-group-addon">instagram</span>
+				<span className="input-group-addon">instagram.com/</span>
 				<input onChange={(e)=>{
 					this.setState({
 						instagram: e.target.value,
