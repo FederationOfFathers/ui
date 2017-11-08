@@ -70,10 +70,10 @@ class App extends Api {
 		return(
 			<div className="app noauth text-center my-5">
 				<h1>Please log in.</h1>
-				<p>Send the following code to <span className="text-primary">@damnbot</span> in slack</p>
+				<p>Send the following code to <a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="text-primary">@damnbot</a> in slack</p>
 				{this.code()}
 				<p className="my-3 py-2 px-2 text-justify">
-					Once you have sent the code in a direct message to <span className="text-primary">@damnbot </span>
+					Once you have sent the code in a direct message to <a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="text-primary">@damnbot </a>
 					in slack you can come back here and you should get
 					automatically logged in.
 				</p>
