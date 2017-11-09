@@ -2,6 +2,7 @@ import React from 'react';
 import LoggedIn from './logged-in.js';
 import Api from './api.js'
 import Clipboard from 'react-clipboard.js';
+import Slack from './lib/slack-deep-link'
 import './App.css';
 
 class App extends Api {
@@ -72,14 +73,14 @@ class App extends Api {
 				<h1 className="text-center">Please log in.</h1>
 				<p className="text-center">Follow the steps below to log in</p>
 				<p><strong>1 -</strong> Copy the code by clicking the button below</p>
-				<p>{this.code()}</p>
+				<div style={{marginBottom: "1em"}}>{this.code()}</div>
 				<p><strong>2 -</strong> Click the button below to message damnbot</p>
-				<p className="text-center"><a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="w-50 btn btn-primary">@damnbot</a></p>
+				<p className="text-center"><a href={Slack.bot()} className="w-50 btn btn-primary">@damnbot</a></p>
 				<p><strong>3 -</strong> Paste the code and push send</p>
 				<p><strong>4 -</strong> Return to this page to be logged in</p>
 				<p><strong>5 -</strong> Shenanigans</p>
 				<p>If you’re having problems visit the channel with the button below and let us know</p>
-				<p className="text-center"><a className="w-50 btn btn-primary"  href="slack://channel?team=T0381RKM5&id=C3GQM9N9H">#dashboard-help</a></p>
+				<p className="text-center"><a className="w-50 btn btn-primary"  href={Slack.help()}>#dashboard-help</a></p>
 			</div>
 		)
 	}
