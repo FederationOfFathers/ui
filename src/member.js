@@ -55,7 +55,9 @@ class Member extends Component {
 				<div className="card">
 					<div className="card-body">
 						<div className="clearfix">
-							<h4 className="card-title" onClick={()=>{window.open(Slack.link(this.props.member.ID))}}>
+							<h4 className="card-title" onClick={()=>{
+								window.location = Slack.link(this.props.member.ID)
+							}}>
 								<img
 									className="float-left mx-2 clearfix"
 									style={{width: '64px', height: '64px'}}
