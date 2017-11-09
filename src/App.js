@@ -2,7 +2,6 @@ import React from 'react';
 import LoggedIn from './logged-in.js';
 import Api from './api.js'
 import Clipboard from 'react-clipboard.js';
-import Slack from './lib/slack-deep-link'
 import './App.css';
 
 class App extends Api {
@@ -80,7 +79,7 @@ class App extends Api {
 				<p><strong>4 -</strong> Return to this page to be logged in</p>
 				<p><strong>5 -</strong> Shenanigans</p>
 				<p>If you’re having problems visit the channel with the button below and let us know</p>
-				<p className="text-center"><a className="w-50 btn btn-primary"  href={Slack.help()}>#dashboard-help</a></p>
+				<p className="text-center"><a className="w-50 btn btn-primary"  href="slack://user?team=T0381RKM5&id=C3GQM9N9H">#dashboard-help</a></p>
 			</div>
 		)
 	}
