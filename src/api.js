@@ -189,7 +189,7 @@ class Api extends State {
 		} else {
 			op = this.fetch("groups/"+id+"/join")
 		}
-		op.then(this.ping)
+		return op.then(this.ping)
 	}
 	statsHourly = (userID, statID, last) => {
 		return this.fetch("xhr/stats/v1/hourly.json?stats=" + statID + "&last=" + last + "&users=" + userID)
@@ -204,7 +204,7 @@ class Api extends State {
 		} else {
 			op = this.fetch("groups/"+id+"/leave")
 		}
-		op.then(this.ping)
+		return op.then(this.ping)
 	}
 	visibilitySlack = (id, set) => {
 		return this.putJSON(

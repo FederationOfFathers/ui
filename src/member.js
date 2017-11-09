@@ -4,6 +4,7 @@ import Channels from './member-channels'
 import SlackStats from './member-slack-activity'
 import Games from './member-games'
 import MembersNav from './nav-members'
+import Slack from './lib/slack-deep-link'
 
 class Member extends Component {
 	componentDidMount = () => {
@@ -54,7 +55,7 @@ class Member extends Component {
 				<div className="card">
 					<div className="card-body">
 						<div className="clearfix">
-							<h4 className="card-title">
+							<h4 className="card-title" onClick={()=>{window.open(Slack.link(this.props.member.ID))}}>
 								<img
 									className="float-left mx-2 clearfix"
 									style={{width: '64px', height: '64px'}}
