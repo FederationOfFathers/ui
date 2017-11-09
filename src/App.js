@@ -33,16 +33,16 @@ class App extends Api {
 		}
 		return (
 			<div>
-					<div className="input-group">
-						<input onChange={()=>{}}id="logincode" className="font-weight-bold form-control text-center text-uppercase" value={this.state.loginCode}/>
-						<Clipboard className="btn input-group-addon" data-clipboard-text={this.state.loginCode} onSuccess={()=>{
-							this.setState({copied: true})
-						}}>
-							&#x2398; copy code
-						</Clipboard>
-					</div>
-					{copied}
+				<div className="input-group">
+					<input onChange={()=>{}}id="logincode" className="font-weight-bold form-control text-center text-uppercase" value={this.state.loginCode}/>
+					<Clipboard className="btn btn-primary" data-clipboard-text={this.state.loginCode} onSuccess={()=>{
+						this.setState({copied: true})
+					}}>
+						&#x2398; copy code
+					</Clipboard>
 				</div>
+				{copied}
+			</div>
 		)
 	}
 	newCode = () => {
@@ -68,18 +68,18 @@ class App extends Api {
 			}
 		}
 		return(
-			<div className="app noauth text-center my-5">
-				<h1>Please log in.</h1>
-				<p>Send the following code to <a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="text-primary">@damnbot</a> in slack</p>
-				{this.code()}
-				<p className="my-3 py-2 px-2 text-justify">
-					Once you have sent the code in a direct message to <a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="text-primary">@damnbot </a>
-					in slack you can come back here and you should get
-					automatically logged in.
-				</p>
-				<p className="my-3 py-2 px-2 text-justify">
-					It doesn't matter if you send upper or lower case letters.
-				</p>
+			<div className="app noauth text-left my-5">
+				<h1 className="text-center">Please log in.</h1>
+				<p className="text-center">Follow the steps below to log in</p>
+				<p><strong>1 -</strong> Copy the code by clicking the button below</p>
+				<p>{this.code()}</p>
+				<p><strong>2 -</strong> Click the button below to message damnbot</p>
+				<p className="text-center"><a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="w-50 btn btn-primary">@damnbot</a></p>
+				<p><strong>3 -</strong> Paste the code and push send</p>
+				<p><strong>4 -</strong> Return to this page to be logged in</p>
+				<p><strong>5 -</strong> Shenanigans</p>
+				<p>If you’re having problems visit the channel with the button below and let us know</p>
+				<p className="text-center"><a className="w-50 btn btn-primary"  href="slack://channel?team=T0381RKM5&id=C3GQM9N9H">#dashboard-help</a></p>
 			</div>
 		)
 	}
