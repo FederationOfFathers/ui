@@ -75,7 +75,7 @@ class App extends Api {
 				<p><strong>1 -</strong> Copy the code by clicking the button below</p>
 				<div style={{marginBottom: "1em"}}>{this.code()}</div>
 				<p><strong>2 -</strong> Click the button below to message damnbot</p>
-				<p className="text-center"><a href={Slack.bot()} className="w-50 btn btn-primary">@damnbot</a></p>
+				<p className="text-center"><a href="slack://user?team=T0381RKM5&id=U1CR4ML94" className="w-50 btn btn-primary">@damnbot</a></p>
 				<p><strong>3 -</strong> Paste the code and push send</p>
 				<p><strong>4 -</strong> Return to this page to be logged in</p>
 				<p><strong>5 -</strong> Shenanigans</p>
