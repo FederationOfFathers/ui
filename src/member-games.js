@@ -14,7 +14,6 @@ class Games extends Component {
 			user: false,
 			open: false,
 			fetching: false,
-			days: 90,
 			data: data,
 		})
 	}
@@ -35,7 +34,7 @@ class Games extends Component {
 	}
 	fetch = () => {
 		this.setState({fetching: this.props.member.ID})
-		this.props.state.api.raw.fetch('games/player/' + this.props.member.ID + '/' + this.state.days + '.json')
+		this.props.state.api.raw.fetch('games/player/' + this.props.member.ID + '/' + this.props.state.days + '.json')
 			.then(function(response) {
 				return response.json()
 			})

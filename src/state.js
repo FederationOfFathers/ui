@@ -10,10 +10,14 @@ class State extends Component {
 			'team': {
 				setHostMoment: this.setHostMoment,
 			},
+			days: (num) => {
+				this.setState({days: num})
+			},
 		}
 	}
 	stateComponentWillMount = () => {
 		this.setState({
+			days: 7,
 			lastRaidFetch: null,
 			lastPingFetch: null,
 			lastChannelsFetch: null,

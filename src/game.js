@@ -14,7 +14,6 @@ class Game extends Component {
 			tz: Moment.tz.guess(),
 			gameID: false,
 			data: data,
-			days: 30,
 		})
 	}
 	componentDidMount = () => {
@@ -31,7 +30,7 @@ class Game extends Component {
 		this.fetch()
 	}
 	fetch = () => {
-		this.props.state.api.raw.fetch('games/played/' + this.props.state.vars.id + '/' + this.state.days + '.json')
+		this.props.state.api.raw.fetch('games/played/' + this.props.state.vars.id + '/' + this.props.state.days + '.json')
 			.then(function(response) {
 				return response.json()
 			})

@@ -17,7 +17,6 @@ class Home extends Component {
 			stats = homeStats.stats
 		}
 		this.setState({
-			days: 7,
 			topChannels: 6,
 			topGames: 8,
 			fetching: false,
@@ -43,7 +42,7 @@ class Home extends Component {
 
 	pullGameActivity = () => {
 		this.setState({fetching: "games"})
-		return this.props.state.api.raw.fetch('games/played/top/'+this.state.days+'/'+this.state.topGames+'.json')
+		return this.props.state.api.raw.fetch('games/played/top/'+this.props.state.days+'/'+this.state.topGames+'.json')
 			.then(function(response) {
 				return response.json()
 			})
@@ -66,7 +65,7 @@ class Home extends Component {
 
 	pullSlackActivity = () => {
 		this.setState({fetching: "stats"})
-		return this.props.state.api.raw.fetch('xhr/stats/v1/slack/activity/last-' + this.state.days + '.json')
+		return this.props.state.api.raw.fetch('xhr/stats/v1/slack/activity/last-' + this.props.state.days + '.json')
 			.then(function(response) {
 				return response.json()
 			})
@@ -192,7 +191,7 @@ class Home extends Component {
 		)
 	}
 	longer = () => {
-		var newDays = this.state.days
+		var newDays = this.props.state.days
 		switch( newDays ) {
 			default:
 				break
@@ -209,10 +208,11 @@ class Home extends Component {
 				newDays = 90
 				break;
 		}
-		this.setState({days: newDays, fetching: false})
+		this.props.state.callbacks.days(newDays)
+		this.setState({fetching: false})
 	}
 	shorter = () => {
-		var newDays = this.state.days
+		var newDays = this.props.state.days
 		switch( newDays ) {
 			default:
 				break
@@ -229,7 +229,8 @@ class Home extends Component {
 				newDays = 60
 				break;
 		}
-		this.setState({days: newDays, fetching: false})
+		this.props.state.callbacks.days(newDays)
+		this.setState({fetching: false})
 	}
 	render = () => {
 		return (
@@ -237,7 +238,7 @@ class Home extends Component {
 				<form>
 				<div className="form-group clearfix">
 					<button style={{marginLeft: "12.5%" }} className="btn-sm btn-primary float-left w-25 btn" onClick={this.shorter}>fewer</button>
-					<input disabled className="mx-1 form-control-sm text-center float-left w-25 m-0 form-text form-control" value={this.state.days+" days"} type="text"/>
+					<input disabled className="mx-1 form-control-sm text-center float-left w-25 m-0 form-text form-control" value={this.props.state.days+" days"} type="text"/>
 					<button className="btn-sm btn-primary float-left w-25 btn" onClick={this.longer}>more</button>
 				</div>
 				</form>
