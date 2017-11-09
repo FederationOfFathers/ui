@@ -102,6 +102,7 @@ class ToggleVisibility extends Component {
 class Channels extends Component {
 	componentWillMount = () => {
 		this.setState({
+			filter: "",
 			viewing: "details",
 		})
 	}
@@ -115,6 +116,9 @@ class Channels extends Component {
 	merge = () => {
 		var list = [];
 		for ( var c in this.props.state.chanList ) {
+			if ( !this.props.state.chanList[c].name.includes(this.state.filter) ) {
+				continue
+			}
 			list.push({
 				sortname: this.props.state.chanList[c].name.replace(/[^a-zA-Z0-9]/, ""),
 				raw: this.props.state.chanList[c],
@@ -123,6 +127,9 @@ class Channels extends Component {
 			})
 		}
 		for ( var g in this.props.state.groupList ) {
+			if ( !this.props.state.groupList[g].name.includes(this.state.filter) ) {
+				continue
+			}
 			var isMember = (this.props.state.groupList[g].members.indexOf(this.props.state.user.name) >= 0)
 			if ( isMember === false && this.props.state.admin === false && this.props.state.groupList[g].visible !== "true" ) {
 				continue
@@ -196,6 +203,10 @@ class Channels extends Component {
 				<button className="btn btn-primary w-100 my-1" onClick={this.toggleViewing}>
 					Switch to channel { this.state.viewing === "stats" ? "details" : "stats" }
 				</button>
+				<input onChange={(e)=>{
+					this.setState({filter:e.target.value})
+				}}
+				type="text" className="form-text form-control w-100 my-1" value={this.state.filter} placeholder="filter"/>
 				<ul className="list-group">{content}</ul>
 			</div>
 		);
