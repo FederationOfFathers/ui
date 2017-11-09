@@ -147,7 +147,7 @@ class Home extends Component {
 		return (
 			<div>
 				<div className="d-flex flex-row">
-					<div className="w-75"><strong>Most PLayed Games</strong></div>
+					<div className="w-75"><strong>Most Played Games</strong></div>
 					<div className="w-25 text-left"><strong>Players</strong></div>
 				</div>
 				{rval}
