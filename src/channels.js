@@ -114,9 +114,10 @@ class Channels extends Component {
 		}
 	}
 	merge = () => {
+		var match = this.state.filter.toLowerCase()
 		var list = [];
 		for ( var c in this.props.state.chanList ) {
-			if ( !this.props.state.chanList[c].name.includes(this.state.filter) ) {
+			if ( !this.props.state.chanList[c].name.toLowerCase().includes(match) ) {
 				continue
 			}
 			list.push({
@@ -127,7 +128,7 @@ class Channels extends Component {
 			})
 		}
 		for ( var g in this.props.state.groupList ) {
-			if ( !this.props.state.groupList[g].name.includes(this.state.filter) ) {
+			if ( !this.props.state.groupList[g].name.toLowerCase().includes(match) ) {
 				continue
 			}
 			var isMember = (this.props.state.groupList[g].members.indexOf(this.props.state.user.name) >= 0)
