@@ -19,18 +19,23 @@ class LinkBar extends Component {
 		return this.props.state.users[this.props.state.user.id].User
 	}
 	streams = () => {
-		if ( typeof this.props.state.meta.streams[this.props.member.ID] === "undefined" ) {
-			return { Twitch: "", Beam: "" }
-		}
-		return this.props.state.meta.streams[this.props.member.ID]
+		this.props.state.api.user.streams.get(this.props.member.ID)
+			.then(() => {
+				console.log("got")
+				console.log(this.props.state.meta.streams[this.props.member.ID])
+				this.setState({
+					twitch: this.props.state.meta.streams[this.props.member.ID].Twitch,
+					mixer: this.props.state.meta.streams[this.props.member.ID].Beam,
+				})
+			})
 	}
 	componentWillMount = () => {
 		this.setState({
 			id: this.props.member.ID,
 			editing: false,
 			xbl: this.user().GamerTag,
-			twitch: this.streams().Twitch,
-			mixer: this.streams().Beam,
+			twitch: "",
+			mixer: "",
 			twitter: '',
 			instagram: '',
 			setFor: false,
@@ -50,8 +55,6 @@ class LinkBar extends Component {
 				id: p.member.ID,
 				editing: false,
 				xbl: "",
-				twitch: "",
-				mixer: "",
 				twitter: twit,
 				instagram: gram,
 				setFor: false,
@@ -62,10 +65,7 @@ class LinkBar extends Component {
 		if ( this.state.setFor === false ) {
 			this.setState({setFor: this.props.member.ID})
 			if ( this.state.mixer === "" || this.state.twitch === "" ) {
-				var s = this.streams()
-				if ( s.Beam !== "" || s.Twitch !== "" ) {
-					this.setState({mixer: s.Beam, twitch: s.Twitch})
-				}
+				this.streams()
 			}
 		}
 	}
