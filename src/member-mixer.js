@@ -9,7 +9,7 @@ class Mixer extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
-		window.location = "//mixer.com/" + this.props.id
+		window.open("//mixer.com/" + this.props.id)
 	}
 	render = () => {
 		var classes = "btn"

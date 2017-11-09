@@ -9,7 +9,7 @@ class Twitter extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
-		window.location = "https://twitter.com/" + this.props.id
+		window.open("https://twitter.com/" + this.props.id)
 	}
 	render = () => {
 		var classes = "btn"

@@ -9,7 +9,7 @@ class Twitch extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
-		window.location = "https://go.twitch.tv/" + this.props.id
+		window.open("https://go.twitch.tv/" + this.props.id)
 	}
 	render = () => {
 		var classes = "btn"

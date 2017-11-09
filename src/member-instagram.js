@@ -9,7 +9,7 @@ class Instagram extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
-		window.location = "https://www.instagram.com/" + this.props.id
+		window.open( "https://www.instagram.com/" + this.props.id )
 	}
 	render = () => {
 		var classes = "btn"

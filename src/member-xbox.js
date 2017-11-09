@@ -9,7 +9,7 @@ class Xbox extends Component {
 		if ( this.props.id === "" ) {
 			return
 		}
-		window.location = "https://account.xbox.com/en-US/Profile?GamerTag="+this.props.id
+		window.open("https://account.xbox.com/en-US/Profile?GamerTag="+this.props.id)
 	}
 	render = () => {
 		var classes = "btn"
