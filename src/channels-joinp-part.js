@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import Slack from './lib/slack-deep-link'
 
 class JoinPart extends Component {
 	callback = () => {
@@ -7,6 +8,9 @@ class JoinPart extends Component {
 		}
 		if ( this.props.kind === "join" ) {
 			this.props.callback(this.props.id, this.props.type)
+				.then(() =>{
+					window.location=Slack.link("channel", this.props.id)
+				})
 		} else {
 			this.props.callback(this.props.id, this.props.type)
 		}
