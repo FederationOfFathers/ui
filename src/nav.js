@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import TeamNav from './nav-team'
-import MembersNav from './nav-members'
 
 class NavLink extends Component {
 	render() {
@@ -36,7 +35,6 @@ class Nav extends Component {
 		return (
 			<div id="nav" style={{backgroundColor:"#fff"}} className="container container-fluid fixed-bottom px-1 py-2">
 				<TeamNav state={this.props.state}/>
-				<MembersNav state={this.props.state}/>
 				<ul className="nav nav-pills nav-fill">
 					<NavLink text="Home" active={"home" === current} nav={this.nav("first")}/>
 					<NavLink text="Team" active={"team" === current} nav={this.nav("team")}/>

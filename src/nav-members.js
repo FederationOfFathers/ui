@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Select from 'react-virtualized-select'
+import 'react-select/dist/react-select.css'
+import 'react-virtualized/styles.css'
+import 'react-virtualized-select/styles.css'
 
 class MembersNav extends Component {
 	users = () => {
@@ -19,7 +23,7 @@ class MembersNav extends Component {
 		var rval = []
 		for ( var uid in users ) {
 			var user = users[uid]
-			rval.push(<option user-id={"u-" + user.ID} key={uid} value={user.Name}>{user.DisplayName}</option>)
+			rval.push({label: user.DisplayName, value: user.Name})
 		}
 		return rval
 	}
@@ -33,14 +37,11 @@ class MembersNav extends Component {
 		return (
 			<form>
 				<div className="form-group">
-					<select
-						onChange={this.userClick}
-						className="form-control"
+					<Select
+						options={this.users()}
 						id="users"
-						style={{height: "3em"}}
-						value={this.props.state.vars.member}>
-						{this.users()}
-					</select>
+						onChange={(s)=>{if ( s === null ) { return } this.props.state.hasher.set({member: s.value})}}
+						value={this.props.state.vars.member}/>
 				</div>
 			</form>
 		)

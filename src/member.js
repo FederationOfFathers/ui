@@ -3,6 +3,7 @@ import LinkBar from './member-linkbar'
 import Channels from './member-channels'
 import SlackStats from './member-slack-activity'
 import Games from './member-games'
+import MembersNav from './nav-members'
 
 class Member extends Component {
 	componentDidMount = () => {
@@ -49,6 +50,7 @@ class Member extends Component {
 	render = () => {
 		return (
 			<div className="members">
+				<MembersNav state={this.props.state}/>
 				<div className="card">
 					<div className="card-body">
 						<div className="clearfix">
