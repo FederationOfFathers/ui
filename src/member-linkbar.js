@@ -4,6 +4,7 @@ import Mixer from './member-mixer'
 import Twitch from './member-twitch'
 import Twitter from './member-twitter'
 import Instagram from './member-instagram'
+import Filter from './lib/sanitize-social-input'
 
 class LinkBar extends Component {
 	metaValue = ( key ) => {
@@ -79,7 +80,7 @@ class LinkBar extends Component {
 			}.bind(this))
 	}
 	changeTwitch = (e) => {
-		this.setState({twitch: e.target.value})
+		this.setState({twitch: Filter.social(e.target.value)})
 	}
 	editTwitch = () => {
 		return (
@@ -100,7 +101,7 @@ class LinkBar extends Component {
 			}.bind(this))
 	}
 	changeMixer = (e) => {
-		this.setState({mixer: e.target.value})
+		this.setState({mixer: Filter.social(e.target.value)})
 	}
 	editMixer = () => {
 		return (
@@ -143,7 +144,7 @@ class LinkBar extends Component {
 				<span className="input-group-addon">twitter.com/</span>
 				<input onChange={(e)=>{
 					this.setState({
-						twitter: e.target.value,
+						twitter: Filter.social(e.target.value),
 					})
 				}} type="text" className="form-control" value={this.state.twitter}/>
 				<span className="input-group-btn">
@@ -168,7 +169,7 @@ class LinkBar extends Component {
 				<span className="input-group-addon">instagram.com/</span>
 				<input onChange={(e)=>{
 					this.setState({
-						instagram: e.target.value,
+						instagram: Filter.social(e.target.value),
 					})
 				}} type="text" className="form-control" value={this.state.instagram}/>
 				<span className="input-group-btn">
