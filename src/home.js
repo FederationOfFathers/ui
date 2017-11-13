@@ -190,58 +190,9 @@ class Home extends Component {
 			</div>
 		)
 	}
-	longer = () => {
-		var newDays = this.props.state.days
-		switch( newDays ) {
-			default:
-				break
-			case 7:
-				newDays = 14
-				break;
-			case 14:
-				newDays = 30
-				break;
-			case 30:
-				newDays = 60
-				break;
-			case 60:
-				newDays = 90
-				break;
-		}
-		this.props.state.callbacks.days(newDays)
-		this.setState({fetching: false})
-	}
-	shorter = () => {
-		var newDays = this.props.state.days
-		switch( newDays ) {
-			default:
-				break
-			case 14:
-				newDays = 7
-				break;
-			case 30:
-				newDays = 14
-				break;
-			case 60:
-				newDays = 30
-				break;
-			case 90:
-				newDays = 60
-				break;
-		}
-		this.props.state.callbacks.days(newDays)
-		this.setState({fetching: false})
-	}
 	render = () => {
 		return (
 			<div>
-				<form>
-				<div className="form-group clearfix">
-					<button style={{marginLeft: "12.5%" }} className="btn-sm btn-primary float-left w-25 btn" onClick={this.shorter}>fewer</button>
-					<input disabled className="mx-1 form-control-sm text-center float-left w-25 m-0 form-text form-control" value={this.props.state.days+" days"} type="text"/>
-					<button className="btn-sm btn-primary float-left w-25 btn" onClick={this.longer}>more</button>
-				</div>
-				</form>
 				{this.slack()}
 				{this.games()}
 			</div>

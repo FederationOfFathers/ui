@@ -111,8 +111,6 @@ class App extends Api {
 						this.newCode()
 						return
 					default:
-						console.log("check")
-						console.log(json)
 						return
 				}
 			})

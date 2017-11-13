@@ -6,6 +6,7 @@ import Channels from './channels'
 import Members from './members'
 import Home from './home'
 import Game from './game'
+import Menu from './menu'
 
 class LoggedIn extends Component {
 	renderSection = () => {
@@ -13,6 +14,8 @@ class LoggedIn extends Component {
 			default:
 				this.props.state.hasher.replace({main: "home"})
 				return
+			case "menu":
+				return (<Menu state={this.props.state}/>)
 			case "home":
 				return (<Home state={this.props.state}/>)
 			case "team":

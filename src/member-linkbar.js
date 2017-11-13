@@ -22,8 +22,6 @@ class LinkBar extends Component {
 	streams = () => {
 		this.props.state.api.user.streams.get(this.props.member.ID)
 			.then(() => {
-				console.log("got")
-				console.log(this.props.state.meta.streams[this.props.member.ID])
 				this.setState({
 					twitch: this.props.state.meta.streams[this.props.member.ID].Twitch,
 					mixer: this.props.state.meta.streams[this.props.member.ID].Beam,

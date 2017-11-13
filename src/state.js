@@ -103,8 +103,6 @@ class State extends Component {
 			}
 			this.setState(value)
 		} catch(e) {
-			console.log("attempted to load saved state got error: ")
-			console.log(e)
 			return
 		}
 	}

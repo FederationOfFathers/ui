@@ -61,10 +61,6 @@ class Game extends Component {
 			members.push((
 				<a key={i} className="my-1" style={{width: "49%", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}
 					onClick={(e) => {
-						console.log({
-							main: "members",
-							member: e.target.getAttribute("player"),
-						})
 						this.props.state.hasher.replace({
 							main: "members",
 							member: e.target.getAttribute("player"),
