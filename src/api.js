@@ -3,7 +3,6 @@ import State from './state.js'
 
 class Api extends State {
 	apiComponentWillMount = () => {
-		this.load()
 		this.setState({
 			api: {
 				raw: {
@@ -16,6 +15,7 @@ class Api extends State {
 				},
 				stats: {
 					hourly: this.statsHourly,
+					daily: this.statsDaily,
 				},
 				team: {
 					host: this.raidHost,
@@ -191,6 +191,12 @@ class Api extends State {
 		}
 		return op.then(this.ping)
 	}
+	statsDaily = (userID, statID, last) => {
+		return this.fetch("xhr/stats/v1/daily.json?stats=" + statID + "&last=" + last + "&users=" + userID)
+			.then(function(response) {
+				return response.json()
+			})
+	}
 	statsHourly = (userID, statID, last) => {
 		return this.fetch("xhr/stats/v1/hourly.json?stats=" + statID + "&last=" + last + "&users=" + userID)
 			.then(function(response) {
@@ -281,7 +287,6 @@ class Api extends State {
 							didPing: false,
 							loggedIn: false,
 						})
-						this.save()
 					}.bind(this)
 					)
 			}.bind(this)

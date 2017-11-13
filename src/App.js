@@ -6,6 +6,9 @@ import Slack from './lib/slack-deep-link'
 import './App.css';
 
 class App extends Api {
+	componentDidUpdate = () => {
+		this.save()
+	}
 	componentWillMount = () => {
 		this.stateComponentWillMount()
 		this.apiComponentWillMount()

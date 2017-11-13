@@ -44,6 +44,7 @@ class State extends Component {
 				streams: {},
 			}
 		})
+		this.load()
 		this.callbacks();
 		hash.registerListener(this.hashChange);
 		window.onresize = function() {
@@ -57,7 +58,6 @@ class State extends Component {
 		var host = this.state.raidHost
 		host.m = m
 		this.setState({raidhost: host})
-		this.save()
 	}
 	setNavHeight = ( height ) => {
 		this.setState({ navHeight: height })

@@ -10,37 +10,39 @@ class SlackStats extends Component {
 			tz: Moment.tz.guess(),
 		})
 	}
+	emptyLast = () => {
+		var m = Moment().utc()
+		var rval = {}
+		for ( var i=0; i<this.props.state.days; i++ ) {
+			if ( i > 0 ) {
+				m.subtract(24, "hour")
+			}
+			var key = m.format('YYYY-MM-DDT00:00:00') + "Z"
+			rval[Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD')] = {
+				name: Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD'),
+				l: m.format('YYYY-MM-DDT00:00:00') + "Z",
+				v: 0,
+			}
+		}
+		return rval
+	}
+	processDaily = (json) => {
+		var d = this.emptyLast()
+		var data = []
+		for (var i in d) {
+			if ( typeof json[this.props.member.ID][32][d[i].l] !== "undefined" ) {
+				d[i].v += json[this.props.member.ID][32][d[i].l]
+			}
+			data.push(d[i])
+		}
+		data.reverse()
+		this.setState({stats: data})
+	}
 	componentDidUpdate = () => {
 		if ( this.state.member !== this.props.member.ID ) {
-			var hours = 720
 			this.setState({member: this.props.member.ID, stats: false})
-			this.props.state.api.stats.hourly(this.props.member.ID, 32, hours)
-				.then(function(json) {
-					if ( typeof json[this.props.member.ID] === "undefined" ) {
-						return
-					}
-					var h = {}
-					var m = Moment().utc()
-					for ( var i=0; i<hours; i++ ) {
-						if ( i > 0 ) {
-							m.subtract(1, "hour")
-						}
-						var local = Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD')
-						var label = m.format('YYYY-MM-DDTHH:00:00') + "Z"
-						if ( typeof h[local] === "undefined" ) {
-							h[local] = {name: local, v: 0}
-						}
-						if ( typeof json[this.props.member.ID][32][label] !== "undefined" ) {
-							h[local].v += json[this.props.member.ID][32][label]
-						}
-					}
-					var data = []
-					for (var key in h) {
-						data.push(h[key])
-					}
-					data.reverse()
-					this.setState({stats: data})
-				}.bind(this))
+			this.props.state.api.stats.daily(this.props.member.ID, 32, this.props.state.days)
+				.then(this.processDaily)
 		}
 	}
 	render = () => {
@@ -49,7 +51,7 @@ class SlackStats extends Component {
 		}
 		return (
 			<div className="my-1 text-center">
-				<h6>Recent Slack Activity (30 days)</h6>
+				<h6>Recent Slack Activity ({this.props.state.days} days)</h6>
 				<ResponsiveContainer width="100%" height={50} margin={{top: 0, right: 0, left: 0, bottom: 0}}>
 					<BarChart data={this.state.stats}>
 						<Bar type="natural" dot={false} dataKey='v' label={false}/>
