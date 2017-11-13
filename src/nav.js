@@ -2,22 +2,33 @@ import React, { Component } from 'react';
 import TeamNav from './nav-team'
 
 class NavLink extends Component {
+	nav = () => {
+		if ( "☰" === this.props.text && true === this.props.active ) {
+			window.history.back()
+			return
+		}
+		this.props.nav()
+	}
 	render() {
 		var classes = "nav-link mx-1"
 		if ( true === this.props.active ) {
-			classes = classes + " active"
+			classes = classes + " active text-white font-weight-bold px-1"
 		}
 		var aStyle = {
 			cursor: "pointer",
 		}
+		var txt = this.props.text
 		if ( "☰" === this.props.text ) {
+			if ( true === this.props.active ) {
+				txt = "✖"
+			}
 			aStyle['paddingLeft'] = "0.25em"
 			aStyle['paddingRight'] = "0.25em"
 			aStyle['marginLeft'] = "0"
 		}
 		return(
 			<li className="nav-item text-center" style={{fontSize: "0.7em", width: (this.props.width + "%"), maxWidth: (this.props.width + "%")}}>
-				<a style={aStyle} className={classes} onClick={this.props.nav}>{this.props.text}</a>
+				<a style={aStyle} className={classes} onClick={this.nav}>{txt}</a>
 			</li>
 		);
 	}
