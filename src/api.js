@@ -166,11 +166,14 @@ class Api extends State {
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {
-				if ( typeof json === "string" ) {
+				if ( typeof json === "string" && json !== "" ) {
 					this.setState({raidbotToken: "fof-ut " + json})
 				} else {
-					this.setState({raidbotToken: false})
+					this.setState({checkedAuth: true, loggedIn: false, raidbotToken: false})
 				}
+			}.bind(this))
+			.catch(function(error) {
+					this.setState({raidbotToken: false})
 			}.bind(this))
 	}
 	groups = () => {

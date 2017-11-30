@@ -17,7 +17,6 @@ class SlackStats extends Component {
 			if ( i > 0 ) {
 				m.subtract(24, "hour")
 			}
-			var key = m.format('YYYY-MM-DDT00:00:00') + "Z"
 			rval[Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD')] = {
 				name: Moment.tz(m.format(), this.state.tz).format('YYYY-MM-DD'),
 				l: m.format('YYYY-MM-DDT00:00:00') + "Z",
