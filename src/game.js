@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'moment-timezone'
 import dpr from './lib/dpr'
+import dim from './lib/dim'
 
 var gameCache = {}
 
@@ -43,7 +44,13 @@ class Game extends Component {
 		if ( this.state.data === false ) {
 			return null
 		}
-		var w = document.querySelector('#game').offsetWidth
+		var w = 512;
+		var container = document.querySelector('#game');
+		if ( container === null ) {
+			w = dim.w()
+		} else {
+			w = container.offsetWidth
+		}
 		var zoom = dpr()
 		var rval = []
 		var members = []
