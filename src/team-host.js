@@ -86,8 +86,10 @@ class Host extends Component {
 		var channels = [
 			(<option key="none" value="">Select A Channel</option>)
 		]
-		for ( var cID in this.props.state.channels ) {
-			channels.push(<option key={cID}>{this.props.state.channels[cID].name}</option>)
+		for ( var cID in this.props.state.chanList ) {
+			if ( "true" === this.props.state.chanList[cID].visible ) {
+				channels.push(<option key={cID}>{this.props.state.chanList[cID].name}</option>)
+			}
 		}
 		return(
 			<div className="form-group">
