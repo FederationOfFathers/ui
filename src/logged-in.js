@@ -32,9 +32,9 @@ class LoggedIn extends Component {
 	}
 	render = () => {
 		return (
-			<div className="app">
+			<div className="app col-sm-12">
 				<Nav state={this.props.state}/>
-				<div className="px-3 py-3"
+				<div className="py-3"
 					style={{
 						position: "absolute",
 						top: 0,

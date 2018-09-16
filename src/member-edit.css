@@ -1,0 +1,124 @@
+.member-edit-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.member-edit-form-section {
+    flex: 1 0 280px;
+    padding: 5px;
+    max-width: 280px;
+}
+.member-edit-form-actions {
+    width: 100%;
+    padding: 5px;
+}
+.member-edit-form .field{
+    /* width: 100%; */
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    background: grey;
+    padding: 7px 5px;
+    font-variant-caps: small-caps;
+    border-radius: 5px;
+    margin: 3px 0;
+}
+
+.member-edit-form .field label {
+    flex: 1 0 75px;
+    margin: 0;
+    color: white;
+}
+
+.member-edit-form .field input {
+    /* flex: 2 0 200px; */
+    padding: 2px;
+    margin: 0;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+/* Xbox */
+.member-edit-form-section .field.xbl {
+    background: #107c10;
+    border: 1px solid #084408;
+}
+
+.member-edit-form-section .field.xbl input {
+    background: #7bb47b;
+}
+
+/* PS4 */
+.member-edit-form-section .field.ps4 {
+    background: #003791;
+    border: 1px solid #001d4d;
+}
+
+.member-edit-form-section .field.ps4 input {
+    background: #97a3b6;
+}
+
+/* Battle.net */
+.member-edit-form-section .field.bnet {
+    background: #00B6EF;
+    border: 1px solid rgb(1, 77, 100);
+}
+
+.member-edit-form-section .field.bnet input {
+    background: rgb(146, 215, 236);
+}
+
+/* Twitch */
+.member-edit-form-section .field.twitch {
+    background: #6441A4 ;
+    border: 1px solid rgb(33, 22, 53) ;
+}
+
+.member-edit-form-section .field.twitch input {
+    background: rgb(192, 167, 236) ;
+}
+
+/* Mixer */
+.member-edit-form-section .field.mixer {
+    background: #1FBAED ;
+    border: 1px solid rgb(19, 67, 83) ;
+}
+
+.member-edit-form-section .field.mixer input {
+    background: rgb(149, 212, 233);
+}
+
+/* YouTube */
+.member-edit-form-section .field.youtube {
+    background: #FF0000 ;
+    border: 1px solid #3a0000 ;
+}
+
+.member-edit-form-section .field.youtube input {
+    background: #fca3a3;
+}
+
+/* Twitter */
+.member-edit-form-section .field.twitter {
+    background: #1DA1F2 ;
+    border: 1px solid #657786;
+}
+
+.member-edit-form-section .field.twitter input {
+    background: #AAB8C2;
+}
+
+/* Instagram */
+.member-edit-form-section .field.instagram {
+    background: #EE176A ;
+    border: 1px solid #690e31;
+}
+
+.member-edit-form-section .field.instagram input {
+    background: #d3a6b7;
+}
+
