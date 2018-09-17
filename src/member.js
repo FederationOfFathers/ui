@@ -12,12 +12,15 @@ class Member extends Component {
 	componentDidMount = () => {
 		this.setState({mounted: true, save: false})
 	}
-	componentWillMount = () => {
-		this.setState({
-			currentID: this.props.member.ID,
+	constructor(props) {
+		super(props);
+		this.state = {
+			currentID: props.member.ID,
 			mounted: false,
-			fetch: false
-		})
+			fetch: false,
+			meta: {},
+			streams: {},
+		}
 	}
 	componentDidUpdate = ( p ) => {
 		if ( this.state.mounted === false ) {
@@ -30,29 +33,26 @@ class Member extends Component {
 			this.fetch()
 		}
 	}
-	fetch = () => {
+	async fetch() {
 		var now = new Date()
 		this.setState({fetch: now.getTime()})
-		this.props.state.api.user.streams.get(this.state.currentID)
-			.then(function() {
-				this.props.state.api.user.meta.get(this.state.currentID)
-					.then(function() {
-						this.props.state.api.user.meta.get(this.state.currentID)
-							.then(()=>{
-								this.setState({meta: this.props.state.meta.users[this.state.currentID]})
-							})
-					}.bind(this))
-			}.bind(this))
-			.catch(function() {
-				this.setState({fetch: false})
-			}.bind(this))
-	}
-	reloadMeta = () => {
-		this.setState({meta: this.props.state.meta.users[this.state.currentID]})
+		try {
+			await this.props.state.api.user.streams.get(this.state.currentID);
+			await this.props.state.api.user.meta.get(this.state.currentID);	
+								
+			this.setState({
+				meta: this.props.state.meta.users[this.state.currentID],
+				streams: this.props.state.meta.streams[this.props.member.ID]
+			});
+		} catch(err) {
+			this.setState({fetch: false});
+		}
 	}
 	editFinished = () => {
-		console.log("EDIT FINISHED")
-		this.setState({editMode: false})
+		this.setState({editMode: false});
+		setTimeout(() => {
+			this.setState({fetch: false})
+		}, 500);
 	}
 	render = () => {
 		const isOwner = this.props.member.Name === this.props.state.user.name;
@@ -72,7 +72,7 @@ class Member extends Component {
 							{this.props.member.DisplayName}
 						</h6>
 					</div>
-					<div className="member-actions" style={{'padding-left': '5px'}}>
+					<div className="member-actions" style={{paddingLeft: '5px'}}>
 						{ isOwner && 
 							(!this.state.editMode &&
 								<MemberActionButton icon='edit' onClick={()=>{this.setState({editMode: true})}}>edit</MemberActionButton>
@@ -82,9 +82,9 @@ class Member extends Component {
 				</div>
 				<div className="py-1">
 				{ this.state.editMode ?
-					(<MemberEdit member={this.props.member} state={this.props.state} editCallback={this.editFinished}/>) :
+					(<MemberEdit member={this.props.member} state={this.props.state} meta={this.state.meta} editCallback={this.editFinished} />) :
 					(<div>
-						<LinkBar state={this.props.state} meta={this.state.meta} member={this.props.member} reloadMeta={this.reloadMeta}/>
+						<LinkBar state={this.props.state} meta={this.state.meta} member={this.props.member} streams={this.state.streams}/>
 						<SlackStats member={this.props.member} state={this.props.state}/>
 						<Channels member={this.props.member} state={this.props.state}/>
 						<Games member={this.props.member} state={this.props.state}/>

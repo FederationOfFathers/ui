@@ -32,19 +32,21 @@ class LoggedIn extends Component {
 	}
 	render = () => {
 		return (
-			<div className="app col-sm-12">
+			<div className="app">
 				<Nav state={this.props.state}/>
-				<div className="py-3"
-					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						height: this.props.state.windowHeight - this.props.state.navHeight,
-						width: "100%",
-						marginBottom: this.props.state.navHeight,
-						overflow: "auto",
-					}}>
-					{this.renderSection()}
+					<div className="row py-3"
+						style={{
+							// position: "absolute",
+							// top: 0,
+							// left: 0,
+							height: this.props.state.windowHeight - this.props.state.navHeight,
+							// width: "100%",
+							marginBottom: this.props.state.navHeight,
+							overflow: "auto",
+						}}>
+					<div className="col-sm-12">
+						{this.renderSection()}
+					</div>
 				</div>
 			</div>
 		);
