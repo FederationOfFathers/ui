@@ -11,6 +11,7 @@ class LinkBar extends Component {
 			bnet: getValueOrEmpty(this.props.meta.bnet),
 			twitch: getValueOrEmpty(this.props.streams.Twitch),
 			mixer: getValueOrEmpty(this.props.streams.Beam),
+			youtube: getValueOrEmpty(this.props.streams.Youtube),
 			twitter: getValueOrEmpty(this.props.meta.twitter),
 			instagram: getValueOrEmpty(this.props.meta.instagram),
 		}
@@ -38,12 +39,14 @@ class LinkBar extends Component {
 						<LinkButton className="mixer"
 							text={data.mixer}
 							link={"https://mixer.com/" + data.mixer}/>
+						<LinkButton className="youtube"
+							text={data.youtube}/>
 					</div>
 				 }
 				{
 					(data.twitter || data.instagram) &&
 					<div className="link-button-group">
-						<h5>Social Media Networks</h5>
+						<h5>Social Media</h5>
 						<LinkButton className="twitter" 
 							text={data.twitter}
 							link={"https://twitter.com/" + data.twitter}/>

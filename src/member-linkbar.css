@@ -54,6 +54,10 @@
     background: url(/images/icon-mixer.png);
     background-size: contain;
 }
+.link-button-group button.youtube .icon {
+    background: url(/images/icon-youtube.png);
+    background-size: contain;
+}
 .link-button-group button.twitter .icon {
     background: url(/images/icon-twitter.png);
     background-size: contain;

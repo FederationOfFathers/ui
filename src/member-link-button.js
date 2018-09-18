@@ -9,8 +9,7 @@ class MemberLinkButton extends Component {
             window.open(this.props.link);
         }
     }
-    copyToClipboard(button) {
-        //TODO
+    copyToClipboard() {
         const el = document.createElement('textarea');
         el.value = this.props.text;
         document.body.appendChild(el);

@@ -15,4 +15,5 @@ export const ActionButton = styled(Button)`
 
 export const MemberActionButton = styled(ActionButton)`
     font-size: small;
+    margin: 5px;
 `

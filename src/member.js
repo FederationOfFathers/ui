@@ -49,10 +49,8 @@ class Member extends Component {
 		}
 	}
 	editFinished = () => {
+		this.setState({fetch: false});
 		this.setState({editMode: false});
-		setTimeout(() => {
-			this.setState({fetch: false})
-		}, 500);
 	}
 	render = () => {
 		const isOwner = this.props.member.Name === this.props.state.user.name;
@@ -72,15 +70,15 @@ class Member extends Component {
 							{this.props.member.DisplayName}
 						</h6>
 					</div>
-					<div className="member-actions" style={{paddingLeft: '5px'}}>
-						{ isOwner && 
-							(!this.state.editMode &&
-								<MemberActionButton icon='edit' onClick={()=>{this.setState({editMode: true})}}>edit</MemberActionButton>
-							) 
-						}
-					</div>
 				</div>
 				<div className="py-1">
+				<div className="member-actions">
+						{ isOwner && 
+							(!this.state.editMode &&
+								<MemberActionButton style={{margin: "10px"}} icon='edit' onClick={()=>{this.setState({editMode: true})}}>edit</MemberActionButton>
+							)
+						}
+					</div>
 				{ this.state.editMode ?
 					(<MemberEdit member={this.props.member} state={this.props.state} meta={this.state.meta} editCallback={this.editFinished} />) :
 					(<div>

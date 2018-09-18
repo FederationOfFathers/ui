@@ -24,7 +24,7 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
-    background: grey;
+    background: #f7f7f7;
     padding: 0; /* 7px 5px; */
     font-variant-caps: small-caps;
     border-radius: 5px;
@@ -39,6 +39,10 @@
     text-align: right;
 }
 
+.member-edit-form .field label img {
+    max-width: 25px;
+}
+
 .member-edit-form .field input {
     /* flex: 2 0 200px; */
     padding: 5px 5px;
@@ -49,50 +53,69 @@
     border-bottom-right-radius: 3px;
 }
 
+.member-edit-form .field input::placeholder {
+    opacity: 0.3;
+} 
+
 /* Xbox */
 .member-edit-form-section .field.xbl {
-    background: #107c10;
     border: 1px solid #107c10;
+}
+.member-edit-form-section .field.xbl input {
+    border-left: 1px solid #107c10;
 }
 
 /* PSN */
 .member-edit-form-section .field.psn {
-    background: #003791;
     border: 1px solid #003791;
+}
+.member-edit-form-section .field.psn input {
+    border-left: 1px solid #003791;
 }
 
 /* Battle.net */
 .member-edit-form-section .field.bnet {
-    background: #00B6EF;
     border: 1px solid #00B6EF;
+}
+.member-edit-form-section .field.bnet input {
+    border-left: 1px solid #00B6EF;
 }
 
 /* Twitch */
 .member-edit-form-section .field.twitch {
-    background: #6441A4 ;
     border: 1px solid #6441A4 ;
 }
-
+.member-edit-form-section .field.twitch input {
+    border-left: 1px solid #6441A4 ;
+}
 /* Mixer */
 .member-edit-form-section .field.mixer {
-    background: #1FBAED ;
     border: 1px solid #1FBAED ;
+}
+.member-edit-form-section .field.mixer input {
+    border-left: 1px solid #1FBAED ;
 }
 
 /* YouTube */
 .member-edit-form-section .field.youtube {
-    background: #FF0000 ;
     border: 1px solid #FF0000 ;
+}
+.member-edit-form-section .field.youtube input {
+    border-left: 1px solid #FF0000 ;
 }
 
 /* Twitter */
 .member-edit-form-section .field.twitter {
-    background: #1DA1F2 ;
     border: 1px solid #1DA1F2;
+}
+.member-edit-form-section .field.twitter input {
+    border-left: 1px solid #1DA1F2;
 }
 
 /* Instagram */
 .member-edit-form-section .field.instagram {
-    background: #EE176A ;
     border: 1px solid #EE176A;
+}
+.member-edit-form-section .field.instagram input {
+    border-left: 1px solid #EE176A;
 }
