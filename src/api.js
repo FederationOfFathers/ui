@@ -45,6 +45,9 @@ class Api extends State {
 		}.bind(this), 180000)
 	}
 	url = ( part ) => {
+		if (process.env.FOF_DASHBAORD_API_HOST) {
+			return "//" + process.env.FOF_DASHBAORD_API_HOST + "/api/v0/" + part;
+		}
 		return "//dashboard.fofgaming.com/api/v0/" + part
 	}
 	postJSON = ( what, payload ) => {
