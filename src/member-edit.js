@@ -3,6 +3,7 @@ import './member-edit.css'
 import { MemberActionButton} from './shared-styles'
 import styled from 'styled-components'
 import {getValueOrEmpty} from './values'
+import Filter from './lib/sanitize-social-input'
 
 const CancelButton = styled(MemberActionButton)`
 	background-color: white;
@@ -57,13 +58,13 @@ class MemberEdit extends Component {
     updateXbox = async (propertyName) => {
         // So, this doesn't exactly work since we're currently loading Xbox GamerTag from Slack, which should change
         // this will probably always be `xbl`, but to keep code consistent, we'll use propertyName
-        await this.props.state.api.user.set.xbl(this.props.member.ID, this.state[propertyName])
+        await this.props.state.api.user.set.xbl(this.props.member.ID, Filter.social(this.state[propertyName]))
     }
     updateMeta = async (propertyName) => {
-        await this.props.state.api.user.meta.set(this.props.member.ID, propertyName, this.state[propertyName])
+        await this.props.state.api.user.meta.set(this.props.member.ID, propertyName, Filter.social(this.state[propertyName]))
     }
     updateStream = async (propertyName) => {
-        await this.props.state.api.user.streams.set(this.props.member.ID, propertyName, this.state[propertyName])
+        await this.props.state.api.user.streams.set(this.props.member.ID, propertyName, Filter.social(this.state[propertyName]))
     }
     updateData = async (propertyName) => {
         switch(propertyName) {
@@ -98,21 +99,21 @@ class MemberEdit extends Component {
             [name]: value
         });
     }
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
-        this.saveMemberData();
+        await this.saveMemberData();
     }
     escFunction = (e) => {
         if (e.keyCode === 27) {
             this.cancel();
-        }
+        } 
     }
 	render = () => {
 		if (this.props.member.Name === this.props.state.user.name) {
             return (
                 <form className="member-edit-form" onSubmit={this.handleSubmit}>
                     <div className="member-edit-form-actions">
-                        <CancelButton icon='cancel' onClick={this.cancel}>cancel</CancelButton>
+                        <CancelButton type='button' icon='cancel' onClick={this.cancel}>cancel</CancelButton>
                         { this.state.saving ?
                             <MemberActionButton >saving...</MemberActionButton> :
                             <MemberActionButton type='submit' icon='save' >save</MemberActionButton>
