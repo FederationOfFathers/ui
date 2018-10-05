@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import './member-edit.css'
 import { MemberActionButton} from './shared-styles'
-import styled from 'styled-components'
 import {getValueOrEmpty} from './values'
 import Filter from './lib/sanitize-social-input'
-
-const CancelButton = styled(MemberActionButton)`
-	background-color: white;
-	color: grey;
-`
 
 class MemberEdit extends Component {
     constructor(props) {
         super(props);
         const originalData = {
+            loc: getValueOrEmpty(props.state.meta.users[props.member.ID].loc),
             xbl: getValueOrEmpty(props.member.GamerTag),
             psn: getValueOrEmpty(props.state.meta.users[props.member.ID].psn),
             bnet: getValueOrEmpty(props.state.meta.users[props.member.ID].bnet),
@@ -26,6 +21,7 @@ class MemberEdit extends Component {
         this.state = {
             saving: false,
             originalData,
+            loc: originalData.loc,
             xbl: originalData.xbl,
             psn: originalData.psn,
             bnet: originalData.bnet,
@@ -71,6 +67,7 @@ class MemberEdit extends Component {
             case 'xbl':
                 await this.updateXbox(propertyName);
                 break;
+            case 'loc':
             case 'psn':
             case 'bnet':
             case 'twitter':
@@ -111,13 +108,19 @@ class MemberEdit extends Component {
 	render = () => {
 		if (this.props.member.Name === this.props.state.user.name) {
             return (
-                <form className="member-edit-form" onSubmit={this.handleSubmit}>
+                <form className="member-edit-form col" onSubmit={this.handleSubmit}>
                     <div className="member-edit-form-actions">
-                        <CancelButton type='button' icon='cancel' onClick={this.cancel}>cancel</CancelButton>
                         { this.state.saving ?
                             <MemberActionButton >saving...</MemberActionButton> :
                             <MemberActionButton type='submit' icon='save' >save</MemberActionButton>
                         }
+                    </div>
+                    <div className="member-edit-form-section">
+                        <h3>Personal Info</h3>
+                        <div className="field loc">
+                            <label htmlFor="loc">Location:</label>
+                            <input value={this.state.loc} onChange={this.handleInputChange} name="loc" placeholder="City, State/Province, Country"/>
+                        </div>
                     </div>
                     <div className="member-edit-form-section">
                         <h3>Gaming Networks</h3>

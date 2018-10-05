@@ -17,7 +17,12 @@
 
 .member-edit-form-actions {
     width: 100%;
-    padding: 5px;
+
+    text-align: right;
+}
+
+.member-edit-form-actions button {
+    width: 50px;
 }
 .member-edit-form .field{
     display: flex;
@@ -29,14 +34,16 @@
     font-variant-caps: small-caps;
     border-radius: 5px;
     margin: 5px 0;
+    border: 1px solid #c2c2c2;
 }
 
 .member-edit-form .field label {
     flex: 1 0 85px;
     padding: 0 5px;
     margin: 0;
-    color: white;
+    color: black;
     text-align: right;
+
 }
 
 .member-edit-form .field label img {
@@ -44,11 +51,11 @@
 }
 
 .member-edit-form .field input {
-    /* flex: 2 0 200px; */
     padding: 5px 5px;
     margin: 0;
     width: 100%;
     border: 0;
+    border-left: 1px solid #c2c2c2;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
