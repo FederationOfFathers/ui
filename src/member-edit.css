@@ -10,6 +10,10 @@
     padding: 5px;
     max-width: 280px;
 }
+.member-edit-form-section .helper-text {
+    font-size: small;
+    color: #7c7c7c;
+}
 .member-edit-form-section h3 {
     font-size: 1em;
     font-variant: small-caps;

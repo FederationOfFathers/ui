@@ -121,7 +121,10 @@ class MemberEdit extends Component {
                             <label htmlFor="loc">Location:</label>
                             <input value={this.state.loc} onChange={this.handleInputChange} name="loc" placeholder="City, State/Province, Country"/>
                         </div>
+                        <div className="helper-text">Optional. Used for the FoF Map</div>
                     </div>
+                    <div className="member-edit-form-section"></div>
+                    <div className="member-edit-form-section"></div>
                     <div className="member-edit-form-section">
                         <h3>Gaming Networks</h3>
                         <div className="field xbl">
