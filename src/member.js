@@ -6,7 +6,14 @@ import Games from './member-games'
 import Slack from './lib/slack-deep-link'
 import MembersNav from './nav-members'
 import MemberEdit from './member-edit'
+import styled from 'styled-components'
 import {MemberActionButton} from './shared-styles'
+import './member.css'
+
+const CancelButton = styled(MemberActionButton)`
+	background-color: white;
+	color: grey;
+`
 
 class Member extends Component {
 	componentDidMount = () => {
@@ -58,11 +65,11 @@ class Member extends Component {
 			<div className="members">
 				<MembersNav state={this.props.state}/>
 				<div className="member-head" style={{display: 'flex'}}>
-					<div className="member-name">
+					<div className="member-name col-sm-10">
 						<h4 className="card-title" onClick={()=>{window.location=Slack.link("user",this.props.member.ID)}}>
 							<img
 								className="float-left mx-2 clearfix"
-								style={{width: '64px', height: '64px'}}
+								style={{width: '48px', height: '48px'}}
 								alt="" src={this.props.member.Image}/>
 							{this.props.member.Name}
 						</h4>
@@ -70,15 +77,15 @@ class Member extends Component {
 							{this.props.member.DisplayName}
 						</h6>
 					</div>
-				</div>
-				<div className="py-1">
-				<div className="member-actions">
+					<div className="member-actions col">
 						{ isOwner && 
-							(!this.state.editMode &&
-								<MemberActionButton style={{margin: "10px"}} icon='edit' onClick={()=>{this.setState({editMode: true})}}>edit</MemberActionButton>
-							)
+							(!this.state.editMode ?
+							<MemberActionButton style={{fontSize: 'x-large',width: '50px', height: '50px'}} onClick={()=>{this.setState({editMode: true})}}><span className="oi oi-pencil" title="pencil" aria-hidden="true"></span></MemberActionButton> :
+							<CancelButton style={{fontSize: 'x-large',width: '50px', height: '50px'}} onClick={()=>{this.setState({editMode: false})}}><span className="oi oi-x" title="cancel" aria-hidden="true"></span></CancelButton> )
 						}
 					</div>
+				</div>
+				<div className="py-1">
 				{ this.state.editMode ?
 					(<MemberEdit member={this.props.member} state={this.props.state} meta={this.state.meta} editCallback={this.editFinished} />) :
 					(<div>
