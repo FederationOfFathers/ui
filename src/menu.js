@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Logout from './logout';
 
 class Menu extends Component {
 	render = () => {
@@ -23,6 +24,7 @@ class Menu extends Component {
 						</select>
 				</div></form>
 				<p className="text-muted text-justified">How many days to look back for games and stats</p>
+				<Logout/>
 			</div>
 		)
 	}
