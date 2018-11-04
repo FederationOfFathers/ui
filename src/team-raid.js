@@ -146,7 +146,12 @@ class Raid extends Component {
 			if ( this.props.data.need > 0 && iInt === this.props.data.need ) {
 				rval.push((<div key="alt" className="btn-group text-secondary px-3" role="group">⇊ alternate queue</div>))
 			}
+			// Treat as member id or display as is if no matching id found
 			var member = list[i]
+			var user = this.props.state.users[member]
+			if (user !== undefined) {
+				member = user.User.GamerTag
+			}
 
 			rval.push(
 				<RaidMember key={"m-"+i}

@@ -15,8 +15,9 @@
 			accessToken: "4c354d1e22dd40a38489602c32b0fcff",
 			captureUncaught: true,
 			captureUnhandledRejections: true,
+			hostWhiteList: ['ui.fofgaming.com', 'dev.fofgaming.com'],
 			payload: {
-				environment: "production"
+				environment: window.location.hostname === "ui.fofgaming.com" ? "production" : window.location.hostname
 			}
 		};
 		// Rollbar Snippet

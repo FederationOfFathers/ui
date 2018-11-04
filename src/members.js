@@ -18,7 +18,7 @@ class Members extends Component {
 		var validUser = false
 		for ( var id in this.props.state.users ) {
 			var user = this.props.state.users[id].User
-			if ( user.Name === this.props.state.vars.member ) {
+			if ( user.DisplayName === this.props.state.vars.member ) {
 				validUser = true
 				break;
 			}
@@ -27,7 +27,7 @@ class Members extends Component {
 			doDefault = true
 		}
 		if ( doDefault === true ) {
-			this.props.state.hasher.set({member: this.props.state.user.name})
+			this.props.state.hasher.set({member: this.props.state.user.profile.display_name})
 		}
 	}
 	member = () => {
@@ -36,7 +36,7 @@ class Members extends Component {
 		}
 		for( var id in this.props.state.users ) {
 			var user = this.props.state.users[id].User
-			if ( user.Name === this.props.state.vars.member ) {
+			if ( user.DisplayName === this.props.state.vars.member ) {
 				return user
 			}
 		}

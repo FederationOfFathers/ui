@@ -60,7 +60,7 @@ class Member extends Component {
 		this.setState({editMode: false});
 	}
 	render = () => {
-		const isOwner = this.props.member.Name === this.props.state.user.name;
+		const isOwner = this.props.member.Name === this.props.state.user.profile.display_name;
 		return (
 			<div className="members">
 				<MembersNav state={this.props.state}/>
