@@ -44,11 +44,8 @@ class Api extends State {
 			this.ping()
 		}.bind(this), 180000)
 	}
-	url = ( part ) => {
-		if (process.env.FOF_DASHBAORD_API_HOST) {
-			return "//" + process.env.FOF_DASHBAORD_API_HOST + "/api/v0/" + part;
-		}
-		return "//dashboard.fofgaming.com/api/v0/" + part
+	url = ( part, version = "v0" ) => {
+		return "//dashboard.fofgaming.com/api/" + version + "/" + part
 	}
 	postJSON = ( what, payload ) => {
 		if ( what.substring(0, 2) !== "//" ) {
@@ -80,9 +77,9 @@ class Api extends State {
 				body: JSON.stringify(payload)
 			})
 	}
-	fetch = ( what ) => {
+	fetch = ( what, version ) => {
 		if ( what.substring(0, 2) !== "//" ) {
-			what = this.url( what );
+			what = this.url( what, version );
 		}
 		return fetch(what, { credentials: 'include' })
 	}
