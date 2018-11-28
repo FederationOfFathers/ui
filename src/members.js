@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import Member from './member'
 
 class Members extends Component {
-	componentWillMount = () => {
-		this.defaultToMe()
-	}
-	componentDidMount = () => {
-		this.defaultToMe()
-	}
 	defaultToMe = () => {
 		var doDefault = false
 		if ( typeof this.props.state.vars.member === "undefined" ) {
@@ -24,6 +18,7 @@ class Members extends Component {
 			}
 		}
 		if ( validUser === false ) {
+			console.warn("Invalid user " + this.props.state.vars.member)
 			doDefault = true
 		}
 		if ( doDefault === true ) {
@@ -32,7 +27,7 @@ class Members extends Component {
 	}
 	member = () => {
 		if ( typeof this.props.state.vars.member === "undefined" ) {
-			return false
+			return false;
 		}
 		for( var id in this.props.state.users ) {
 			var user = this.props.state.users[id].User
@@ -45,7 +40,7 @@ class Members extends Component {
 	render() {
 		var user = this.member()
 		if ( user === false ) {
-			return null
+			this.defaultToMe()
 		}
 		return (<Member member={user} state={this.props.state}/>)
 	}

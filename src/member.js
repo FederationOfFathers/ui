@@ -52,6 +52,7 @@ class Member extends Component {
 				streams: this.props.state.meta.streams[this.props.member.ID]
 			});
 		} catch(err) {
+			console.error("Unable to fetch user data - " + err)
 			this.setState({fetch: false});
 		}
 	}
