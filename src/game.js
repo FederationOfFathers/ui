@@ -65,6 +65,9 @@ class Game extends Component {
 		))
 		for ( var i in this.state.data.players ) {
 			var player = this.props.state.users[this.state.data.players[i].slack_id]
+			if (typeof player === "undefined") {
+				continue;
+			}
 			members.push((
 				<a key={i} className="my-1" style={{width: "49%", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}
 					onClick={(e) => {
