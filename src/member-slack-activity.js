@@ -29,7 +29,7 @@ class SlackStats extends Component {
 		var d = this.emptyLast()
 		var data = []
 		for (var i in d) {
-			if ( typeof json[this.props.member.ID][32][d[i].l] !== "undefined" ) {
+			if (typeof json[this.props.member.ID] !== "undefined" && typeof json[this.props.member.ID][32][d[i].l] !== "undefined" ) {
 				d[i].v += json[this.props.member.ID][32][d[i].l]
 			}
 			data.push(d[i])
