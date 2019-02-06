@@ -152,6 +152,16 @@ class Api extends State {
 				this.setState({users: json})
 			}.bind(this))
 	}
+	members = async () => {
+		try {
+			console.log("getting members");
+			let response = await this.fetch("members", "v1");
+			let json = await response.json();
+			this.setState({members: json});
+		} catch(error) {
+			console.error("Unable to get members." + error);
+		}
+	}
 	channels = () => {
 		return this.fetch("channels")
 			.then(function(response) {
@@ -281,6 +291,7 @@ class Api extends State {
 						this.setState({lastPingFetch: new Date().getTime()})
 						this.raidList()
 							.then(this.users)
+							.then(this.members)
 							.then(this.groups)
 							.then(this.channels)
 							.then(this.save)
