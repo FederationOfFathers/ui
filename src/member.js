@@ -22,7 +22,7 @@ class Member extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentID: props.member.ID,
+			currentID: props.member.id,
 			mounted: false,
 			fetch: false,
 			meta: {},
@@ -33,8 +33,8 @@ class Member extends Component {
 		if ( this.state.mounted === false ) {
 			return
 		}
-		if ( this.state.currentID !== this.props.member.ID ) {
-			this.setState({fetch: false, currentID: this.props.member.ID})
+		if ( this.state.currentID !== this.props.member.id ) {
+			this.setState({fetch: false, currentID: this.props.member.id})
 		}
 		if ( this.state.fetch === false ) {
 			this.fetch()
@@ -49,7 +49,7 @@ class Member extends Component {
 								
 			this.setState({
 				meta: this.props.state.meta.users[this.state.currentID],
-				streams: this.props.state.meta.streams[this.props.member.ID]
+				streams: this.props.state.meta.streams[this.props.member.id]
 			});
 		} catch(err) {
 			console.error("Unable to fetch user data - " + err)
@@ -61,13 +61,13 @@ class Member extends Component {
 		this.setState({editMode: false});
 	}
 	render = () => {
-		const isOwner = this.props.member.Name === this.props.state.user.profile.display_name;
+		const isOwner = this.props.member.name === this.props.state.user.profile.display_name;
 		return (
 			<div className="members">
 				<MembersNav state={this.props.state}/>
 				<div className="member-head" style={{display: 'flex'}}>
 					<div className="member-name col-sm-10">
-						<h4 className="card-title" onClick={()=>{window.location=Slack.link("user",this.props.member.ID)}}>
+						<h4 className="card-title" onClick={()=>{window.location=Slack.link("user",this.props.member.slack)}}>
 							<img
 								className="float-left mx-2 clearfix"
 								style={{width: '48px', height: '48px'}}
