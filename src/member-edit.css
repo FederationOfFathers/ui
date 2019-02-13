@@ -29,6 +29,7 @@
     width: 50px;
 }
 .member-edit-form .field{
+    height: 36px;
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;

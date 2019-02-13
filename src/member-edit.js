@@ -131,7 +131,7 @@ class MemberEdit extends Component {
                         <div>
                             <h3>Link Discord</h3>
                             <div className="field discord">
-                                <a className="btn-block btn-secondary h-100 text-center" href={this.props.state.oauth.discord}><img className="img-fluid h-100" src="/images/discord-logo.png" alt="Discord"/></a>
+                                <a className="btn-block h-100 text-center" href={this.props.state.oauth.discord}><img className="img-fluid h-100" src="/images/discord-logo.png" alt="Discord"/></a>
                             </div>
                             <div className="helper-text">Slack is no more. All hail Discord!</div>
                         </div>
