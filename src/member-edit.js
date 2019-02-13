@@ -7,16 +7,19 @@ import Filter from './lib/sanitize-social-input'
 class MemberEdit extends Component {
     constructor(props) {
         super(props);
+        console.log(props.member)
+        let userStreams = props.state.meta.streams[props.member.id];
+        let userMeta = props.state.meta.users[props.member.id];
         const originalData = {
-            loc: getValueOrEmpty(props.state.meta.users[props.member.ID].loc),
-            xbl: getValueOrEmpty(props.member.GamerTag),
-            psn: getValueOrEmpty(props.state.meta.users[props.member.ID].psn),
-            bnet: getValueOrEmpty(props.state.meta.users[props.member.ID].bnet),
-            twitch: getValueOrEmpty(props.state.meta.streams[props.member.ID].Twitch),
-            beam: getValueOrEmpty(props.state.meta.streams[props.member.ID].Beam), // Why is this still called Beam?
-            youtube: getValueOrEmpty(props.state.meta.streams[props.member.ID].Youtube),
-            twitter: getValueOrEmpty(props.state.meta.users[props.member.ID].twitter),
-            instagram: getValueOrEmpty(props.state.meta.users[props.member.ID].instagram),
+            loc: getValueOrEmpty(userMeta.loc),
+            xbl: getValueOrEmpty(props.member.xbox),
+            psn: getValueOrEmpty(userMeta.psn),
+            bnet: getValueOrEmpty(userMeta.bnet),
+            twitch: getValueOrEmpty(userStreams.Twitch),
+            beam: getValueOrEmpty(userStreams.Beam), // Why is this still called Beam?
+            youtube: getValueOrEmpty(userStreams.Youtube),
+            twitter: getValueOrEmpty(userMeta.twitter),
+            instagram: getValueOrEmpty(userMeta.instagram),
         }
         this.state = {
             saving: false,
@@ -54,13 +57,13 @@ class MemberEdit extends Component {
     updateXbox = async (propertyName) => {
         // So, this doesn't exactly work since we're currently loading Xbox GamerTag from Slack, which should change
         // this will probably always be `xbl`, but to keep code consistent, we'll use propertyName
-        await this.props.state.api.user.set.xbl(this.props.member.ID, Filter.social(this.state[propertyName]))
+        await this.props.state.api.user.set.xbl(this.props.member.id, Filter.social(this.state[propertyName]))
     }
     updateMeta = async (propertyName) => {
-        await this.props.state.api.user.meta.set(this.props.member.ID, propertyName, Filter.social(this.state[propertyName]))
+        await this.props.state.api.user.meta.set(this.props.member.id, propertyName, Filter.social(this.state[propertyName]))
     }
     updateStream = async (propertyName) => {
-        await this.props.state.api.user.streams.set(this.props.member.ID, propertyName, Filter.social(this.state[propertyName]))
+        await this.props.state.api.user.streams.set(this.props.member.id, propertyName, Filter.social(this.state[propertyName]))
     }
     updateData = async (propertyName) => {
         switch(propertyName) {
@@ -106,7 +109,7 @@ class MemberEdit extends Component {
         } 
     }
 	render = () => {
-		if (this.props.member.Name === this.props.state.user.profile.display_name) {
+		if (this.props.member.name === this.props.state.user.profile.display_name) {
             return (
                 <form className="member-edit-form col" onSubmit={this.handleSubmit}>
                     <div className="member-edit-form-actions">

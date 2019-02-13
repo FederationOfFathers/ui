@@ -41,7 +41,9 @@ class Games extends Component {
 			.then(function(json) {
 				gamesCache[this.props.member.ID] = json
 				this.setState({data: json})
-			}.bind(this))
+			}.bind(this)).catch(function(err){
+				console.log("Unable to get player games. " + err)
+			})
 	}
 	list = () => {
 		if ( this.state.data === false ) {
