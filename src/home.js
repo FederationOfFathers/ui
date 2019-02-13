@@ -8,8 +8,8 @@ var homeStats = {
 
 class Home extends Component {
 	componentWillMount = () => {
-		var games = false
-		var stats = false
+		var games = {}
+		var stats = {}
 		if ( homeStats.games !== null ) {
 			games = homeStats.games
 		}
@@ -40,13 +40,13 @@ class Home extends Component {
 		this.fetch()
 	}
 
-	pullGameActivity = () => {
+	pullGameActivity = async () => {
 		this.setState({fetching: "games"})
-		return this.props.state.api.raw.fetch('games/played/top/'+this.props.state.days+'/'+this.state.topGames+'.json')
-			.then(function(response) {
-				return response.json()
-			})
-			.then(function(json) {
+		try {
+			var response = await this.props.state.api.raw.fetch('games/played/top/'+this.props.state.days+'/'+this.state.topGames+'.json');
+			var json = {}
+			if (response.ok) {
+				json = await response.json();
 				var max = 0;
 				for ( var i=0; i<json.length; i++ ) {
 					if ( json[i].players > max ) {
@@ -57,19 +57,32 @@ class Home extends Component {
 					json[i].pct = Math.round((json[i].players / max) * 100)
 				}
 				homeStats.games = json
-				this.setState({
-					games: json,
-				})
-			}.bind(this))
+			} else {
+				window.Rollbar.warning('Unable to load Game data', 'warning', { status: response.status, statusText: response.statusText });
+				json["error"] = {
+					name: "Game data unavailable",
+					id: "error",
+					pct: 0,
+					players: "",
+				}
+			}
+			
+			this.setState({
+				games: json,
+			})
+		} catch(err) {
+			console.error("Unable to pull game activity - " + err )
+		}
 	}
 
-	pullSlackActivity = () => {
+	pullSlackActivity = async () => {
 		this.setState({fetching: "stats"})
-		return this.props.state.api.raw.fetch('xhr/stats/v1/slack/activity/last-' + this.props.state.days + '.json')
-			.then(function(response) {
-				return response.json()
-			})
-			.then(function(json) {
+		try {
+			var response = await this.props.state.api.raw.fetch('xhr/stats/v1/slack/activity/last-' + this.props.state.days + '.json');
+			var final = []
+			if (response.ok) {
+				var json = await response.json();
+				
 				var data = []
 				var channels = Object.keys(json)
 				var max = 0
@@ -93,20 +106,29 @@ class Home extends Component {
 					}
 					return 0
 				})
-				var final = []
+				
 				for ( var i=0; i<this.state.topChannels; i++ ) {
 					final.push(data.pop())
 					final[i].pct = Math.round((final[i].v / max) * 100)
 				}
 				homeStats.stats = final
-				this.setState({stats: final})
-			}.bind(this))
+			} else {
+				window.Rollbar.warning("Unable to load Slack data", { status: response.status, statusText: response.statusText})
+				final["error"] = {
+					name: "Slack data not available",
+					v: "",
+					pct: 0,
+				}
+			}
+			
+			this.setState({stats: final})
+		} catch(err){
+			console.error("Unable pull Slack activity - " +  err);
+		}
+		
 	}
 
 	games = () => {
-		if ( this.state.games === false ) {
-			return null
-		}
 		var zoom = dpr()
 		var rval = []
 		for ( var i in this.state.games ) {
@@ -155,9 +177,6 @@ class Home extends Component {
 		)
 	}
 	slack = () => {
-		if ( this.state.stats === false ) {
-			return null
-		}
 		var rval = []
 		for ( var i in this.state.stats ) {
 			rval.push((

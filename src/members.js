@@ -10,9 +10,9 @@ class Members extends Component {
 			doDefault = true
 		}
 		var validUser = false
-		for ( var id in this.props.state.users ) {
-			var user = this.props.state.users[id].User
-			if ( user.DisplayName === this.props.state.vars.member ) {
+		for ( var id in this.props.state.members ) {
+			var user = this.props.state.members[id]
+			if ( user.name === this.props.state.vars.member ) {
 				validUser = true
 				break;
 			}
@@ -29,9 +29,10 @@ class Members extends Component {
 		if ( typeof this.props.state.vars.member === "undefined" ) {
 			return false;
 		}
-		for( var id in this.props.state.users ) {
-			var user = this.props.state.users[id].User
-			if ( user.DisplayName === this.props.state.vars.member ) {
+		for( var id in this.props.state.members ) {
+			var user = this.props.state.members[id]
+			if ( user.name === this.props.state.vars.member ) {
+				// user.id = id;
 				return user
 			}
 		}
