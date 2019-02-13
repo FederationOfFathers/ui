@@ -127,7 +127,7 @@ class MemberEdit extends Component {
                         <div className="helper-text">Optional. Used for the FoF Map</div>
                     </div>
                     <div className="member-edit-form-section">
-                    {this.props.member.discord !== "" &&
+                    {this.props.member.discord === "" &&
                         <div>
                             <h3>Link Discord</h3>
                             <div className="field discord">
