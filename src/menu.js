@@ -7,7 +7,16 @@ class Menu extends Component {
 			<div>
 				<h2 className="text-center">App Configuration</h2>
 				<hr/>
-
+				{this.props.state.member.discord === "" &&
+				<div>
+					<p><strong>Link Discord</strong></p>
+					<div className="field discord">
+						<a className="btn btn-light text-center" style={{height: "36px", border: "1px solid #ccc"}} href={this.props.state.oauth.discord}><img className="img-fluid h-100" src="/images/discord-logo.png" alt="Discord"/></a>
+						<div className="helper-text">Slack is no more. All hail Discord!</div>
+					</div>
+					<hr/>
+				</div>
+				}
 				<p><strong>History Size</strong></p>
 				<form><div className="input-group">
 						<span className="input-group-addon">History</span>
