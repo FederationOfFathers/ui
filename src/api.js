@@ -316,11 +316,16 @@ class Api extends State {
 			})
 	}
 	loadOAuth = async () => {
-		let response = await this.fetch("oauth/discord", "v1");
-		let link = await response.json();
+		let link = "";
+		try {
+			let response = await this.fetch("oauth/discord", "v1");
+			link = await response.json();
+		} catch (error) {
+			console.error("Could not get oauth." + error)
+		}
 		this.setState({oauth: {
-				discord: link,
-			}});
+			discord: link,
+		}});
 	}
 }
 
