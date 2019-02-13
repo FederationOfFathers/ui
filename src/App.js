@@ -50,7 +50,7 @@ class App extends Api {
 		)
 	}
 	newCode = () => {
-		return this.fetch("login/get")
+		return this.fetch("login/get", "v0")
 			.then(function(response) {
 				return response.json()
 			})
@@ -96,7 +96,7 @@ class App extends Api {
 		)
 	}
 	loginChecker = () => {
-		this.fetch("login/check/" + this.state.loginCode)
+		this.fetch("login/check/" + this.state.loginCode, "v1")
 			.then(function(response) {
 				return response.json()
 			})
