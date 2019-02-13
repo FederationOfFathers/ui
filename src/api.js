@@ -174,20 +174,20 @@ class Api extends State {
 				this.setState({lastChannelsFetch: new Date().getTime()})
 			}.bind(this))
 	}
-	raidbotAuth = () => {
-		return this.fetch("auth/team-tool")
-			.then(function(response) {
-				return response.json()
-			}).then(function(json) {
-				if ( typeof json === "string" && json !== "" ) {
-					this.setState({raidbotToken: "fof-ut " + json})
-				} else {
-					this.setState({checkedAuth: true, loggedIn: false, raidbotToken: false})
-				}
-			}.bind(this))
-			.catch(function(error) {
-					this.setState({raidbotToken: false})
-			}.bind(this))
+	raidbotAuth = async () => {
+		try {
+
+			let response = await this.fetch("auth/team-tool", "v1")
+			let json = await response.json();
+			if ( typeof json === "string" && json !== "" ) {
+				this.setState({raidbotToken: "fof-ut " + json})
+			} else {
+				this.setState({checkedAuth: true, raidbotToken: false})
+			}
+		} catch(error) {
+			console.error("unable to get raid data" + error)
+			this.setState({raidbotToken: false});
+		}
 	}
 	groups = () => {
 		return this.fetch("groups")
