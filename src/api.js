@@ -112,7 +112,9 @@ class Api extends State {
 			}).then(function(json) {
 				this.setState({raids: json})
 				this.setState({lastRaidFetch: new Date().getTime()})
-			}.bind(this))
+			}.bind(this)).catch((error) => {
+				console.error("Cannot get raids. " + error);
+			})
 	}
 	raidJoin = ( body ) => {
 		return this.raidpost( 'raid/join', body )
@@ -150,11 +152,12 @@ class Api extends State {
 				return response.json()
 			}).then(function(json) {
 				this.setState({users: json})
-			}.bind(this))
+			}.bind(this)).catch(function(err) {
+				console.error("Could not fetch users - " + err )
+			})
 	}
 	members = async () => {
 		try {
-			console.log("getting members");
 			let response = await this.fetch("members", "v1");
 			let json = await response.json();
 			this.setState({members: json});
@@ -208,6 +211,9 @@ class Api extends State {
 		return this.fetch("xhr/stats/v1/daily.json?stats=" + statID + "&last=" + last + "&users=" + userID)
 			.then(function(response) {
 				return response.json()
+			}).catch(function(err) {
+				console.error("Could not fetch daily stats - " + err)
+				return {}
 			})
 	}
 	statsHourly = (userID, statID, last) => {
@@ -304,7 +310,9 @@ class Api extends State {
 					}.bind(this)
 					)
 			}.bind(this)
-			)
+			).catch(function(error) {
+				console.error(error);
+			})
 	}
 }
 
