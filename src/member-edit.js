@@ -126,7 +126,17 @@ class MemberEdit extends Component {
                         </div>
                         <div className="helper-text">Optional. Used for the FoF Map</div>
                     </div>
-                    <div className="member-edit-form-section"></div>
+                    <div className="member-edit-form-section">
+                    {this.props.member.discord !== "" &&
+                        <div>
+                            <h3>Link Discord</h3>
+                            <div className="field discord">
+                                <a className="btn-block btn-secondary h-100 text-center" href={this.props.state.oauth.discord}><img className="img-fluid h-100" src="/images/discord-logo.png" alt="Discord"/></a>
+                            </div>
+                            <div className="helper-text">Slack is no more. All hail Discord!</div>
+                        </div>
+                    }
+                    </div>
                     <div className="member-edit-form-section"></div>
                     <div className="member-edit-form-section">
                         <h3>Gaming Networks</h3>

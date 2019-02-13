@@ -39,6 +39,7 @@ class Api extends State {
 				},
 			}
 		})
+		this.loadOAuth();
 		this.ping()
 		setInterval(function(){
 			this.ping()
@@ -313,6 +314,13 @@ class Api extends State {
 			).catch(function(error) {
 				console.error(error);
 			})
+	}
+	loadOAuth = async () => {
+		let response = await this.fetch("oauth/discord", "v1");
+		let link = await response.json();
+		this.setState({oauth: {
+				discord: link,
+			}});
 	}
 }
 
