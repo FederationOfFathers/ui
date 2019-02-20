@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import LinkBar from './member-linkbar'
-import Channels from './member-channels'
-import SlackStats from './member-slack-activity'
-import Games from './member-games'
 import Slack from './lib/slack-deep-link'
 import MembersNav from './nav-members'
 import MemberEdit from './member-edit'
