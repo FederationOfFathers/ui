@@ -38,7 +38,7 @@ class Nav extends Component {
 	nav = ( to ) => {
 		switch( to ) {
 			case "members":
-				return  function() { this.props.state.hasher.replace({main: to, member: this.props.state.user.profile.display_name}) }.bind(this)
+				return  function() { this.props.state.hasher.replace({main: to, member: this.props.state.user.name}) }.bind(this)
 			default:
 				return function() { this.props.state.hasher.replace({main: to}) }.bind(this)
 		}

@@ -61,7 +61,7 @@ class Member extends Component {
 		this.setState({editMode: false});
 	}
 	render = () => {
-		const isOwner = this.props.member.name === this.props.state.user.profile.display_name;
+		const isOwner = this.props.member.name === this.props.state.user.name;
 		return (
 			<div className="members">
 				<MembersNav state={this.props.state}/>
@@ -91,9 +91,6 @@ class Member extends Component {
 					(<MemberEdit member={this.props.member} state={this.props.state} meta={this.state.meta} editCallback={this.editFinished} />) :
 					(<div>
 						<LinkBar state={this.props.state} meta={this.state.meta} member={this.props.member} streams={this.state.streams}/>
-						<SlackStats member={this.props.member} state={this.props.state}/>
-						<Channels member={this.props.member} state={this.props.state}/>
-						<Games member={this.props.member} state={this.props.state}/>
 					</div>
 					)
 				}
