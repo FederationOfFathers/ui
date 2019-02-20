@@ -1,8 +1,6 @@
 import React from 'react';
 import LoggedIn from './logged-in.js';
 import Api from './api.js'
-import Clipboard from 'react-clipboard.js';
-import Slack from './lib/slack-deep-link'
 import './App.css';
 
 class App extends Api {
@@ -27,97 +25,25 @@ class App extends Api {
 			<p>This should only take a few seconds</p>
 			</div>)
 	}
-	code = () => {
-		if ( typeof this.state.loginCode === "undefined" || ! this.state.loginCode ) {
-			return null
-		}
-		var copied = null
-		if ( this.state.copied ) {
-			copied = (<div className="my-1 alert alert-success" role="alert">code copied to clipboard</div>)
-		}
-		return (
-			<div>
-				<div className="input-group">
-					<input onChange={()=>{}}id="logincode" className="font-weight-bold form-control text-center text-uppercase" value={this.state.loginCode}/>
-					<Clipboard className="btn btn-primary" data-clipboard-text={this.state.loginCode} onSuccess={()=>{
-						this.setState({copied: true})
-					}}>
-						&#x2398; copy code
-					</Clipboard>
-				</div>
-				{copied}
-			</div>
-		)
-	}
-	newCode = () => {
-		return this.fetch("login/get", "v0")
-			.then(function(response) {
-				return response.json()
-			})
-			.then((json) => {
-				this.setState({loginCode: json, copied: false})
-			})
-	}
 	pleaseLogIn = () => {
-		if ( this.state.loginCode === false ) {
-			if ( this.state.fetchingLoginCode === false ) {
-				this.setState({fetchingLoginCode: true})
-				this.newCode()
-					.then(() =>{
-						this.setState({
-							fetchingLoginCode: false,
-							loginChecker: window.setInterval(this.loginChecker, 1000),
-						})
-				})
-			}
-		}
+
+		const discordLoginURL = "https://discordapp.com/api/oauth2/authorize?client_id=447447191640997888&redirect_uri=https%3A%2F%2Fdashboard.fofgaming.com%2Fapi%2Fv1%2Foauth%2Fdiscord%2Flogin&response_type=code&scope=identify&state=login"
 		return(
 			<div className="app noauth text-left my-5">
-				<h1 className="text-center">Please log in.</h1>
-				<p className="text-center">Follow the steps below to log in</p>
-				<p><strong>1 -</strong> Copy the code by clicking the button below</p>
-				<div style={{marginBottom: "1em"}}>{this.code()}</div>
-				<p><strong>2 -</strong> Click the button below to message damnbot</p>
-				<p className="text-center">
-					<a href={Slack.bot()} className="w-50 btn btn-primary">
-						@damnbot
-					</a>
-				</p>
-				<p><strong>3 -</strong> Paste the code and push send</p>
-				<p><strong>4 -</strong> Return to this page to be logged in</p>
-				<p><strong>5 -</strong> Shenanigans</p>
-				<p>If you’re having problems visit the channel with the button below and let us know</p>
-				<p className="text-center">
-					<a className="w-50 btn btn-primary" href={Slack.help()}>
-						#dashboard-help
-					</a>
-				</p>
+				<div className="text-center">
+					<h2>Login With Discord</h2>
+					<div className="field discord">
+						<p className="helper-text">You need to be verified in the <a href="https://discord.gg/8H2stfJ">FoF Discord</a> to be able to login.</p>
+						<a className="btn btn-block btn-lg text-center" style={{ backgroundColor: "#7289DA"}} href={discordLoginURL}><img className="img-fluid h-100" src="/images/discord-logo-white.png" alt="Discord"/></a>
+						<p><a href="https://discord.gg/8H2stfJ">Join FoF! - https://discord.gg/8H2stfJ</a></p>
+						<small className="helper-text text-black-50">Slack is no more. All hail Discord!</small><br/>
+						<small className="text-black-50">if this doesn't work, it's because it's not done</small>
+					</div>
+				</div>
 			</div>
 		)
 	}
-	loginChecker = () => {
-		this.fetch("login/check/" + this.state.loginCode, "v1")
-			.then(function(response) {
-				return response.json()
-			})
-			.then((json) => {
-				switch(json) {
-					case "ok":
-						if ( this.state.loginChecker !== false ) {
-							window.clearInterval(this.state.loginChecker)
-						}
-						this.ping()
-						return
-					case "wait":
-						return
-					case "gone":
-						this.newCode()
-						return
-					default:
-						return
-				}
-			})
-	}
+
 	render = () => {
 		if ( false === this.state.checkedAuth ) {
 			return this.stillChecking()
@@ -125,7 +51,6 @@ class App extends Api {
 		if ( false === this.state.loggedIn ) {
 			return this.pleaseLogIn()
 		}
-		new window.Clipboard('.btn')
 		return ( <LoggedIn state={this.state}/> );
 	}
 }

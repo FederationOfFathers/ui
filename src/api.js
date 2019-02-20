@@ -45,7 +45,7 @@ class Api extends State {
 			this.ping()
 		}.bind(this), 180000)
 	}
-	url = ( part, version = "v0" ) => {
+	url = ( part, version = "v1" ) => {
 		return "//dashboard.fofgaming.com/api/" + version + "/" + part
 	}
 	postJSON = ( what, payload ) => {
@@ -148,7 +148,7 @@ class Api extends State {
 			}.bind(this))
 	}
 	users = () => {
-		return this.fetch("xhr/users/v1/users.json")
+		return this.fetch("xhr/users/v1/users.json", "v0") // TODO bump API to v1
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {
@@ -166,15 +166,7 @@ class Api extends State {
 			console.error("Unable to get members." + error);
 		}
 	}
-	channels = () => {
-		return this.fetch("channels")
-			.then(function(response) {
-				return response.json()
-			}).then(function(json) {
-				this.setState({chanList: json})
-				this.setState({lastChannelsFetch: new Date().getTime()})
-			}.bind(this))
-	}
+
 	raidbotAuth = async () => {
 		try {
 
@@ -190,24 +182,7 @@ class Api extends State {
 			this.setState({raidbotToken: false});
 		}
 	}
-	groups = () => {
-		return this.fetch("groups")
-			.then(function(response) {
-				return response.json()
-			}).then(function(json) {
-				this.setState({groupList: json})
-				this.setState({lastGroupsFetch: new Date().getTime()})
-			}.bind(this))
-	}
-	joinSlack = (id, kind) => {
-		var op = null
-		if ( kind === "channel" ) {
-			op = this.fetch("channels/"+id+"/join")
-		} else {
-			op = this.fetch("groups/"+id+"/join")
-		}
-		return op.then(this.ping)
-	}
+
 	statsDaily = (userID, statID, last) => {
 		return this.fetch("xhr/stats/v1/daily.json?stats=" + statID + "&last=" + last + "&users=" + userID)
 			.then(function(response) {

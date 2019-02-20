@@ -22,7 +22,7 @@ class Members extends Component {
 			doDefault = true
 		}
 		if ( doDefault === true ) {
-			this.props.state.hasher.set({member: this.props.state.user.profile.display_name})
+			this.props.state.hasher.set({member: this.props.state.user.name})
 		}
 	}
 	member = () => {

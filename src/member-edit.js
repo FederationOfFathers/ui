@@ -109,7 +109,7 @@ class MemberEdit extends Component {
         } 
     }
 	render = () => {
-		if (this.props.member.name === this.props.state.user.profile.display_name) {
+		if (this.props.member.name === this.props.state.user.name) {
             return (
                 <form className="member-edit-form col" onSubmit={this.handleSubmit}>
                     <div className="member-edit-form-actions">
