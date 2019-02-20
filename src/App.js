@@ -19,10 +19,15 @@ class App extends Api {
 			fetchingLoginCode: false,
 		})
 	}
+	logoutClick = () => {
+        document.cookie = "secure-cookie=;path=/;domain=fofgaming.com;expires=-1";
+        window.location.reload(false)
+    }
 	stillChecking = () => {
 		return(<div className="my-5 text-center">
 			<h1>Checking Login Status</h1>
 			<p>This should only take a few seconds</p>
+			<small><a href="#" onClick={this.logoutClick}>click here to logout of old sessions</a><br/>especially old Slack sessions</small>
 			</div>)
 	}
 	pleaseLogIn = () => {
