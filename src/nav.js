@@ -38,7 +38,7 @@ class Nav extends Component {
 	nav = ( to ) => {
 		switch( to ) {
 			case "members":
-				return  function() { this.props.state.hasher.replace({main: to, member: this.props.state.user.profile.display_name}) }.bind(this)
+				return  function() { this.props.state.hasher.replace({main: to, member: this.props.state.user.name}) }.bind(this)
 			default:
 				return function() { this.props.state.hasher.replace({main: to}) }.bind(this)
 		}
@@ -63,7 +63,7 @@ class Nav extends Component {
 					<NavLink text="☰" active={"menu" === current} nav={this.nav("menu")} width={8}/>
 					<NavLink text="Home" active={"home" === current} nav={this.nav("first")} width={20}/>
 					<NavLink text="Team" active={"team" === current} nav={this.nav("team")} width={20}/>
-					<NavLink text="Channels" active={"channels" === current} nav={this.nav("channels")} width={26}/>
+					{/* <NavLink text="Channels" active={"channels" === current} nav={this.nav("channels")} width={26}/> */}
 					<NavLink text="Members" active={"members" === current} nav={this.nav("members")} width={26}/>
 				</ul>
 			</div>
