@@ -148,9 +148,15 @@ class Raid extends Component {
 			}
 			// Treat as member id or display as is if no matching id found
 			var member = list[i]
-			var user = this.props.state.users[member]
+			var username = member;
+			var user = this.props.state.members[member]
 			if (user !== undefined) {
-				member = user.User.GamerTag
+				username = user.name
+			} else {
+				user = this.props.state.users[member]
+				if (user !== undefined) {
+					username = user.User.Name
+				}
 			}
 
 			rval.push(
@@ -159,7 +165,7 @@ class Raid extends Component {
 					i={i}
 					id={member}
 					state={this.props.state}
-					text={member}/>
+					text={username}/>
 			)
 		}
 		return rval
