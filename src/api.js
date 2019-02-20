@@ -45,8 +45,8 @@ class Api extends State {
 			this.ping()
 		}.bind(this), 180000)
 	}
-		return "//dashboard.fofgaming.com/api/" + version + "/" + part
 	url = ( part, version = "v1" ) => {
+		return "//dashboard.fofgaming.com/api/" + version + "/" + part
 	}
 	postJSON = ( what, payload ) => {
 		if ( what.substring(0, 2) !== "//" ) {
@@ -148,7 +148,7 @@ class Api extends State {
 			}.bind(this))
 	}
 	users = () => {
-		return this.fetch("xhr/users/v1/users.json")
+		return this.fetch("xhr/users/v1/users.json", "v0") // TODO bump API to v1
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {
