@@ -6,7 +6,7 @@ import {getValueOrEmpty } from './values'
 class LinkBar extends Component {
 	render = () => {
 		const data = {
-			xbl: getValueOrEmpty(this.props.member.xbox),
+			xbl: getValueOrEmpty(this.props.member.User.GamerTag),
 			psn: getValueOrEmpty(this.props.meta.psn),
 			bnet: getValueOrEmpty(this.props.meta.bnet),
 			twitch: getValueOrEmpty(this.props.streams.Twitch),
