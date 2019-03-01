@@ -8,21 +8,16 @@ class Api extends State {
 				raw: {
 					fetch: this.fetch,
 				},
-				slack: {
-					join: this.joinSlack,
-					part: this.partSlack,
-					visibility: this.visibilitySlack,
-				},
 				stats: {
 					hourly: this.statsHourly,
 					daily: this.statsDaily,
 				},
 				team: {
-					host: this.raidHost,
-					leave: this.raidLeave,
-					join: this.raidJoin,
+					host: this.eventCreate,
+					leave: this.eventLeave,
+					join: this.eventJoin,
 					ping: this.raidPing,
-					close: this.raidClose,
+					close: this.eventDelete,
 				},
 				user: {
 					streams: {
@@ -45,12 +40,14 @@ class Api extends State {
 			this.ping()
 		}.bind(this), 180000)
 	}
+
 	url = ( part, version = "v1" ) => {
-		return "//dashboard.fofgaming.com/api/" + version + "/" + part
+		// return "//dashboard.fofgaming.com/api/" + version + "/" + part
+		return "//localhost:8866/api/" + version + "/" + part
 	}
-	postJSON = ( what, payload ) => {
+	postJSON = ( what, payload, version ) => {
 		if ( what.substring(0, 2) !== "//" ) {
-			what = this.url( what );
+			what = this.url( what, version );
 		}
 		return fetch(
 			what,
@@ -63,9 +60,9 @@ class Api extends State {
 				body: JSON.stringify(payload)
 			})
 	}
-	putJSON = ( what, payload ) => {
+	putJSON = ( what, payload, version ) => {
 		if ( what.substring(0, 2) !== "//" ) {
-			what = this.url( what );
+			what = this.url( what, version );
 		}
 		return fetch(
 			what,
@@ -76,7 +73,23 @@ class Api extends State {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(payload)
-			})
+			}, version)
+	}
+	deleteJSON = ( what, payload, version ) => {
+		if ( what.substring(0, 2) !== "//" ) {
+			what = this.url( what, version );
+		}
+		console.log(version)
+		return fetch(
+			what,
+			{
+				credentials: "include",
+				method: "DELETE",
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(payload)
+			}, version)
 	}
 	fetch = ( what, version ) => {
 		if ( what.substring(0, 2) !== "//" ) {
@@ -106,34 +119,48 @@ class Api extends State {
 			}
 		)
 	}
-	raidList = () => {
-		return this.raidfetch("get")
-			.then(function(response) {
-				return response.json()
-			}).then(function(json) {
-				this.setState({raids: json})
-				this.setState({lastRaidFetch: new Date().getTime()})
-			}.bind(this)).catch((error) => {
-				console.error("Cannot get raids. " + error);
-			})
+	eventsList = async () => {
+		try {
+			let response = await this.fetch("events", "v1");
+			let json = await response.json();
+			this.setState({events: json, eventsLastFetched: new Date().getTime()})
+		} catch(error) {
+			console.error("Cannot get events. " + error);
+		}
 	}
-	raidJoin = ( body ) => {
-		return this.raidpost( 'raid/join', body )
-			.then(function() {
-				this.raidList()
-			}.bind(this))
+	eventJoin = async ( eventID,  type = 1) => {
+		try {
+			let body = { eventID: eventID, type: type };
+			await this.postJSON( 'events/' + eventID + '/join', body, "v1");
+			await this.eventsList();
+		} catch(error) {
+			console.error("unable to join event " + error)
+		}
 	}
-	raidLeave = ( body ) => {
-		return this.raidpost( 'raid/leave', body )
-			.then(function() {
-				this.raidList()
-			}.bind(this))
+	eventCreate = async ( body ) => {
+		try {
+			await this.postJSON( 'events/create', body, "v1");
+			await this.eventsList();
+		} catch(error) {
+			console.error("unable to create event " + error)
+		}
 	}
-	raidHost = ( body ) => {
-		return this.raidpost( 'raid/host', body )
-			.then(function() {
-				this.raidList()
-			}.bind(this))
+	eventDelete = async ( eventID ) => {
+		try {
+			await this.deleteJSON( 'events/' + eventID, {}, "v1");
+			await this.eventsList();
+		} catch(error) {
+			console.error("unable to create event " + error)
+		}
+	}
+	eventLeave = async ( eventID,  eMemberID) => {
+		try {
+			let body = { eventID: eventID, member: eMemberID};
+			await this.postJSON( 'events/leave', body, "v1");
+			await this.eventsList();
+		} catch(error) {
+			console.error("unable to leave event " + error)
+		}
 	}
 	raidPing = ( body ) => {
 		return this.raidpost( 'raid/ping', body )
@@ -166,20 +193,18 @@ class Api extends State {
 			console.error("Unable to get members." + error);
 		}
 	}
-
-	raidbotAuth = async () => {
+	channels = async () => {
 		try {
-
-			let response = await this.fetch("auth/team-tool", "v1")
+			let response = await this.fetch("events/channels", "v1");
 			let json = await response.json();
-			if ( typeof json === "string" && json !== "" ) {
-				this.setState({raidbotToken: "fof-ut " + json})
-			} else {
-				this.setState({checkedAuth: true, raidbotToken: false})
-			}
+			
+			this.setState({
+				eventChannels: json,
+				lastEventChannelsFetch: new Date().getTime()
+			})
+			
 		} catch(error) {
-			console.error("unable to get raid data" + error)
-			this.setState({raidbotToken: false});
+			console.error("unable to load event channels " +  error)
 		}
 	}
 
@@ -244,51 +269,45 @@ class Api extends State {
 		put[key]=value
 		return this.putJSON("meta/member/" + userid, put)
 	}
-	ping = () => {
-		this.raidbotAuth()
-			.then(function() {
-				if ( this.state.raidbotToken === false ) {
-					this.setState({checkedAuth: true, loggedIn: false})
-					return
-				}
-				this.fetch( "ping" )
-					.then(function(response) {
-						return response.json()
-					})
-					.then(function(json) {
-						this.setState({checkedAuth: true})
-						if ( typeof json.user === "undefined" ) {
-							this.setState({loggedIn: false})
-							return
-						}
-						if ( json.user === null ) {
-							this.setState({loggedIn: false})
-							return
-						}
-						this.setState({loggedIn: true})
-						// json.admin = false // testing
-						json.didPing = true
-						json.loggedIn = true
-						this.setState(json)
-						this.setState({lastPingFetch: new Date().getTime()})
-						this.raidList()
-							.then(this.users)
-							.then(this.members)
-							.then(this.groups)
-							.then(this.channels)
-							.then(this.save)
-					}.bind(this))
-					.catch(function(ex) {
-						this.setState({
-							didPing: false,
-							loggedIn: false,
-						})
-					}.bind(this)
-					)
-			}.bind(this)
-			).catch(function(error) {
-				console.error(error);
+	ping = async () => {
+		try {
+			let pingResponse = await this.fetch("ping");
+			let pingJson = await pingResponse.json();
+			if (typeof pingJson.user === "undefined" || pingJson.user == null) {
+				this.setState({
+					loggedIn: false,
+				})
+			} else {
+				this.setState({loggedIn: true})
+			}
+
+			console.log(pingJson)
+
+			pingJson.didPing = true;
+			pingJson.loggedIn = true;
+			this.setState({pingJson});
+			this.setState({lastPingFetch: new Date().getTime()});
+		} catch (error) {
+			console.error("ping failed: " + error)
+			this.setState({
+				didPing: false,
+				loggedIn: false,
 			})
+		}
+
+		console.log("pinged");
+
+		try {
+			await this.eventsList()
+			await this.users()
+			await this.members()
+			await this.groups()
+			await this.channels()
+			await this.save()
+
+		} catch(error) {
+			console.warn("unable to fetch some data " + error)
+		}
 	}
 	loadOAuth = async () => {
 		let link = "";

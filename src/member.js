@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LinkBar from './member-linkbar'
-import Slack from './lib/slack-deep-link'
 import MembersNav from './nav-members'
 import MemberEdit from './member-edit'
 import styled from 'styled-components'
@@ -58,7 +57,7 @@ class Member extends Component {
 		this.setState({editMode: false});
 	}
 	render = () => {
-		const isOwner = parseInt(this.state.currentID) === this.props.state.user.id;
+		const isOwner = parseInt(this.state.currentID, 10) === this.props.state.user.id;
 		let user = this.props.state.users[this.state.currentID]
 		
 		return (

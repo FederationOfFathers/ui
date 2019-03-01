@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Nav from './nav'
-import Team from './team'
+import Events from './events/events'
 import Roster from './roster-iframe'
-import Channels from './channels'
 import Members from './members'
 import Home from './home'
 import Game from './game'
@@ -18,12 +17,10 @@ class LoggedIn extends Component {
 				return (<Menu state={this.props.state}/>)
 			case "home":
 				return (<Home state={this.props.state}/>)
-			case "team":
-				return (<Team state={this.props.state}/>)
+			case "events":
+				return (<Events state={this.props.state}/>)
 			case "roster":
 				return (<Roster state={this.props.state}/>)
-			case "channels":
-				return (<Channels state={this.props.state}/>)
 			case "members":
 				return (<Members state={this.props.state}/>)
 			case "game":
