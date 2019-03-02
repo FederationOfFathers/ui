@@ -28,8 +28,6 @@ class EventMember extends Component {
 		await this.props.state.api.team.leave(this.props.member.EventID, this.props.member.ID)
 	}
     render = () => {
-        // console.log("member")
-        // console.log(this.props.member)
 		let isUser = this.props.state.user.id === this.props.member.MemberID
         return (
         	<div className="btn-group w-100" role="group" aria-label="event member">

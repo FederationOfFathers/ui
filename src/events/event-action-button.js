@@ -11,11 +11,9 @@ class EventActionButton extends Component {
         for (let i in this.props.event.Members) {
             if (this.props.event.Members[i].MemberID === this.props.state.user.id
 				&& this.props.event.Members[i].Type === 0) {
-            	console.log("user is host");
                 return true
             }
         }
-		console.log("user is not host");
         return false
     }
 
@@ -37,7 +35,6 @@ class EventActionButton extends Component {
         }
 
         if (this.props.event.Members.length >= this.props.event.Need) {
-        	console.log("Alt button!")
             button = <button className="btn btn-block btn-info" onClick={this.joinEventAlt}>Join the event as alt</button>
         }
 

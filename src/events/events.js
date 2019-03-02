@@ -19,10 +19,8 @@ class Events extends Component {
 
         console.dir(this.props.state.vars)
         if ( this.props.state.vars.event === "host") {
-            console.log("raid host")
             return (<EventHost state={this.props.state} />)
         }
-        console.log("not host")
         return (
             <div className="team container container-fluid">
             <h3>Events</h3>

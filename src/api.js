@@ -79,7 +79,6 @@ class Api extends State {
 		if ( what.substring(0, 2) !== "//" ) {
 			what = this.url( what, version );
 		}
-		console.log(version)
 		return fetch(
 			what,
 			{
@@ -281,8 +280,6 @@ class Api extends State {
 				this.setState({loggedIn: true})
 			}
 
-			console.log(pingJson)
-
 			pingJson.didPing = true;
 			pingJson.loggedIn = true;
 			this.setState({pingJson});
@@ -294,8 +291,6 @@ class Api extends State {
 				loggedIn: false,
 			})
 		}
-
-		console.log("pinged");
 
 		try {
 			await this.eventsList()

@@ -59,13 +59,11 @@ class EventHost extends Component {
 			// total that we need... so add an additional slot for the host
 			body.need = this.state.need + 1;
 		}
-		console.log("body")
-		console.log(body)
 		try {
 			await this.props.state.api.team.host(body)
 			this.props.state.hasher.set({event: null})
 		} catch(error) {
-			console.log("event save failed " + error)
+			console.error("event save failed " + error)
 		}
 		
 	}
