@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LinkBar from './member-linkbar'
-import Slack from './lib/slack-deep-link'
 import MembersNav from './nav-members'
 import MemberEdit from './member-edit'
 import styled from 'styled-components'
@@ -19,7 +18,7 @@ class Member extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentID: props.member.id,
+			currentID: props.member.User.ID,
 			mounted: false,
 			fetch: false,
 			meta: {},
@@ -30,8 +29,8 @@ class Member extends Component {
 		if ( this.state.mounted === false ) {
 			return
 		}
-		if ( this.state.currentID !== this.props.member.id ) {
-			this.setState({fetch: false, currentID: this.props.member.id})
+		if ( this.state.currentID !== this.props.member.User.ID ) {
+			this.setState({fetch: false, currentID: this.props.member.User.ID})
 		}
 		if ( this.state.fetch === false ) {
 			this.fetch()
@@ -43,10 +42,10 @@ class Member extends Component {
 		try {
 			await this.props.state.api.user.streams.get(this.state.currentID);
 			await this.props.state.api.user.meta.get(this.state.currentID);	
-								
+
 			this.setState({
 				meta: this.props.state.meta.users[this.state.currentID],
-				streams: this.props.state.meta.streams[this.props.member.id]
+				streams: this.props.state.meta.streams[this.state.currentID]
 			});
 		} catch(err) {
 			console.error("Unable to fetch user data - " + err)
@@ -58,21 +57,23 @@ class Member extends Component {
 		this.setState({editMode: false});
 	}
 	render = () => {
-		const isOwner = this.props.member.name === this.props.state.user.name;
+		const isOwner = parseInt(this.state.currentID, 10) === this.props.state.user.id;
+		let user = this.props.state.users[this.state.currentID]
+		
 		return (
 			<div className="members">
 				<MembersNav state={this.props.state}/>
 				<div className="member-head" style={{display: 'flex'}}>
 					<div className="member-name col-sm-10">
-						<h4 className="card-title" onClick={()=>{window.location=Slack.link("user",this.props.member.slack)}}>
+						<h4 className="card-title" onClick={() => false }>
 							<img
 								className="float-left mx-2 clearfix"
 								style={{width: '48px', height: '48px'}}
-								alt="" src={this.props.member.Image}/>
-							{this.props.member.Name}
+								alt="" src={user.User.Image}/>
+							{user.User.Name}
 						</h4>
 						<h6 className="card-subtitle mb-2 text-muted">
-							{this.props.member.DisplayName}
+							{user.User.Name}
 						</h6>
 					</div>
 					<div className="member-actions col">

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 class TeamNav extends Component {
-	componentWillMount = () => {
-		this.setState({
+	constructor(props) {
+		super(props)
+		this.state = {
 			subNavSelected: false,
-		})
+		}
 	}
 	subNavClick = () => {
 		if ( this.state.subNavSelected === true ) {
@@ -14,10 +15,10 @@ class TeamNav extends Component {
 		}
 	}
 	click = () => {
-		if ( this.props.state.vars.raid !== "host" ) {
-			this.props.state.hasher.set({raid: "host"})
+		if ( this.props.state.vars.event !== "host" ) {
+			this.props.state.hasher.set({event: "host"})
 		} else {
-			this.props.state.hasher.set({raid: null})
+			this.props.state.hasher.set({event: null})
 		}
 	}
 	joinClick = () => {
@@ -88,13 +89,13 @@ class TeamNav extends Component {
 		)
 	}
 	render = () => {
-		if ( this.props.state.vars.main !== "team" ) {
+		if ( this.props.state.vars.main !== "events" ) {
 			return null
 		}
-		if ( this.props.state.vars.raid === "host" ) {
+		if ( this.props.state.vars.event === "host" ) {
 			return this.addingRaid()
 		}
-		if ( typeof this.props.state.vars.raid !== 'undefined' && this.props.state.vars.raid !== null ) {
+		if ( typeof this.props.state.vars.event !== 'undefined' && this.props.state.vars.event !== null ) {
 			return this.viewingRaid()
 		}
 		return this.canHostFromHere()

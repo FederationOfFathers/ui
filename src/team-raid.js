@@ -148,16 +148,11 @@ class Raid extends Component {
 			}
 			// Treat as member id or display as is if no matching id found
 			var member = list[i]
-			var username = member;
-			var user = this.props.state.members[member]
+			var username = "unknown (" + member + ")";
+			var user = this.props.state.users[member]
 			if (user !== undefined) {
-				username = user.name
-			} else {
-				user = this.props.state.users[member]
-				if (user !== undefined) {
-					username = user.User.Name
-				}
-			}
+				username = user.User.Name
+			} 
 
 			rval.push(
 				<RaidMember key={"m-"+i}
