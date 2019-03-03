@@ -27,7 +27,7 @@ class App extends Api {
 		return(<div className="my-5 text-center">
 			<h1>Checking Login Status</h1>
 			<p>This should only take a few seconds</p>
-			<small><a href="#" onClick={this.logoutClick}>click here to logout of old sessions</a><br/>especially old Slack sessions</small>
+			<small><button className="btn btn-link btn-sm" onClick={this.logoutClick}>click here to logout of old sessions</button><br/>especially old Slack sessions</small>
 			</div>)
 	}
 	pleaseLogIn = () => {
@@ -50,11 +50,11 @@ class App extends Api {
 	}
 
 	render = () => {
-		if ( false === this.state.checkedAuth ) {
-			return this.stillChecking()
-		}
 		if ( false === this.state.loggedIn ) {
 			return this.pleaseLogIn()
+		}
+		if ( false === this.state.verified  ) {
+			return (<div className="alert alert-danger">You must be verified to use the team tool</div>)
 		}
 		return ( <LoggedIn state={this.state}/> );
 	}

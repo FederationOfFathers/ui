@@ -31,7 +31,7 @@ class Game extends Component {
 		this.fetch()
 	}
 	fetch = () => {
-		this.props.state.api.raw.fetch('games/played/' + this.props.state.vars.id + '/' + this.props.state.days + '.json')
+		this.props.state.api.raw.fetch('games/played/' + this.props.state.vars.id + '/' + this.props.state.days + '.json', "v0")
 			.then(function(response) {
 				return response.json()
 			})

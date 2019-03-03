@@ -42,7 +42,7 @@ class Home extends Component {
 	pullGameActivity = async () => {
 		this.setState({fetching: "games"})
 		try {
-			var response = await this.props.state.api.raw.fetch('games/played/top/'+this.props.state.days+'/'+this.state.topGames+'.json');
+			var response = await this.props.state.api.raw.fetch('games/played/top/'+this.props.state.days+'/'+this.state.topGames+'.json', "v0");
 			var json = {}
 			if (response.ok) {
 				json = await response.json();

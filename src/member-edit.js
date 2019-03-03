@@ -7,12 +7,11 @@ import Filter from './lib/sanitize-social-input'
 class MemberEdit extends Component {
     constructor(props) {
         super(props);
-        console.log(props.member)
-        let userStreams = props.state.meta.streams[props.member.id];
-        let userMeta = props.state.meta.users[props.member.id];
+        let userStreams = props.state.meta.streams[props.member.User.ID];
+        let userMeta = props.state.meta.users[props.member.User.ID];
         const originalData = {
             loc: getValueOrEmpty(userMeta.loc),
-            xbl: getValueOrEmpty(props.member.xbox),
+            xbl: getValueOrEmpty(props.member.User.GamerTag),
             psn: getValueOrEmpty(userMeta.psn),
             bnet: getValueOrEmpty(userMeta.bnet),
             twitch: getValueOrEmpty(userStreams.Twitch),
@@ -57,13 +56,13 @@ class MemberEdit extends Component {
     updateXbox = async (propertyName) => {
         // So, this doesn't exactly work since we're currently loading Xbox GamerTag from Slack, which should change
         // this will probably always be `xbl`, but to keep code consistent, we'll use propertyName
-        await this.props.state.api.user.set.xbl(this.props.member.id, Filter.social(this.state[propertyName]))
+        await this.props.state.api.user.set.xbl(this.props.member.User.ID, Filter.social(this.state[propertyName]))
     }
     updateMeta = async (propertyName) => {
-        await this.props.state.api.user.meta.set(this.props.member.id, propertyName, Filter.social(this.state[propertyName]))
+        await this.props.state.api.user.meta.set(this.props.member.User.ID, propertyName, Filter.social(this.state[propertyName]))
     }
     updateStream = async (propertyName) => {
-        await this.props.state.api.user.streams.set(this.props.member.id, propertyName, Filter.social(this.state[propertyName]))
+        await this.props.state.api.user.streams.set(this.props.member.User.ID, propertyName, Filter.social(this.state[propertyName]))
     }
     updateData = async (propertyName) => {
         switch(propertyName) {
@@ -109,7 +108,7 @@ class MemberEdit extends Component {
         } 
     }
 	render = () => {
-		if (this.props.member.name === this.props.state.user.name) {
+		if (this.props.member.User.Name === this.props.state.user.name) {
             return (
                 <form className="member-edit-form col" onSubmit={this.handleSubmit}>
                     <div className="member-edit-form-actions">
@@ -127,15 +126,6 @@ class MemberEdit extends Component {
                         <div className="helper-text">Optional. Used for the FoF Map</div>
                     </div>
                     <div className="member-edit-form-section">
-                    {this.props.member.discord === "" &&
-                        <div>
-                            <h3>Link Discord</h3>
-                            <div className="field discord">
-                                <a className="btn-block h-100 text-center" href={this.props.state.oauth.discord}><img className="img-fluid h-100" src="/images/discord-logo.png" alt="Discord"/></a>
-                            </div>
-                            <div className="helper-text">Slack is no more. All hail Discord!</div>
-                        </div>
-                    }
                     </div>
                     <div className="member-edit-form-section"></div>
                     <div className="member-edit-form-section">
