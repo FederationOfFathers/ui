@@ -53,6 +53,9 @@ class App extends Api {
 		if ( false === this.state.loggedIn ) {
 			return this.pleaseLogIn()
 		}
+		if ( false === this.state.verified  ) {
+			return (<div className="alert alert-danger">You must be verified to use the team tool</div>)
+		}
 		return ( <LoggedIn state={this.state}/> );
 	}
 }

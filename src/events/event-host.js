@@ -8,7 +8,7 @@ class EventHost extends Component {
 		super(props)
 
 
-		// 🤷🏽‍♂️ somethign about getting the time/dams
+		// 🤷🏽‍♂️ somethign about getting the time/dams. ported from original. ask DK
 		var initialMoment = moment()
 		var initialOffMinutes = initialMoment.get('minute') % 5
 		if ( initialOffMinutes !== 0 ) {
@@ -92,14 +92,32 @@ class EventHost extends Component {
 		}
 		return rval
 	}
+	isHostableChannel = (channel) => {
+		if (this.props.state.admin === true) {	// admins host anywhere
+			return true
+		}
+		if (this.props.state.verified === false) {	// unverified can't host
+			return false
+		}
+		let hostableCategories = [
+			"444608078411989012", // PC Games
+			"444608230140674059", // PS4
+			"439890949569642498", // Xbox
+			"444608367118516225", // Switch
+			"440693691192049675", // Random
+		]
+		return hostableCategories.indexOf(channel.categoryID) > -1;
+	}
 	renderChanSelect = () => {
 		var channels = [
 			(<option key="none" value="">Select A Channel</option>)
 		]
 		for ( let i in this.props.state.eventChannels ) {
 			let channel = this.props.state.eventChannels[i];
-			let channelName = channel.categoryName + ": " + channel.name;
-			channels.push(<option key={i} value={channel.channelID}>{channelName}</option>)
+			if (this.isHostableChannel(channel)) {
+				let channelName = channel.categoryName === "" ? channel.name : channel.categoryName + ": " + channel.name;
+				channels.push(<option key={i} value={channel.channelID}>{channelName}</option>)
+			}
 		}
 		return(
 			<div className="form-group">

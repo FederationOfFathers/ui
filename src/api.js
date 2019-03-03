@@ -42,8 +42,7 @@ class Api extends State {
 	}
 
 	url = ( part, version = "v1" ) => {
-		// return "//dashboard.fofgaming.com/api/" + version + "/" + part
-		return "//localhost:8866/api/" + version + "/" + part
+		return "//dashboard.fofgaming.com/api/" + version + "/" + part
 	}
 	postJSON = ( what, payload, version ) => {
 		if ( what.substring(0, 2) !== "//" ) {
@@ -282,7 +281,7 @@ class Api extends State {
 
 			pingJson.didPing = true;
 			pingJson.loggedIn = true;
-			this.setState({pingJson});
+			this.setState(pingJson);
 			this.setState({lastPingFetch: new Date().getTime()});
 		} catch (error) {
 			console.error("ping failed: " + error)
@@ -293,11 +292,10 @@ class Api extends State {
 		}
 
 		try {
+			await this.channels()
 			await this.eventsList()
 			await this.users()
 			await this.members()
-			await this.groups()
-			await this.channels()
 			await this.save()
 
 		} catch(error) {

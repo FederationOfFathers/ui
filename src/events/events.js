@@ -17,7 +17,6 @@ class Events extends Component {
 
     render = () => {
 
-        console.dir(this.props.state.vars)
         if ( this.props.state.vars.event === "host") {
             return (<EventHost state={this.props.state} />)
         }
