@@ -18,7 +18,7 @@ class LinkBar extends Component {
 		return(
 			<div className="link-buttons">
 				{
-					(data.xbox || data.psn || data.bnet) &&
+					(data.xbl || data.psn || data.bnet) &&
 					<div className="link-button-group">
 						<h5>Gaming Networks</h5>
 						<LinkButton className="xbox" 
