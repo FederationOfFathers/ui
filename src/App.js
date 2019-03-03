@@ -2,6 +2,7 @@ import React from 'react';
 import LoggedIn from './logged-in.js';
 import Api from './api.js'
 import './App.css';
+import Logout from './logout';
 
 class App extends Api {
 	componentDidUpdate = () => {
@@ -54,7 +55,7 @@ class App extends Api {
 			return this.pleaseLogIn()
 		}
 		if ( false === this.state.verified  ) {
-			return (<div className="alert alert-danger">You must be verified to use the team tool</div>)
+			return (<div className="alert alert-danger">You must be verified to use the team tool<br/><Logout/></div>)
 		}
 		return ( <LoggedIn state={this.state}/> );
 	}
