@@ -34,7 +34,7 @@ class EventMember extends Component {
 				<button className="event-member btn btn-block btn-light">
 					{this.memberName()} {this.badge()}
 				</button>
-				{ isUser &&
+				{ isUser && this.props.member.Type > 0 &&
 					<button className={"btn btn-danger"} onClick={this.leaveEvent}><span className="oi oi-minus" title="leave event" aria-hidden="true"></span></button>
 				}
 			</div>

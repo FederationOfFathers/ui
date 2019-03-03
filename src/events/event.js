@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import EventMember from './event-member'
 import EventActionButton from './event-action-button'
+import EventMemberEmpty from "./event-member-empty";
 
 // props event, state
 class Event extends Component {
@@ -46,6 +47,10 @@ class Event extends Component {
         eventMembers.unshift(eventHost)
 		eventMembers.push(eventAlts);
 
+        for (let i = eventMembers.length; i <= this.props.event.Need; i++) {
+        	eventMembers.push(<EventMemberEmpty/>)
+		}
+
         return eventMembers
     }
 
@@ -60,7 +65,7 @@ class Event extends Component {
         
         return (
             <div className="single-event">
-                <button className="btn btn-block btn-dark d-flex flex-row justify-content-around align-items-center" onClick={this.clickHandler}>
+                <button className="btn btn-block btn-secondary d-flex flex-row justify-content-around align-items-center" onClick={this.clickHandler}>
                     <div className="w-100">
                         <div>{this.props.event.Title}</div>
                         <div>
