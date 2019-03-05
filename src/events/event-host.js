@@ -53,12 +53,11 @@ class EventHost extends Component {
 			title: this.state.title,
 			when: this.state.m.format('X'), // IMPORTANT Go uses Unix/Seconds, not milliseconds
 		}
-		
-		if ( this.state.need > 0 ) {
-			// we ask how many MORE members... but we want to record how many
-			// total that we need... so add an additional slot for the host
-			body.need = this.state.need + 1;
-		}
+
+		// we ask how many MORE members... but we want to record how many
+		// total that we need... so add an additional slot for the host
+		body.need = this.state.need + 1;
+
 		try {
 			await this.props.state.api.team.host(body)
 			this.props.state.hasher.set({event: null})
