@@ -28,22 +28,16 @@ class EventActionButton extends Component {
     }
 
     render = () => {
-        let button = <button className="btn btn-block btn-info" onClick={this.joinEvent}>Join the event</button>
 
         if (this.userIsHost()) {
-            button = <button className="btn btn-block btn-danger" onClick={this.deleteEvent}>Delete the event</button>
+        	return (<button className="btn btn-block btn-danger" onClick={this.deleteEvent}>Delete the event</button>)
         }
 
         if (this.props.event.Members.length >= this.props.event.Need) {
-            button = <button className="btn btn-block btn-info" onClick={this.joinEventAlt}>Join the event as alt</button>
+            return (<button className="btn btn-block btn-info" onClick={this.joinEventAlt}>Join the event as alt</button>)
         }
 
-        return(
-            <div>
-            {button}
-            </div>
-            
-        )
+        return(<button className="btn btn-block btn-info" onClick={this.joinEvent}>Join the event</button>)
     }
 }
 
