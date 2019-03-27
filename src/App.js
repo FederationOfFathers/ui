@@ -32,20 +32,26 @@ class App extends Api {
 			</div>)
 	}
 	pleaseLogIn = () => {
-
+		// todo pull from api
 		const discordLoginURL = "https://discordapp.com/api/oauth2/authorize?client_id=447447191640997888&redirect_uri=https%3A%2F%2Fdashboard.fofgaming.com%2Fapi%2Fv1%2Foauth%2Fdiscord%2Flogin&response_type=code&scope=identify&state=login"
 		const discordInviteURL = "https://discord.gg/WAgSs2Y";
 		return(
 			<div className="app noauth text-left my-5">
-				<div className="text-center">
-					<h2>Login With Discord</h2>
-					<div className="field discord">
-						<p className="helper-text">You need to be verified in the <a href={discordInviteURL}>FoF Discord</a> to be able to login.</p>
+				<div className="mx-auto d-flex flex-column align-items-center">
+					<h2 className="d-flex text-center"><span className="px-md-3" role="img" aria-label={'point down'}>👇 👇</span>Login With Discord<span className="px-md--3" role={'img'} aria-label={'point down'}>👇 👇</span></h2>
+					<div className="field discord w-100 py-2">
 						<a className="btn btn-block btn-lg text-center" style={{ backgroundColor: "#7289DA"}} href={discordLoginURL}><img className="img-fluid h-100" src="/images/discord-logo-white.png" alt="Discord"/></a>
-						<p><a href={discordInviteURL}>Join FoF! - {discordInviteURL}</a></p>
-						<small className="helper-text text-black-50">Slack is no more. All hail Discord!</small><br/>
-						<small className="text-black-50">if this doesn't work, it's because it's not done</small>
 					</div>
+					<h2><span role="img" aria-label={'point up'}> 👆 👆 </span></h2>
+					<p>
+					<ol>
+						Instructions
+						<li>Click the link above</li>
+						<li>Login to Discord</li>
+						<li>Click the "Authorize" button</li>
+						<li>Be logged in</li>
+					</ol>
+					</p>
 				</div>
 			</div>
 		)
