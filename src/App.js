@@ -34,7 +34,6 @@ class App extends Api {
 	pleaseLogIn = () => {
 		// todo pull from api
 		const discordLoginURL = "https://discordapp.com/api/oauth2/authorize?client_id=447447191640997888&redirect_uri=https%3A%2F%2Fdashboard.fofgaming.com%2Fapi%2Fv1%2Foauth%2Fdiscord%2Flogin&response_type=code&scope=identify&state=login"
-		const discordInviteURL = "https://discord.gg/WAgSs2Y";
 		return(
 			<div className="app noauth text-left my-5">
 				<div className="mx-auto d-flex flex-column align-items-center">

@@ -11,7 +11,7 @@ class LoggedIn extends Component {
 	renderSection = () => {
 		switch( this.props.state.vars.main ) {
 			default:
-				this.props.state.hasher.replace({main: "home"})
+				this.props.state.hasher.replace({main: "events"})
 				return
 			case "menu":
 				return (<Menu state={this.props.state}/>)
