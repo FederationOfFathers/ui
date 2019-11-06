@@ -1,6 +1,15 @@
 {
-  "main.css": "static/css/main.b6d5e33e.css",
-  "main.css.map": "static/css/main.b6d5e33e.css.map",
-  "main.js": "static/js/main.2862c75c.js",
-  "main.js.map": "static/js/main.2862c75c.js.map"
+  "files": {
+    "main.css": "/static/css/main.c742f742.css",
+    "main.js": "/static/js/main.19b0b431.js",
+    "main.js.map": "/static/js/main.19b0b431.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.46026e1b4782fb046199aa71b91bfd4b.js": "/precache-manifest.46026e1b4782fb046199aa71b91bfd4b.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.c742f742.css.map": "/static/css/main.c742f742.css.map"
+  },
+  "entrypoints": [
+    "static/css/main.c742f742.css",
+    "static/js/main.19b0b431.js"
+  ]
 }

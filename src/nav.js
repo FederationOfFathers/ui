@@ -61,8 +61,8 @@ class Nav extends Component {
 				<TeamNav state={this.props.state}/>
 				<ul className="nav nav-pills nav-fill">
 					<NavLink text="☰" active={"menu" === current} nav={this.nav("menu")} width={8}/>
-					<NavLink text="Home" active={"home" === current} nav={this.nav("first")} width={20}/>
-					<NavLink text="Events" active={"team" === current} nav={this.nav("events")} width={20}/>
+					
+					<NavLink text="Events" active={"events" === current} nav={this.nav("events")} width={20}/>
 					<NavLink text="Members" active={"members" === current} nav={this.nav("members")} width={26}/>
 				</ul>
 			</div>
