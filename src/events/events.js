@@ -18,7 +18,10 @@ class Events extends Component {
 			"440693691192049675", // Random
 		]
 		return listableCategories.indexOf(channel.categoryID) > -1;
-	}
+    }
+    handleNewEventClick = () => {
+        this.props.state.hasher.set({event: "host"})
+    }
     eventChannels = () => {
         //TODO sort the channels
         let eventChannels = []
@@ -27,7 +30,9 @@ class Events extends Component {
                 eventChannels.push(<EventChannel key={idx} channel={this.props.state.events[idx]} state={this.props.state}/>);
             }
         }
-
+        if (eventChannels.length < 1) {
+            return <p>There are no events currently scheduled. <button className="btn btn-sm btn-primary" onClick={this.handleNewEventClick}>Click here to create a new event</button></p>
+        }
         return eventChannels
     }
 
