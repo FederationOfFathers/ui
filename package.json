@@ -7,7 +7,7 @@
     "input-moment": "^0.3.6",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.13",
-    "node-fetch": "^1.7.3",
+    "node-fetch": "^2.6.1",
     "promise-polyfill": "6.0.2",
     "react": "^16.0.0",
     "react-clipboard.js": "^1.1.3",
